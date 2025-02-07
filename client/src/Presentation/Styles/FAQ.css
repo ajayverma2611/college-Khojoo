@@ -14,11 +14,15 @@
 }
 .questions{
   font-size: 20px;
-  font-weight: bold;
+  font-weight: 500;
   margin-bottom: 5px;
 }
 .faqHeading{
   font-size: 35px;
   color: #05B97D;
   margin-bottom: 20px;
+}
+.answers{
+  font-size: 15px;
+  margin-top: 10px;
 }

@@ -3,6 +3,7 @@ import helpAndFeedbackImage from "../Assests/helpandfeedback.png";
 import { Button } from "bootstrap";
 const HelpAndFeedBack = () => {
   return (
+    <>
     <div className='helpandfeedbackMainContainer'>
       <div className="hfContent">
         <h1 className="feedbackHeading">Help And FeedBack</h1>
@@ -19,6 +20,7 @@ const HelpAndFeedBack = () => {
         <img src={helpAndFeedbackImage} alt="helpandfeedback" className="hfImage"/>
       </div>
     </div>
+    </>
   )
 }
 
