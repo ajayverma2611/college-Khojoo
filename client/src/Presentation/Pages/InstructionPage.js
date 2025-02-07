@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom"
 import "../Styles/InstructionPage.css"
 const InstructionPage = () => {
   return (
@@ -11,7 +12,7 @@ const InstructionPage = () => {
         <p><span className="textFormatting">Total Duration:</span> 3 Hours</p>
         <p><span className="textFormatting">Total Number of Questions:</span> 75 (25 Questions each from Physics, Chemistry, and Mathematics)</p>
         <p><span className="textFormatting">Type of Questions:</span> Multiple Choice Questions (MCQs) and Numerical Type Questions</p>
-        <p><span className="textFormatting">Total Marks:</span> 360 (4 Marks for each correct answer, -1 Mark for each wrong answer in MCQs)</p>
+        <p><span className="textFormatting">Total Marks:</span> 300 (4 Marks for each correct answer, -1 Mark for each wrong answer in MCQs)</p>
         <p className="textFormatting" style={{textAlign: "center", marginTop: "10px", fontSize: "20px"}}>General Instructions</p>
         <p className="textFormatting" style={{marginTop: "10px"}}>1. Before Starting the Test:</p>
         <p>Ensure that you are in a quiet environment without distractions.</p>
@@ -55,8 +56,12 @@ const InstructionPage = () => {
         <p>Good luck, and we hope this mock test helps you prepare for your JEE Mains!</p>
       </div>
       <div className="InstructionBtns">
-        <button className="cancelBtn">Cancel</button>
-        <button className="startBtn">Start</button>
+        <Link to = "/tests">
+          <button className="cancelBtn">Cancel</button>
+        </Link>
+        <Link to="#">
+          <button className="startBtn">Start</button>
+        </Link>
       </div>
     </div>
   )

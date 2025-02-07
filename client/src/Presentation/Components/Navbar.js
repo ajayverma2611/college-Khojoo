@@ -4,6 +4,7 @@ import home from '../Assests/navbar-icons/home.svg';
 import exam from '../Assests/navbar-icons/exams.svg';
 import materials from '../Assests/navbar-icons/materials.svg';
 import { useState, useRef, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 const Navbar = () => {
     const [showDropdown, setShowDropdown] = useState(false);
@@ -41,18 +42,18 @@ const Navbar = () => {
                 </div>
                 <div className="nav-link">
                     <img src={home} alt="Home" />
-                    <a href="/home">Home</a>
+                    <Link to="/home">Home</Link>
                 </div>
                 <div className="nav-link">
                     <img src={exam} alt="Exams" />
-                    <a href="/#">Exams</a>
+                    <Link to="/tests">Exams</Link>
                 </div>
                 <div className="nav-link">
                     <img src={materials} alt="Materials" />
-                    <a href="/#">Materials</a>
+                    <Link to="/#">Materials</Link>
                 </div>
                 <div className="nav-link">
-                    <a href="/#">? Help</a>
+                    <Link to="/helpandfeedback">? Help</Link>
                 </div>
             </div>
 
@@ -70,18 +71,18 @@ const Navbar = () => {
             <div className="nav-links">
                 <div className="nav-link">
                     <img src={home} alt="Home" />
-                    <a href="/home">Home</a>
+                    <Link to="/home">Home</Link>
                 </div>
                 <div className="nav-link">
                     <img src={exam} alt="Exams" />
-                    <a href="/#">Exams</a>
+                    <Link to="/tests">Exams</Link>
                 </div>
                 <div className="nav-link">
                     <img src={materials} alt="Materials" />
-                    <a href="/#">Materials</a>
+                    <Link to="/#">Materials</Link>
                 </div>
                 <div className="nav-link">
-                    <a href="/#">? Help</a>
+                    <Link to="/helpandfeedback">? Help</Link>
                 </div>
             </div>
 
