@@ -1,6 +1,6 @@
 import "../Styles/HelpAndFeedBack.css";
 import helpAndFeedbackImage from "../Assests/helpandfeedback.png";
-import { Button } from "bootstrap";
+// import { Button } from "bootstrap";
 const HelpAndFeedBack = () => {
   return (
     <>
