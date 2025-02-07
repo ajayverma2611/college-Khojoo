@@ -18,9 +18,10 @@
   margin-bottom: 5px;
 }
 .faqHeading{
-  font-size: 35px;
+  font-size: 30px;
   color: #05B97D;
   margin-bottom: 20px;
+  padding-left: 20px;
 }
 .answers{
   font-size: 15px;
