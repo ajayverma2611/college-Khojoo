@@ -16,7 +16,7 @@
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
   margin-top: 15px;
   overflow-y: scroll;
-  height: 60%;
+  height: 75%;
   border-radius: 10px;
 }
 .cancelBtn{

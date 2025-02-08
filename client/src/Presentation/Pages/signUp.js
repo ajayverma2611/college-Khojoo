@@ -1,6 +1,6 @@
 import { useState } from "react";
 import "../Styles/style1.css";
-import signUpImage from "./sign_Up_Image.png";
+// import signUpImage from "./sign_Up_Image.png";
 
 export default function SignUp() {
     const [email, setEmail] = useState('');
@@ -104,7 +104,7 @@ export default function SignUp() {
 
             {/* Right Side - Image */}
             <div className="sign-up-image">
-                <img src={signUpImage} alt="Educational theme" />
+                {/* <img src={signUpImage} alt="Educational theme" /> */}
             </div>
         </div>
     );

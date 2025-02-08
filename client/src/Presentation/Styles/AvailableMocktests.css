@@ -30,7 +30,7 @@
   border-radius: 10px;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
   padding: 20px;
-  width: 44%;
+  width: 48%;
 }
 .testContainer:hover{
   background-color: #f5f5f5;
@@ -58,13 +58,17 @@
   padding: 5px;
 }
 @media (max-width: 768px) {
-
   .mocktestHeading {
     font-size: 24px; 
   }
 
   .testsContainer {
-    padding: 0 8% 0 8%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding-left: 5%;
+    padding-right: 5%;
   }
 
   .showtests {
@@ -96,6 +100,6 @@
   }
 
   .testContainer {
-    width: 48%;
+    width: 100%;
   }
 }
