@@ -141,8 +141,8 @@ const Paths = () =>{
             setPathData(paths.slice(0,pathdata.length+1));
         }
     }
-    
 
+    
     return (
         <div style={{display:"flex",flexDirection:"column",alignItems:"center"}}>
             <div style={{width:"100%",display:"flex",justifyContent:"center"}} >

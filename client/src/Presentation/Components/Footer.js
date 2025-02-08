@@ -28,7 +28,7 @@ const Footer = () =>{
                         <a href="/#" className="footer-links">Contact Us</a>
                     </div>
                 </div>
-                <div className="footer-left">
+                <div id="footer-mob" className="footer-left">
                     <div className="footer-links">
                         <h1 className="footer-heading">Quick Links</h1>
                         <a href="/home" className="footer-links">About Us</a>

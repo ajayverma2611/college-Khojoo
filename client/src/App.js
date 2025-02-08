@@ -5,6 +5,7 @@ import Home from './Presentation/Pages/Home';
 import MockTestPage from './Presentation/Pages/MockTestPage';
 import Navbar from './Presentation/Components/Navbar';
 import InstructionPage from './Presentation/Pages/InstructionPage';
+import Profile from './Presentation/Pages/Profile';
 
 function App() {
   const location = useLocation();
@@ -18,6 +19,7 @@ function App() {
         <Route path="/helpandfeedback" element={<FeedBack />} />
         <Route path="/tests" element={<MockTestPage />}/>
         <Route path="/instructionpage" element={<InstructionPage />} />
+        <Route path="/profile" element={<Profile/>}/>
       </Routes>
     </div>
   );
