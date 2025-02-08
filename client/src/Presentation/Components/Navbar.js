@@ -94,7 +94,7 @@ const Navbar = () => {
                     alt="Profile"
                 />
                 <div className={"nav-dropdown" + (showDropdown ? " drop-active" : "")}>
-                    <a href="/#">Profile</a>
+                    <a href="/profile">Profile</a>
                     <a href="/#">Logout</a>
                 </div>
             </div>
