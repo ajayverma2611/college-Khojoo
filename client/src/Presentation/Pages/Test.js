@@ -3,11 +3,18 @@ import "../Styles/Test.css"
 const Test = () => {
   const [subject, setSubject] = useState("Maths");
   const [option, setOption] = useState(0);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const toggleSidebar = () => {
+    setSidebarOpen(!sidebarOpen);
+  };
   return (
     <div className="testPage">
-      <div className="test-sidebar2">
+      <button className={`toggle-sidebar-btn ${sidebarOpen ? " colouring": ""}`} onClick={toggleSidebar}>
+        {sidebarOpen ? '\u2715' : '\u2630'}
+      </button>
+      <div className={`test-sidebar2 ${sidebarOpen ? " test-open" : ""}`}>
         <h2 className="selected-subject">{subject}</h2>
-        <div className="test-sidebar">
+        <div className={`test-sidebar ${sidebarOpen ? "test-sidebartoopen" : ""}`}>
           {
             [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25].map((i) => {
               return(

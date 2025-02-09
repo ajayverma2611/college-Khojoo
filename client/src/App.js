@@ -8,7 +8,8 @@ import InstructionPage from './Presentation/Pages/InstructionPage';
 import SignIn from './Presentation/Pages/signIn';
 import SignUp from './Presentation/Pages/signUp';
 import Test from './Presentation/Pages/Test';
-
+import Profile from './Presentation/Pages/Profile';
+import FeedbackModal from './Presentation/Components/feedbackModal';
 
 function App() {
   const location = useLocation();
@@ -25,6 +26,8 @@ function App() {
         <Route path="/login" element={<SignIn />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/test" element={<Test />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/modal" element={<FeedbackModal/>}/>
       </Routes>
     </div>
   );

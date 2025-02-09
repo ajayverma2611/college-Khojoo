@@ -107,6 +107,7 @@
 }
   .mocktestHeading {
     font-size: 24px; 
+    padding-top: 80px;
   }
 
   .testsContainer {
