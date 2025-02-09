@@ -6,23 +6,25 @@ const AvailableMocktests = () => {
     <div className="mocktestmaincontainer">
       <h1 className="mocktestHeading">Available Mocktests</h1>
       <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
-          <div className="testsContainer">
+          
             <div className="showtests">
             {tests.map((test, index) => {
               return (
                 <div key={index} className="testContainer">
-                  <div style={{ display: "flex", justifyContent: "space-between" }}>
+                  <div style={{ display: "flex", flexWrap:"wrap",gap:"20px" }}>
                     <h2 className="testName">{test}</h2>
-                    <p className="tag">3 hours</p>
-                    <p className="tag">300 Marks</p>
-                    <p className="startbtn">Start Test</p>
+                    <div className="test-tag-cont">
+                      <p id="test-tag" className="tag">3 hours</p>
+                      <p id="test-tag" className="tag">300 Marks</p>
+                      <p id="test-tag2" className="startbtn">Start Test</p>
+                    </div>
                   </div>
                   <p className = "noofques">No of Questions: 75 | Maths: 25 | Physics: 25 | Chemistry: 25</p>
                 </div>
               )
             })}
           </div>
-        </div>  
+        
       </div>
     </div>
   )
