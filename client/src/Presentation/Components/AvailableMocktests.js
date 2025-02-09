@@ -16,7 +16,9 @@ const AvailableMocktests = () => {
                     <div className="test-tag-cont">
                       <p id="test-tag" className="tag">3 hours</p>
                       <p id="test-tag" className="tag">300 Marks</p>
-                      <p id="test-tag2" className="startbtn">Start Test</p>
+                      <p id="test-tag2" className="startbtn">
+                        <a href = "/instructionpage" style={{color: "white", textDecoration: "none"}}>Start Test</a>
+                      </p>
                     </div>
                   </div>
                   <p className = "noofques">No of Questions: 75 | Maths: 25 | Physics: 25 | Chemistry: 25</p>

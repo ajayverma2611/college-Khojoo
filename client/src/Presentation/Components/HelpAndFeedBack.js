@@ -1,8 +1,12 @@
 import "../Styles/HelpAndFeedBack.css";
 import helpAndFeedbackImage from "../Assests/helpandfeedback.png";
+import FeedbackModal from "./feedbackModal";
+import { useState } from "react";
 const HelpAndFeedBack = () => {
+  const [showModal, setShowModal] = useState(false);
   return (
     <>
+    {showModal && <FeedbackModal showModal = {setShowModal}/>}
     <div className='helpandfeedbackMainContainer'>
       <div className="hfContent">
         <h1 className="feedbackHeading">Help And FeedBack</h1>
@@ -11,7 +15,7 @@ const HelpAndFeedBack = () => {
         <p className="hfContentPara">Your feedback is essential for us to improve our platform and provide you with the best possible experience. We want to hear from you—whether you have suggestions, encountered problems, or simply want to share your thoughts.</p>
         </div>
         <div className="hfBtnContainer">
-          <button className="hfBtn">FeedBack</button>
+          <button className="hfBtn" onClick={(e) => setShowModal(true)}>FeedBack</button>
           <button className="hfBtn">Contact Us</button>
         </div>
       </div>

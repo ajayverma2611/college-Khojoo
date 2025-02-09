@@ -27,7 +27,6 @@ function App() {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/test" element={<Test />} />
         <Route path="/profile" element={<Profile />} />
-        <Route path="/modal" element={<FeedbackModal/>}/>
       </Routes>
     </div>
   );

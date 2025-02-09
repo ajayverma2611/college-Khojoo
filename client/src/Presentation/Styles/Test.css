@@ -164,15 +164,16 @@
   .test-sidebar2{
     display: none;
     background-color: #ffffff;
+    transition: all 0.5s;
   }
   .test-open{
     display: flex;
     flex-direction:column;
     align-self: center;
-    border: 1px solid #000000;
     height: 100vh;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
     justify-content: center;
+    transition: all 0.5s; 
   }
   .toggle-sidebar-btn {
     position: fixed;
@@ -217,6 +218,7 @@
   }
   .selected-subject{
     font-size: 26px;
+    font-weight: 500;
     color: #000000;
   }
 }
