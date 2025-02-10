@@ -1,6 +1,6 @@
 import { useState } from "react";
 import "../Styles/style1.css";
-// import signUpImage from "./sign_Up_Image.png";
+import signUpImage from "../Assests/SignIn-signUp/sign_Up_Image.png";
 
 export default function SignUp() {
     const [email, setEmail] = useState('');
@@ -27,19 +27,18 @@ export default function SignUp() {
                         type="email" 
                         value={email} 
                         onChange={(e) => setEmail(e.target.value)} 
-                        // placeholder="Enter your email"
+                        
                     />
                     <label>Full Name</label>
                     <input 
                         type="text" 
                         value={fullName} 
                         onChange={(e) => setFullName(e.target.value)} 
-                        // placeholder="Enter your email"
+
                     />
 
                    <label>Location</label>
                    <select
-                    id="dropdown"
                     name="location"
                     value={location}
                     onChange={(e) => { setLocation(e.target.value) }}
@@ -86,14 +85,14 @@ export default function SignUp() {
                         type="password" 
                         value={password} 
                         onChange={(e) => setPassword(e.target.value)} 
-                        // placeholder="Enter your password"
+                        
                     />
                     <label>Confirm Password</label>
                     <input 
                         type="password" 
                         value={confirmPassword} 
                         onChange={(e) => setconfirmPassWord(e.target.value)} 
-                        // placeholder="Enter your password"
+                        
                     /> 
 
                     <button type="submit" className="sign-up-btn">Sign Up</button>
@@ -104,7 +103,7 @@ export default function SignUp() {
 
             {/* Right Side - Image */}
             <div className="sign-up-image">
-                {/* <img src={signUpImage} alt="Educational theme" /> */}
+                <img src={signUpImage} alt="Educational theme" />
             </div>
         </div>
     );

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import "../Styles/style.css";
-// import signInImage from "./sign_in_image.png";
+import signInImage from "../Assests/SignIn-signUp/sign_in_image.png";
 
 export default function SignIn() {
     const [email, setEmail] = useState('');
@@ -16,7 +16,9 @@ export default function SignIn() {
             {/* Left Side - Sign In Form */}
             <div className="sign-in-content">
                 <h1>Welcome!</h1>
+                <div className="div-para">
                 <p className="subheading">create a free account</p>
+                </div>
 
                 <form onSubmit={handleSubmit} className="sign-in-form">
                     <label>Email Address</label>
@@ -45,7 +47,7 @@ export default function SignIn() {
 
             {/* Right Side - Image */}
             <div className="sign-in-image">
-                {/* <img src={signInImage} alt="Educational theme" /> */}
+                <img src={signInImage} alt="Educational theme" />
             </div>
         </div>
     );
