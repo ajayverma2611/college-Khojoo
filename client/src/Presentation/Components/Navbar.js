@@ -46,7 +46,7 @@ const Navbar = () => {
                 </div>
                 <div className="nav-link">
                     <img src={exam} alt="Exams" />
-                    <Link to="/tests">Exams</Link>
+                    <Link to="/tests">Tests</Link>
                 </div>
                 <div className="nav-link">
                     <img src={materials} alt="Materials" />
@@ -75,7 +75,7 @@ const Navbar = () => {
                 </div>
                 <div className="nav-link">
                     <img src={exam} alt="Exams" />
-                    <Link to="/tests">Exams</Link>
+                    <Link to="/tests">Tests</Link>
                 </div>
                 <div className="nav-link">
                     <img src={materials} alt="Materials" />
@@ -94,8 +94,8 @@ const Navbar = () => {
                     alt="Profile"
                 />
                 <div className={"nav-dropdown" + (showDropdown ? " drop-active" : "")}>
-                    <a href="/#">Profile</a>
-                    <a href="/#">Logout</a>
+                    <a href="/profile">Profile</a>
+                    <a href="/login">Logout</a>
                 </div>
             </div>
         </nav>

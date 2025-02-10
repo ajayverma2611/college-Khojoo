@@ -4,6 +4,7 @@
     display:flex;
     justify-content:space-evenly;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    
 }
 
 .hero h1{
@@ -38,7 +39,7 @@
 
 }
 .hero-right img{
-    height:500px;
+    height:700px;
     width:auto;
 }
 .hero-left{

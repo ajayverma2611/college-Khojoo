@@ -59,7 +59,7 @@ const InstructionPage = () => {
         <Link to = "/tests">
           <button className="cancelBtn">Cancel</button>
         </Link>
-        <Link to="#">
+        <Link to="/test">
           <button className="startBtn">Start</button>
         </Link>
       </div>

@@ -9,10 +9,18 @@
 }
 .showtests{
   display: flex;
+  width:100%;
+  height:100%;
+  padding-top:50px;
   flex-wrap: wrap;
   gap: 35px;
   margin-bottom: 5%;
 }
+
+.tag{
+  text-wrap:none;
+}
+
 .startbtn{
   display: flex;
   gap:10px;
@@ -25,15 +33,22 @@
   padding: 5px;
 }
 .testContainer{
+  display:flex;
+  flex-direction: column;
   background-color: #ffffff;
   cursor: pointer;
   border-radius: 10px;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
-  padding: 20px;
-  width: 44%;
+  padding: 25px;
+  width: 48%;
+  gap:15px;
+  transition: all 0.3s;
+
 }
+
 .testContainer:hover{
-  background-color: #f5f5f5;
+  transform: scale(1.02);
+  transition: all 0.3s;
 }
 .testName{
   font-size: 18px;
@@ -44,6 +59,9 @@
   margin-top: 8px;
 }
 .testsContainer{
+  width:100%;
+  position: relative;
+  box-sizing: border-box;
   padding: 0 12% 0 14%;
 }
 .badges{
@@ -57,14 +75,47 @@
   width: fit-content;
   padding: 5px;
 }
-@media (max-width: 768px) {
 
+.test-tag-cont{
+  display:flex;
+  gap:20px;
+
+}
+#test-tag2:hover{
+  background-color: #056376;
+}
+
+#test-tag2{
+  font-size: 15px;
+  background-color: #059BB9;
+  border-radius: 8px;
+  padding: 5px 7px;
+}
+
+@media (max-width: 768px) {
+ .test-tag-cont{
+  gap:10px;
+ }
+  
+#test-tag{
+  font-size: 13px;
+  color: white;
+  background-color: #05B97D;
+  border-radius: 8px;
+  padding: 5px 7px;
+}
   .mocktestHeading {
     font-size: 24px; 
+    padding-top: 80px;
   }
 
   .testsContainer {
-    padding: 0 8% 0 8%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding-left: 5%;
+    padding-right: 5%;
   }
 
   .showtests {
@@ -96,6 +147,6 @@
   }
 
   .testContainer {
-    width: 48%;
+    width: 100%;
   }
 }

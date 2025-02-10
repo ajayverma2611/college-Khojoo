@@ -14,8 +14,8 @@ const Footer = () =>{
                         <h2 className="footer-links">Himagiri Nandan</h2>
                         <h2 className="footer-links">Ajay Verma</h2>
                     </div>
-                    <div id="first-footer" className="logo">
-                        <h1>College Khojo</h1>
+                    <div className="logo" id="first-footer">
+                        <h1 >College Khojo</h1>
                     </div>
                 </div>
                 <div className="footer-left">
@@ -28,7 +28,7 @@ const Footer = () =>{
                         <a href="/#" className="footer-links">Contact Us</a>
                     </div>
                 </div>
-                <div className="footer-left">
+                <div id="footer-mob" className="footer-left">
                     <div className="footer-links">
                         <h1 className="footer-heading">Quick Links</h1>
                         <a href="/home" className="footer-links">About Us</a>

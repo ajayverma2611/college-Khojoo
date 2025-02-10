@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "../Styles/feedbackModal.css";
 import { MdCancel } from "react-icons/md";
-const FeedbackModal = () => {
+const FeedbackModal = ({showModal}) => {
   const [username, setUsername] = useState("");
   const [description, setDescription] = useState("");
   const submitFeedback = (e) => {
@@ -20,7 +20,7 @@ const FeedbackModal = () => {
     <div className="feedbackModalmain">
       <div className="feedbackModal">
         <form onSubmit={(e) => submitFeedback(e)}>
-          <div className="cancelIcon">
+          <div className="cancelIcon" onClick={() => showModal(false)}>
             <MdCancel className="cancelIcon" color="#05B97D" size="1.5rem"/>
           </div>
           <div style={{marginBottom: "15px"}}>
@@ -32,7 +32,7 @@ const FeedbackModal = () => {
             <textarea rows="6" placeholder="Give us your valuable feedbacks" className="feedbackmodalinputs" value={description} onChange={handleDesc}></textarea>
           </div>
           <div className="btncontainer">
-            <button type="submit" className="feedbackSubmitbtn">submit</button>
+            <button type="submit" className="feedbackSubmitbtn">Submit</button>
           </div>
         </form>
       </div>

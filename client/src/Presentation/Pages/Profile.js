@@ -1,44 +1,52 @@
-import { useState } from "react";
-import "../Styles/style1.css";
-// import signUpImage from "./sign_Up_Image.png";
+import Navbar from '../Components/Navbar';
+import '../Styles/Profile.css';
+import profileimg from  '../Assests/profile.svg';
+import editbtn from '../Assests/edit.svg';
+import { useState } from 'react';
 
-export default function SignUp() {
-    const [email, setEmail] = useState('');
-    const [fullName,setFullName]=useState('');
-    const [location,setLocation]=useState('');
-    const [password, setPassword] = useState('');
-    const [confirmPassword,setconfirmPassWord]=useState('');
 
-    function handleSubmit(event) {
-        event.preventDefault();
-        // Handle login logic here
-    }
+const Profile = () =>{
+    const [name,setName]= useState('SUDHARSAN B');
+    const [location,setLocation] = useState("");
+
+    const [nameedit,setnameedit] = useState(false);
+    const [locationedit,setlocationedit] = useState(false);
+
 
     return (
-        <div className="container">
-            {/* Left Side - Sign Un Form */}
-            <div className="sign-up-content">
-                <h1>Welcome!</h1>
-                <p className="subheading">create a free account</p>
+        <div className="profile-page">
+            <Navbar/>
+            <div className="profile-header">
+                <div className="profile-image">
+                    <img src={profileimg} alt="edit" />
+                </div>
+                <img className="editbtn" src={editbtn} alt="edit" />
+            </div>
+            <div className="prof-details">
+                <div className="prof-detail">
+                    <h1>Name   {`  `} <sp/> </h1>
+                    {
+                        nameedit ? 
+                        <input id="dropdown" type="text" />
+                        : 
+                        <h2>SUDHARSAN B</h2>
+                    }
+                    {
+                        nameedit ?
+                        <button className="herobutton" onClick={()=>{setnameedit(false)}}>Save</button>
+                        :
+                        <button className="herobutton"  onClick={()=>{setnameedit(true)}}>Edit</button>
 
-                <form onSubmit={handleSubmit} className="sign-up-form">
-                    <label>Email Address</label>
-                    <input 
-                        type="email" 
-                        value={email} 
-                        onChange={(e) => setEmail(e.target.value)} 
-                        // placeholder="Enter your email"
-                    />
-                    <label>Full Name</label>
-                    <input 
-                        type="text" 
-                        value={fullName} 
-                        onChange={(e) => setFullName(e.target.value)} 
-                        // placeholder="Enter your email"
-                    />
 
-                   <label>Location</label>
-                   <select
+                    }
+                
+                </div>
+                <div className="prof-detail">
+                    <h1>Location </h1>
+                    {
+                        locationedit ? 
+
+                        <select
                     id="dropdown"
                     name="location"
                     value={location}
@@ -80,32 +88,23 @@ export default function SignUp() {
                     <option value="Delhi">Delhi</option>
                     <option value="Puducherry">Puducherry</option>
                 </select>
+                        :  <h2>Tamil Nadu</h2>
 
-                    <label>Password</label>
-                    <input 
-                        type="password" 
-                        value={password} 
-                        onChange={(e) => setPassword(e.target.value)} 
-                        // placeholder="Enter your password"
-                    />
-                    <label>Confirm Password</label>
-                    <input 
-                        type="password" 
-                        value={confirmPassword} 
-                        onChange={(e) => setconfirmPassWord(e.target.value)} 
-                        // placeholder="Enter your password"
-                    /> 
+                    }
+                    {
+                        locationedit ?            
+                        <button className="herobutton"  onClick={()=>{setlocationedit(false)}}>Save</button>
 
-                    <button type="submit" className="sign-up-btn">Sign Up</button>
+                        :
+                        <button className="herobutton" onClick={()=>{setlocationedit(true)}}>Edit</button>
 
-                    <p className="signin-link">Already have an account? <a href="#">Sign in</a></p>
-                </form>
-            </div>
-
-            {/* Right Side - Image */}
-            <div className="sign-up-image">
-                {/* <img src={signUpImage} alt="Educational theme" /> */}
+                    }
+                </div>
+                
             </div>
         </div>
-    );
+    )
 }
+
+
+export default Profile;
