@@ -13,9 +13,9 @@ import FeedbackModal from './Presentation/Components/feedbackModal';
 
 function App() {
   const location = useLocation();
-  const shownavbar = location.pathname !== "/signup" && location.pathname !== "/login" && location.pathname !== "/test";
+  const shownavbar = location.pathname !== "/signUp" && location.pathname !== "/signIn" && location.pathname !== "/test";
   return (
-    <div>
+    <div style={{boxSizing:'border-box'}}>
       {shownavbar && <Navbar />}
       <Routes>
         <Route path="/" element={<Home />} />
@@ -23,8 +23,8 @@ function App() {
         <Route path="/helpandfeedback" element={<FeedBack />} />
         <Route path="/tests" element={<MockTestPage />}/>
         <Route path="/instructionpage" element={<InstructionPage />} />
-        <Route path="/login" element={<SignIn />} />
-        <Route path="/signup" element={<SignUp />} />
+        <Route path="/signin" element={<SignIn />} />
+        <Route path="/signUp" element={<SignUp />} />
         <Route path="/test" element={<Test />} />
         <Route path="/profile" element={<Profile />} />
       </Routes>

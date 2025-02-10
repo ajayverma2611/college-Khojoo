@@ -1,12 +1,11 @@
 import HelpAndFeedBack from "../Components/HelpAndFeedBack"
 import FAQ from "../Components/FAQ"
-import Material from "../Components/Materials"
+
 const FeedBack = () => {
   return (
     <div>
       <HelpAndFeedBack/>
-      <FAQ />
-      
+      <FAQ /> 
     </div>
   )
 }

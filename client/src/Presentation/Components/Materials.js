@@ -1,17 +1,33 @@
 import React, { useRef } from "react";
 import "../Styles/Materials.css";
+import mathsbookclass11 from "../Assests/materials-books/ncert-books/Mathematics-class11.jpg"
+import physics_part1_class11 from "../Assests/materials-books/ncert-books/physics_part1_class11.jpg"
+import physics_part2_class11 from "../Assests/materials-books/ncert-books/physics_part2_class11.jpg"
+import chemistry_part1_class11 from "../Assests/materials-books/ncert-books/chemistry_part1_class11.jpg"
+import chemistry_part2_class11 from "../Assests/materials-books/ncert-books/chemistry_part2_class11.jpg"
+import maths_vol1_class12 from "../Assests/materials-books/ncert-books/maths_vol1_class12.jpg"
+import maths_vol2_class12 from "../Assests/materials-books/ncert-books/maths_vol2_class12.jpg"
+import physics_part1_class12 from "../Assests/materials-books/ncert-books/physics_part1_class12.jpg"
+import physics_part2_class12 from "../Assests/materials-books/ncert-books/physics_part2_class12.jpg"
+import chemistry_part1_class12 from "../Assests/materials-books/ncert-books/chemistry_part1_class12.jpg"
+import chemistry_part2_class12 from "../Assests/materials-books/ncert-books/chemistry_part2_class12.jpg"
 
 const booksData = [
   {
-    category: "Ncert Text Books",
+    category: "NCERT Text Books",
     books: [
-      { id: 1, title: "NCERT Solutions", image: "ncert_solution.jpg" },
-      { id: 2, title: "Class 12th Maths vol 1", image: "maths_vol1.jpg" },
-      { id: 3, title: "Class 12th Maths vol 1", image: "maths_vol1.jpg" },
-      { id: 4, title: "Class 12th Maths vol 1", image: "maths_vol1.jpg" },
-      { id: 5, title: "Class 12th Maths vol 1", image: "maths_vol1.jpg" },
-      { id: 6, title: "Class 12th Maths vol 1", image: "maths_vol1.jpg" },
-    ],
+      { id: 1, title: "Class 11th Mathematics", image: mathsbookclass11 },
+      { id: 2, title: "Class 11th Physics Part 1", image: physics_part1_class11 },
+      { id: 3, title: "Class 11th Physics Part 2", image: physics_part2_class11 },
+      { id: 4, title: "Class 11th Chemistry Part 1", image: chemistry_part1_class11},
+      { id: 5, title: "Class 11th Chemistry Part 2", image: chemistry_part2_class11 },
+      { id: 6, title: "Class 12th Mathematics Vol 1", image: maths_vol1_class12 },
+      { id: 7, title: "Class 12th Mathematics Vol 2", image: maths_vol2_class12 },
+      { id: 8, title: "Class 12th Physics Part 1", image: physics_part1_class12 },
+      { id: 9, title: "Class 12th Physics Part 2", image: physics_part2_class12 },
+      { id: 10, title: "Class 12th Chemistry Part 1", image: chemistry_part1_class12 },
+      { id: 11, title: "Class 12th Chemistry Part 2", image: chemistry_part2_class12 }
+    ]
   },
   {
     category: "Hand Books",
