@@ -14,8 +14,8 @@ const Footer = () =>{
                         <h2 className="footer-links">Himagiri Nandan</h2>
                         <h2 className="footer-links">Ajay Verma</h2>
                     </div>
-                    <div id="first-footer" className="logo">
-                        <h1>College Khojo</h1>
+                    <div className="logo" id="first-footer">
+                        <h1 >College Khojo</h1>
                     </div>
                 </div>
                 <div className="footer-left">

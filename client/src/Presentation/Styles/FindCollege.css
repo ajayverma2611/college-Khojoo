@@ -31,6 +31,7 @@
     display:flex;
     position: relative;
     flex-direction: column;
+    align-items: center;
     gap:30px;
     padding:50px;
     width:100%;
@@ -41,9 +42,9 @@
     background-color: white;
     border-radius: 12px;
     display:flex;
-    
     flex-direction: column;
-    padding:30px 30px;
+    padding:20px 20px;
+    width: 70%;
     box-shadow: 0 0 10px rgba(0,0,0,0.2);
 }
 
@@ -55,13 +56,13 @@
 
 
 .college-course{
-    font-size: 20px;
+    font-size: 18px;
     font-family:"Inter", sans-serif;
     color:#555555;
 }
 
 .college-name{
-    font-size: 16px;
+    font-size: 15px;
     font-family:"Inter", sans-serif;
     color:#282828;
     font-weight: 300;
@@ -80,5 +81,8 @@
     }
     .college-cont{
         padding:20px;
+    }
+    .college{
+        width: 95%;
     }
 }
