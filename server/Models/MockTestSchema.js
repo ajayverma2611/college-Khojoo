@@ -1,11 +1,6 @@
 const mongoose = require('mongoose');
 
 const questionScehma = new mongoose.Schema({
-  testId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'MockTest',
-    required: true
-  },
   question:{
     type: String,
     required: true
@@ -53,6 +48,7 @@ const questionScehma = new mongoose.Schema({
 });
 
 const sectionSchema = new mongoose.Schema({
+  
   name: {type : String, values: ['Physics', 'Chemistry', 'Maths'], required: true},
   questions: [questionScehma]
 });
@@ -77,5 +73,6 @@ const mocktestSchema = new mongoose.Schema({
   }
 });
 
-module.exports = mongoose.model('sections', sectionSchema);
-module.exports = mongoose.model('MockTest', mocktestSchema);
+
+export {mocktestSchema};
+module.exports = mongoose.model('MockTest',mocktestSchema);
