@@ -45,6 +45,7 @@ const questionScehma = new mongoose.Schema({
     type: Date,
     default: Date.now
   }
+
 });
 
 const sectionSchema = new mongoose.Schema({
@@ -70,6 +71,10 @@ const mocktestSchema = new mongoose.Schema({
   createdAt: {
     type: Date,
     default: Date.now
+  },
+  timer : {
+    type: Number,
+    required: true
   }
 });
 
