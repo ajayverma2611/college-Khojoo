@@ -1,6 +1,6 @@
 const express = require("express");
 const app = express();
-const connectToDatabase = require( "./db/connect");
+const connectToDatabase = require( "./config/connect");
 const user = require("./routers/user");
 const mocktest = require("./routers/mocktest");
 
