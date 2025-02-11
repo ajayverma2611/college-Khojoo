@@ -1,4 +1,4 @@
-import { mocktestSchema, mocktestSchema } from "../models/MockTestSchema";
+import { mocktestSchema, mocktestSchema } from "../Models/MockTestSchema";
 
 async function mockTestData(req,res){
     const {id} = req.body;

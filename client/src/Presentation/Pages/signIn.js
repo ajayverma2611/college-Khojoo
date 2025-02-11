@@ -41,7 +41,7 @@ export default function SignIn() {
 
                     <button type="submit" className="sign-in-btn">Sign in</button>
 
-                    <p className="signup-link">Don't have an account? <a href="#">Sign up</a></p>
+                    <p className="signup-link">Don't have an account? <a href="/signup">Sign up</a></p>
                 </form>
             </div>
 
