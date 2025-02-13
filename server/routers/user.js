@@ -5,11 +5,12 @@ const updatedprofile = require("../controller/updatedprofile");
 const User = require("../models/userschema");
 const bcrypt = require("bcrypt");
 const session = require("express-session");
-
+require("dotenv").config();
+const isAuthenticated = require("../middleware/auth");
 // Existing Routes (Kept Unchanged)
-router.post("/profile", profile);
-router.post("/updateprofile", updatedprofile);
-router.post("/feedbacks", feedback);
+router.post("/profile", isAuthenticated, profile);
+router.post("/updateprofile", isAuthenticated, updatedprofile);
+router.post("/feedbacks", isAuthenticated, feedback);
 //  Signup Route
 router.post("/signup", async (req, res) => {
   try {

@@ -50,7 +50,7 @@ const Navbar = () => {
                 </div>
                 <div className="nav-link">
                     <img src={materials} alt="Materials" />
-                    <Link to="/#">Materials</Link>
+                    <Link to="/materials">Materials</Link>
                 </div>
                 <div className="nav-link">
                     <Link to="/helpandfeedback">? Help</Link>

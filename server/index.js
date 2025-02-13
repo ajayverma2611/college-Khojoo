@@ -6,7 +6,7 @@ const cors = require("cors");
 const connectToDatabase = require("./config/connect");
 const userRoutes = require("./routers/user");
 const mocktestRoutes = require("./routers/mocktest");
-
+require("dotenv").config();
 const app = express();
 
 // Middleware
@@ -23,7 +23,7 @@ app.use(
     resave: false,
     saveUninitialized: false,
     store: MongoStore.create({
-      mongoUrl: "mongodb+srv://samplesudharsan4:aLIqH9LLjXOwC25F@cluster0.ptyub.mongodb.net/college-khojo", // Explicit DB name added
+      mongoUrl: process.env.MONGO_URL, // Explicit DB name added
       collectionName: "sessions",
     }),
     cookie: {
@@ -39,8 +39,6 @@ app.use(
 app.use("/auth", userRoutes);
 app.use("/mocktest", mocktestRoutes);
 
-
-
 connectToDatabase().then(
 // Start Server after Database Connection
 async () => {
@@ -54,6 +52,3 @@ async () => {
     console.error("Failed to start server:", error);
   }
 });
-
-
-
