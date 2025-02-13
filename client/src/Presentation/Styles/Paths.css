@@ -66,7 +66,7 @@
 
 @media screen and (max-width:550px) {
     .heading{
-        padding-left:20px;
+        /* padding-left:20px; */
         margin-left:0px;
     }
     .path{
@@ -74,6 +74,6 @@
         height: 100%;
     }
     .paths{
-        padding:20px;
+        padding:30px;
     }
 }

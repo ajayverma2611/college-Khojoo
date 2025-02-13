@@ -10,10 +10,11 @@ import SignUp from './Presentation/Pages/signUp';
 import Test from './Presentation/Pages/Test';
 import Profile from './Presentation/Pages/Profile';
 import FeedbackModal from './Presentation/Components/feedbackModal';
+import Materials from './Presentation/Components/Materials';
 
 function App() {
   const location = useLocation();
-  const shownavbar = location.pathname !== "/signUp" && location.pathname !== "/signIn" && location.pathname !== "/test";
+  const shownavbar = location.pathname !== "/signup" && location.pathname !== "/signin" && location.pathname !== "/test";
   return (
     <div style={{boxSizing:'border-box'}}>
       {shownavbar && <Navbar />}
@@ -24,9 +25,10 @@ function App() {
         <Route path="/tests" element={<MockTestPage />}/>
         <Route path="/instructionpage" element={<InstructionPage />} />
         <Route path="/signin" element={<SignIn />} />
-        <Route path="/signUp" element={<SignUp />} />
+        <Route path="/signup" element={<SignUp />} />
         <Route path="/test" element={<Test />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/materials" element={<Materials />} />
       </Routes>
     </div>
   );
