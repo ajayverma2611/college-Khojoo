@@ -1,7 +1,8 @@
-import User from '../models/user.js';
+const User = require('../models/userschema.js');
 
 
 async function userprofile(req,res){
+    //localhost:8000/user/profile 
     const {id} = req.body;
     console.log(id);
 

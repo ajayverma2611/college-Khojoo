@@ -1,4 +1,4 @@
-import { mocktestSchema, mocktestSchema } from "../Models/MockTestSchema";
+const MockTestSchema = require("../models/MockTestSchema");
 
 async function mockTestData(req,res){
     const {id} = req.body;
@@ -13,5 +13,5 @@ async function mockTestData(req,res){
     res.status(200).json({error:false,data:test});
 };
 
-module.exports = updatedprofile;
+module.exports = mockTestData;
 

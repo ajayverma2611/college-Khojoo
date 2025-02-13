@@ -1,5 +1,5 @@
 const router = require('express').Router();
-import { mocktest } from "../controller/mocktestdata";
+const mocktest =  require("../controller/mocktestdata");
 
 
 
