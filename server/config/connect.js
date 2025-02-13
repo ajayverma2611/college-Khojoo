@@ -6,10 +6,7 @@ const uri = "mongodb+srv://samplesudharsan4:aLIqH9LLjXOwC25F@cluster0.ptyub.mong
 async function connectToDatabase() {
   try {
     // Connecting to MongoDB using Mongoose
-    await mongoose.connect(uri, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
+    await mongoose.connect(uri);
     console.log("Connected to MongoDB successfully using Mongoose!");
 
     // You can now perform database operations, e.g., querying, inserting, etc.

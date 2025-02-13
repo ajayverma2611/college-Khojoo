@@ -1,7 +1,13 @@
 import "../Styles/AvailableMocktests.css";
 import { tests } from "../../Application/Services";
-import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import {startTime, resetTime} from "../../Application/StateManagement/slices/TimerSlice";
 const AvailableMocktests = () => {
+  const dispatch = useDispatch();
+  const startTest = () => {
+    dispatch(startTime());
+    dispatch(resetTime());
+  }
   return (
     <div className="mocktestmaincontainer">
       <h1 className="mocktestHeading">Available Mocktests</h1>
@@ -17,7 +23,7 @@ const AvailableMocktests = () => {
                       <p id="test-tag" className="tag">3 hours</p>
                       <p id="test-tag" className="tag">300 Marks</p>
                       <p id="test-tag2" className="startbtn">
-                        <a href = "/instructionpage" style={{color: "white", textDecoration: "none"}}>Start Test</a>
+                        <a href = "/instructionpage" style={{color: "white", textDecoration: "none"}} onClick={startTest}>Start Test</a>
                       </p>
                     </div>
                   </div>

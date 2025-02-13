@@ -9,8 +9,11 @@ import SignIn from './Presentation/Pages/signIn';
 import SignUp from './Presentation/Pages/signUp';
 import Test from './Presentation/Pages/Test';
 import Profile from './Presentation/Pages/Profile';
-import FeedbackModal from './Presentation/Components/feedbackModal';
 import Materials from './Presentation/Components/Materials';
+import {Provider} from 'react-redux';
+import store from './Application/StateManagement/store';
+import {persistor} from './Application/StateManagement/store';
+import {PersistGate} from 'redux-persist/integration/react';
 
 function App() {
   const location = useLocation();
@@ -35,9 +38,13 @@ function App() {
 }
 function AppWrapper(){
   return(
-    <BrowserRouter>
-      <App/>
-    </BrowserRouter>
+    <Provider store = {store}>
+      <PersistGate loading={null} persistor={persistor}>
+        <BrowserRouter>
+          <App/>
+        </BrowserRouter>
+      </PersistGate>
+    </Provider>
   )
 }
 
