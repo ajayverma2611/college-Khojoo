@@ -1,6 +1,6 @@
-import User from '../models/user';
+const User  = require('../models/userschema');
 
-async function updatedprofile(req,res){
+async function updateProf(req,res){
     const {id,name,location} = req.body;
     console.log(id);
 
@@ -20,5 +20,5 @@ async function updatedprofile(req,res){
     res.status(200).json({error:false,message:"User updated successfully"});
 };
 
-module.exports = updatedprofile;
+module.exports = updateProf;
 

@@ -8,8 +8,8 @@ const mocktest = require("./routers/mocktest");
 app.use(express.json());
 
 
-app.post("/user",user);
-app.post("/mocktest",mocktest);
+app.use("/user",user);
+app.use("/mocktest",mocktest);
 
 
 connectToDatabase().then(
