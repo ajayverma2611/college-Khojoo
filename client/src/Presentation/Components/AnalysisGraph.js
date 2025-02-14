@@ -4,6 +4,7 @@ import {useSelector} from "react-redux";
 
 // Custom Tooltip
 const CustomTooltip = ({ active, payload }) => {
+
   if (active && payload && payload.length) {
     return (
       <div style={{
@@ -24,14 +25,34 @@ const CustomTooltip = ({ active, payload }) => {
 
 
 const PerformanceChart = () => {
-  const testData = useSelector(state => state.mocktest.data);
-  const mockTestData = testData.map((d, i) => ({ test: d.title, scoredMarks: d.scoredMarks }));
+  const id_data = useSelector((state) => state.user.data._id);
+
+  const [data, setdata] = useState([]);
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const response = await axios.post("http://localhost:8000/mock/attemptedmocktests",
+            {id : id_data}
+        );
+        const data = await response.data;
+        console.log(data);
+        if(data.error!=true){
+            setdata(data); // Make sure to access 'data' key in the response
+        }
+    } catch (error) {
+        console.error("Error fetching mock tests:", error);
+      }
+    }
+    fetchData();
+  }, []);
+
   return (
     <div style={{ width: "90%", margin: "auto", textAlign: "center", padding: "20px", background: "#fff", borderRadius: "12px", boxShadow: "0px 4px 20px rgba(0,0,0,0.1)" }}>
       <h2 style={{ color: "#333", marginBottom: "20px" }}>Mock Test Performance</h2>
 
       <ResponsiveContainer width="100%" height={400}>
-        <LineChart data={mockTestData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
+        <LineChart data={data} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
           <XAxis 
             dataKey="test" 
             tickCount={mockTestData.length} 
@@ -50,7 +71,7 @@ const PerformanceChart = () => {
           {/* Single Line with dynamic stroke */}
           <Line
             type="monotone"
-            dataKey="score"
+            dataKey="scoredMarks"
             strokeWidth={3}
             stroke="#00C49F"
             dot={{ r: 6, strokeWidth: 2, stroke: "#fff" }}
@@ -73,7 +94,7 @@ const PerformanceChart = () => {
       }}>
         <h4 style={{ color: "#00C49F", marginBottom: "10px" }}>Analysis</h4>
         <p><strong>Attempted:</strong> {mockTestData.length}</p>
-        <p><strong>Max Score:</strong> {Math.max(...mockTestData.map(d => d.score))}</p>
+        <p><strong>Max scoredMarks:</strong> {Math.max(...mockTestData.map(d => d.score))}</p>
       </div> */}
     </div>
   );

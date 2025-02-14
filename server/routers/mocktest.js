@@ -4,12 +4,13 @@ const mocktests = require("../controller/mocktests");
 const isAuthenticated = require("../middleware/auth");
 const addMockToUser = require("../controller/AttemptingMocks");
 const addAttemptedMockToUser = require("../controller/AttemptedMocks");
+const attempted = require('../controller/attempted');
 
 
 router.post("/mocktests", mocktests);
 router.post("/mocktestdata", mocktestdata);
 router.post("/addMocktoUser", addMockToUser);
 router.post("/addAttemptedMocktoUser", addAttemptedMockToUser);
-
+router.post("/attemptedmocks", attempted);
 
 module.exports = router;
