@@ -4,7 +4,16 @@ const mongoose = require('mongoose');
 const questionSchema = new mongoose.Schema({
   question: { type: String, required: true },
   question_image: { type: String, default: '' },
-  options: { type: [String], required: true },  // Assuming options are an array of strings
+  options: {
+    a: { type: String, required: false },
+    a_image_link: { type: String, required: false },
+    b: { type: String, required: false },
+    b_image_link: { type: String, required: false },
+    c: { type: String, required: false },
+    c_image_link: { type: String, required: false },
+    d: { type: String, required: false },
+    d_image_link: { type: String, required: false }
+  },  // Assuming options are an array of strings
   correctOption: { type: String, required: true },  // Assuming a single correct option is a string
   selectedOption: { type: String, default: '' },  // Default empty selected option
   explanation: { type: String, default: '' },

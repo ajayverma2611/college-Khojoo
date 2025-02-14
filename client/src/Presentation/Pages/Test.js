@@ -2,16 +2,23 @@ import { useState, useEffect } from "react"
 import "../Styles/Test.css"
 import { useDispatch, useSelector } from "react-redux";
 import { decrementTime, autoSubmit, submitTest } from "../../Application/StateManagement/slices/TimerSlice";
-
+import { selectOption, clearOption, setQuestionindex, setSubindex } from "../../Application/StateManagement/slices/MocktestSlice";
+import { useNavigate } from "react-router-dom";
 const Test = () => {
-  const [subject, setSubject] = useState("Maths");
-  const [option, setOption] = useState(0);
+  const [subject, setSubject] = useState("Physics");
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [data, setData] = useState(useSelector((state) => state.mocktest.data));
+  const [subIndex, setSubIndex] = useState(useSelector(state => state.mocktest.subjectIndex)); // subject index
+  const [questionIndex, setQuestionIndex] = useState(useSelector(state => state.mocktest.questionIndex)); // question index
+  const [ghost, setGhost] = useState(false);
+  const [selectedoption, setSelectedoption] = useState("");
 
   const dispatch = useDispatch();
   const time = useSelector((state) => state.timer.time);
   const isRunning = useSelector((state) => state.timer.isRunning);
   const testSubmitted = useSelector((state) => state.timer.testSubmitted);
+
+  const navigate = useNavigate();
 
   const formatTime = (seconds) => { // gives format as HH:MM:SS
     const hrs = Math.floor(seconds / 3600);
@@ -35,13 +42,17 @@ const Test = () => {
     setSidebarOpen(!sidebarOpen);
   };
 
-  // useEffect(() => {
-  //   async function fetchData() {
-  //     const response = await axios.post("http://localhost:8000/mock/mocktestdata",{
-  //       id: 
-  //     })
-  //   }
-  // }, []);
+  useEffect(() => {
+    const handleBeforeUnload = (event) => {
+      const message = "Are you sure you want to leave?";
+      event.returnValue = message;
+      return message;
+    };
+    window.addEventListener("beforeunload", handleBeforeUnload);
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+  };
+  }, []);
 
   return (
     <div className="testPage">
@@ -51,13 +62,22 @@ const Test = () => {
       <div className={`test-sidebar2 ${sidebarOpen ? " test-open" : ""}`}>
         <h2 className="selected-subject">{subject}</h2>
         <div className={`test-sidebar ${sidebarOpen ? "test-sidebartoopen" : ""}`}>
-          {
-            [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25].map((i) => {
-              return(
-                <button className="herobutton" id="test-nav-btn1" key={i}>{i}</button>
-              )
-            })
-          }
+          {[...Array(25)].map((_, index) => {
+            const isAnswered = data.sections[subIndex].questions[index].selectedOption !== "";
+            const isActive = questionIndex === index; // Check if this button represents the currently selected question
+
+            return (
+              <button
+                className={`herobutton ${isAnswered ? " answered-btn2" : "not-hero-btn"} ${isActive ? "active-btn2" : ""}`}
+                id="test-nav-btn1"
+                key={index}
+                onClick={() => {dispatch(setQuestionindex({questionIndex: index})); window.location.reload()}}
+              >
+                {index + 1}
+              </button>
+            );
+          })}
+
         </div>
       </div>
       <div className = "tag" id="time-tag">
@@ -68,9 +88,9 @@ const Test = () => {
           <h1>Mock Test</h1>
         </div>
         <div className="test-header2">
-          <button className={"herobutton" + (subject !== "Maths" ? " test-disabled" : "")} id="test-nav-btn" onClick={(e) => {setSubject("Maths")}}>Maths</button>
-          <button className={"herobutton" + (subject !== "Physics" ? " test-disabled" : "")} id="test-nav-btn" onClick={(e) => {setSubject("Physics")}}>Physics</button>
-          <button className={"herobutton" + (subject !== "Chemistry" ? " test-disabled" : "")} id="test-nav-btn" onClick={(e) => {setSubject("Chemistry")}}>Chemistry</button>
+          <button className={"herobutton" + (subIndex !== 2 ? " test-disabled" : "")} id="test-nav-btn" onClick={(e) => {setSubject("Maths"); dispatch(setSubindex({subIndex: 2})); dispatch(setQuestionindex({questionIndex: 0})); window.location.reload()}}>Maths</button>
+          <button className={"herobutton" + (subIndex !== 0 ? " test-disabled" : "")} id="test-nav-btn" onClick={(e) => {setSubject("Physics"); dispatch(setSubindex({subIndex:0})); dispatch(setQuestionindex({questionIndex:0})); window.location.reload()}}>Physics</button>
+          <button className={"herobutton" + (subIndex !== 1 ? " test-disabled" : "")} id="test-nav-btn" onClick={(e) => {setSubject("Chemistry"); dispatch(setSubindex({subIndex:1})); dispatch(setQuestionindex({questionIndex:0})); window.location.reload()}}>Chemistry</button>
         </div>
         {
           testSubmitted ? (
@@ -85,33 +105,38 @@ const Test = () => {
             ) :
             (
               <div className="test-body">
-              <h1>Question 1.</h1>
-              <h2>What is the capital of India?</h2>
+              <h1>Question {questionIndex+1}.</h1>
+              <h2>{data.sections[subIndex].questions[questionIndex].question}</h2>
+              {data.sections[subIndex].questions[questionIndex].question_image !== "" && <img src={data.sections[subIndex].questions[questionIndex].question_image} className="test-question-image"/>}
               <div className="test-options">
-                <div className={"test-option" + (option === 1 ? " test-opt-enabled" : "")} onClick={(e) => {setOption(1)}}>
+                <div className={"test-option" + (ghost === true ? (selectedoption === "a" ? " test-opt-enabled" : "") : ("a" === data.sections[subIndex].questions[questionIndex].selectedOption ? " test-opt-enabled" : ""))} onClick={(e) => {dispatch(selectOption({subIndex, questionIndex, option: "a"})); setGhost(true); setSelectedoption("a")}}>
                   <p>A</p>
-                  <p>New Delhi</p>
+                  <p>{data.sections[subIndex].questions[questionIndex].options.a}</p>
+                  {data.sections[subIndex].questions[questionIndex].options.a_image_link !== "" && <img src={data.sections[subIndex].questions[questionIndex].options.a_image_link}/>}
                 </div>
-                <div className={"test-option" + (option === 2 ? " test-opt-enabled" : "")} onClick={(e) => {setOption(2)}}>
+                <div className={"test-option" + (ghost === true ? (selectedoption === "b" ? " test-opt-enabled" : "") : ("b" === data.sections[subIndex].questions[questionIndex].selectedOption ? " test-opt-enabled" : ""))} onClick={(e) => {dispatch(selectOption({subIndex, questionIndex, option: "b"})); setGhost(true); setSelectedoption("b")}}>
                   <p>B</p>
-                  <p>Hyderabad</p>
+                  <p>{data.sections[subIndex].questions[questionIndex].options.b}</p>
+                  {data.sections[subIndex].questions[questionIndex].options.b_image_link !== "" && <img src={data.sections[subIndex].questions[questionIndex].options.b_image_link}/>}
                 </div>
-                <div className={"test-option" + (option === 3 ? " test-opt-enabled" : "")} onClick={(e) => {setOption(3)}}>
+                <div className={"test-option" + (ghost === true ? (selectedoption === "c" ? " test-opt-enabled" : "") : ("c" === data.sections[subIndex].questions[questionIndex].selectedOption ? " test-opt-enabled" : ""))} onClick={(e) => {dispatch(selectOption({subIndex, questionIndex, option: "c"})); setGhost(true); setSelectedoption("c")}}>
                   <p>C</p>
-                  <p>Bangalore</p>
+                  <p>{data.sections[subIndex].questions[questionIndex].options.c}</p>
+                  {data.sections[subIndex].questions[questionIndex].options.c_image_link !== "" && <img src={data.sections[subIndex].questions[questionIndex].options.c_image_link}/>}
                 </div>
-                <div className={"test-option" + (option === 4 ? " test-opt-enabled" : "")} onClick={(e) => {setOption(4)}}>
+                <div className={"test-option" + (ghost === true ? (selectedoption === "d" ? " test-opt-enabled" : "") : ("d" === data.sections[subIndex].questions[questionIndex].selectedOption ? " test-opt-enabled" : ""))} onClick={(e) => {dispatch(selectOption({subIndex, questionIndex, option: "d"})); setGhost(true); setSelectedoption("d")}}>
                   <p>D</p>
-                  <p>Chennai</p>
+                  <p>{data.sections[subIndex].questions[questionIndex].options.d}</p>
+                  {data.sections[subIndex].questions[questionIndex].options.d_image_link !== "" && <img src={data.sections[subIndex].questions[questionIndex].options.d_image_link}/>}
                 </div>
               </div>
               <div className="test-header" id="test-buttons">
-                <button className="herobutton" id="test-nav-btn" onClick={(e) => {setOption(0)}}>Clear</button>
+                <button className="herobutton" id="test-nav-btn" onClick={(e) => {dispatch(clearOption({subIndex, questionIndex})); setSelectedoption("")}}>Clear</button>
                 <button className="herobutton" id="test-nav-btn">Previous</button>
                 <button className="herobutton" id="test-nav-btn">Next</button>
               </div>
               <div className="submit-container">
-              <button className="herobutton" id="submit-nav-btn" onClick={() => dispatch(submitTest())}>Submit</button>
+              <button className="herobutton" id="submit-nav-btn" onClick={() => {dispatch(submitTest()); navigate("/tests")}}>Submit</button>
               </div>
             </div>
             )

@@ -1,11 +1,24 @@
 import { Link } from "react-router-dom"
 import "../Styles/InstructionPage.css"
-import { useSelector } from "react-redux"
+import { useSelector, useDispatch } from "react-redux"
 import { useEffect } from "react";
-
+import { setMockTestData } from "../../Application/StateManagement/slices/MocktestSlice";
+import axios from "axios";
 const InstructionPage = () => {
   const id = useSelector((state) => state.timer.id);
-  
+  const dispatch = useDispatch();
+  useEffect(() => {
+    async function fetchData(){
+      const response = await axios.post(`http://localhost:8000/mock/mocktestdata`, {id});
+      const data = response.data;
+      console.log(data);
+      if(!data){
+        console.log("Not found");
+      }
+      dispatch(setMockTestData(data));
+    }
+    fetchData();
+  }, []);
 
   return (
     <div className="InstructionPage">
