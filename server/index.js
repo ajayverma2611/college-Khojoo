@@ -5,6 +5,7 @@ const MongoStore = require("connect-mongo");
 const cors = require("cors");
 const connectToDatabase = require("./config/connect");
 const userRoutes = require("./routers/user");
+const bookRoutes = require("./routers/bookRoutes");
 const mocktestRoutes = require("./routers/mocktest");
 require("dotenv").config();
 const app = express();
@@ -38,6 +39,8 @@ app.use(
 // Routes
 app.use("/auth", userRoutes);
 app.use("/mock", mocktestRoutes);
+app.use("/material", bookRoutes);
+
 
 connectToDatabase().then(
 // Start Server after Database Connection

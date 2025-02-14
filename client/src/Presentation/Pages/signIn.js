@@ -1,15 +1,31 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import "../Styles/style.css";
 import signInImage from "../Assests/SignIn-signUp/sign_in_image.png";
 
 export default function SignIn() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [error, setError] = useState('');
+    const navigate = useNavigate();
 
-    function handleSubmit(event) {
+    async function handleSubmit(event) {
         event.preventDefault();
-        // Handle login logic here
+
+        try {
+            const response = await axios.post("http://localhost:8000/auth/login", {
+                email,
+                password
+            }, { withCredentials: true });
+
+            localStorage.setItem("user", JSON.stringify(response.data.user)); // Store user info
+            navigate("/home"); // Redirect after login
+        } catch (err) {
+            setError(err.response?.data?.message || "Invalid email or password");
+        }
     }
+
 
     return (
         <div className="container">
@@ -19,6 +35,8 @@ export default function SignIn() {
                 <div className="div-para">
                 <p className="subheading">create a free account</p>
                 </div>
+
+                {error && <p className="error">{error}</p>}
 
                 <form onSubmit={handleSubmit} className="sign-in-form">
                     <label>Email Address</label>

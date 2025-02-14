@@ -4,13 +4,16 @@ import home from '../Assests/navbar-icons/home.svg';
 import exam from '../Assests/navbar-icons/exams.svg';
 import materials from '../Assests/navbar-icons/materials.svg';
 import { useState, useRef, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import axios from "axios";
+
 
 const Navbar = () => {
     const [showDropdown, setShowDropdown] = useState(false);
     const [showSidebar, setShowSidebar] = useState(false);
     const dropdownRef = useRef(null);
     const sidebarRef = useRef(null);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const handleClickOutside = (event) => {
@@ -32,6 +35,17 @@ const Navbar = () => {
             document.removeEventListener('mousedown', handleClickOutside);
         };
     }, []);
+
+    const handleLogout = async () => {
+        try {
+            await axios.post("http://localhost:8000/auth/logout", {}, { withCredentials: true });
+            // Clear session from frontend
+            navigate("/signin"); 
+        } catch (error) {
+            console.error("Logout failed:", error);
+        }
+    };
+
 
     return (
         <nav>
@@ -95,7 +109,7 @@ const Navbar = () => {
                 />
                 <div className={"nav-dropdown" + (showDropdown ? " drop-active" : "")}>
                     <a href="/profile">Profile</a>
-                    <a href="/signin">Logout</a>
+                    <a onClick={handleLogout} href="/signin">Logout</a>
                 </div>
             </div>
         </nav>
