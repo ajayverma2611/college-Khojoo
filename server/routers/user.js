@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const profile = require("../controller/profile");
 const updatedprofile = require("../controller/updatedprofile");
-const User = require("../models/userschema");
+const User = require("../Models/userschema");
 const bcrypt = require("bcrypt");
 const session = require("express-session");
 
@@ -12,6 +12,7 @@ router.post("/updateprofile", updatedprofile);
 // ✅ Signup Route
 router.post("/signup", async (req, res) => {
   try {
+    console.log('hyy signup');
     const { name, location, email, password } = req.body;
 
     // Check if user already exists
@@ -29,11 +30,14 @@ router.post("/signup", async (req, res) => {
   } catch (error) {
     res.status(500).json({ message: "Error registering user", error });
   }
+
+  
 });
 
 // ✅ Login Route
-router.post("/login", async (req, res) => {
+router.post("/signin", async (req, res) => {
   try {
+    console.log('hyyy done');
     const { email, password } = req.body;
 
     // Check if user exists
