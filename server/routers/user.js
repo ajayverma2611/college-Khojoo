@@ -1,15 +1,18 @@
-const router = require("express").Router();
+const router = require('express').Router();
+const feedback = require('../controller/feedback');
 const profile = require("../controller/profile");
 const updatedprofile = require("../controller/updatedprofile");
-const User = require("../Models/userschema");
+const User = require("../models/userschema");
 const bcrypt = require("bcrypt");
 const session = require("express-session");
-
+require("dotenv").config();
+const isAuthenticated = require("../middleware/auth");
 // Existing Routes (Kept Unchanged)
-router.post("/profile", profile);
-router.post("/updateprofile", updatedprofile);
+router.post("/profile", isAuthenticated, profile);
+router.post("/updateprofile", isAuthenticated, updatedprofile);
+router.post("/feedbacks", isAuthenticated, feedback);
 
-// ✅ Signup Route
+//  Signup Route
 router.post("/signup", async (req, res) => {
   try {
     console.log('hyy signup');
@@ -35,7 +38,7 @@ router.post("/signup", async (req, res) => {
 });
 
 // ✅ Login Route
-router.post("/signin", async (req, res) => {
+router.post("/login", async (req, res) => {
   try {
     console.log('hyyy done');
     const { email, password } = req.body;
@@ -61,6 +64,7 @@ router.post("/logout", (req, res) => {
   req.session.destroy((err) => {
     if (err) return res.status(500).json({ message: "Error logging out" });
     res.clearCookie("connect.sid"); // Clear session cookie
+    console.log('hyy logout');
     res.status(200).json({ message: "Logout successful" });
   });
 });

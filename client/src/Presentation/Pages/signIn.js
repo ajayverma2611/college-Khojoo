@@ -14,7 +14,7 @@ export default function SignIn() {
         event.preventDefault();
 
         try {
-            const response = await axios.post("http://localhost:8000/auth/signin", {
+            const response = await axios.post("http://localhost:8000/auth/login", {
                 email,
                 password
             }, { withCredentials: true });

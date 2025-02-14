@@ -137,6 +137,30 @@
   justify-content: flex-end;
 }
 
+.submit-container{
+  display: flex;
+  justify-content: flex-end;
+}
+#submit-nav-btn{
+  border-radius: 7px;
+  width: fit-content;
+  background-color: rgb(184, 69, 69);
+}
+
+#test-submitted{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 70vh;
+  width: 100%;
+}
+
+#test-submitted h2{
+  font-size: 40px;
+  font-weight: 500;
+  color: #05B97D
+}
+
 @media (max-width: 768px) {
   #time-tag{
     right: 20px;

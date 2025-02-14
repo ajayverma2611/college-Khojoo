@@ -4,7 +4,8 @@ import home from '../Assests/navbar-icons/home.svg';
 import exam from '../Assests/navbar-icons/exams.svg';
 import materials from '../Assests/navbar-icons/materials.svg';
 import { useState, useRef, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import axios from "axios";
 
 
 const Navbar = () => {
@@ -12,6 +13,7 @@ const Navbar = () => {
     const [showSidebar, setShowSidebar] = useState(false);
     const dropdownRef = useRef(null);
     const sidebarRef = useRef(null);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const handleClickOutside = (event) => {
@@ -34,6 +36,16 @@ const Navbar = () => {
         };
     }, []);
 
+    const handleLogout = async () => {
+        try {
+            await axios.post("http://localhost:8000/auth/logout", {}, { withCredentials: true });
+            // Clear session from frontend
+            navigate("/signin"); 
+        } catch (error) {
+            console.error("Logout failed:", error);
+        }
+    };
+
 
     return (
         <nav>
@@ -52,7 +64,7 @@ const Navbar = () => {
                 </div>
                 <div className="nav-link">
                     <img src={materials} alt="Materials" />
-                    <Link to="/#">Materials</Link>
+                    <Link to="/materials">Materials</Link>
                 </div>
                 <div className="nav-link">
                     <Link to="/helpandfeedback">? Help</Link>
@@ -97,7 +109,7 @@ const Navbar = () => {
                 />
                 <div className={"nav-dropdown" + (showDropdown ? " drop-active" : "")}>
                     <a href="/profile">Profile</a>
-                    <a href="/signin">Logout</a>
+                    <a onClick={handleLogout} href="/signin">Logout</a>
                 </div>
             </div>
         </nav>
