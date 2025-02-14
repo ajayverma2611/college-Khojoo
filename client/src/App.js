@@ -14,6 +14,7 @@ import {Provider} from 'react-redux';
 import store from './Application/StateManagement/store';
 import {persistor} from './Application/StateManagement/store';
 import {PersistGate} from 'redux-persist/integration/react';
+import ExamExplanation from './Presentation/Pages/ExamExplanation';
 
 function App() {
   const location = useLocation();
@@ -32,6 +33,7 @@ function App() {
         <Route path="/test" element={<Test />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/materials" element={<Materials />} />
+        <Route path="/exam/:id" element={<ExamExplanation/>} />
       </Routes>
     </div>
   );

@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const questionSchema = new mongoose.Schema({
   question: {
     type: String,
-    required: true
+    required: false
   },
   question_image: {
     type: String,  // giving url for this question image...
@@ -21,29 +21,22 @@ const questionSchema = new mongoose.Schema({
     d_image_link: { type: String, required: false }
   },
   correctOption: {
-    type: String,
-    enum: ['a', 'b', 'c', 'd'],  // Correct option should be one of these values
-    required: true
+    type: String,  // Correct option should be one of these values
+    required: false
   },
   selectedOption: {
-    type: String,
-    enum: ['a', 'b', 'c', 'd', ''],  // Allow an empty string for unselected options
+    type: String,  // Allow an empty string for unselected options
     required: false
   },
   explanation: { type: String, required: false },
   explanation_image: { type: String, required: false },
-  createdAt: {
-    type: Date,
-    default: Date.now
-  }
 });
 
 // Section Schema
 const sectionSchema = new mongoose.Schema({
   name: {
-    type: String,
-    enum: ['Physics', 'Chemistry', 'Maths'], // Limit the values to these 3
-    required: true
+    type: String, // Limit the values to these 3
+    required: false
   },
   questions: [questionSchema] // Array of question objects
 });
@@ -52,26 +45,23 @@ const sectionSchema = new mongoose.Schema({
 const mocktestSchema = new mongoose.Schema({
   title: {
     type: String,
-    required: true
+    required: false
   },
   totalMarks: {
     type: Number,
-    required: true
+    required: false
   },
   scoredMarks: {
     type: Number,
-    required: true
+    required: false
   },
   sections: [sectionSchema], // Array of section objects
-  createdAt: {
-    type: Date,
-    default: Date.now
-  },
   timer: {
     type: Number,
-    required: true
+    required: false
   }
 });
 
 // Model export
 module.exports = mongoose.model('MockTest', mocktestSchema);  // Export the model
+
