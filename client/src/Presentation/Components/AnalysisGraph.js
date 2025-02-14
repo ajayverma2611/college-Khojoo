@@ -1,21 +1,26 @@
 import React from "react";
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, Legend } from "recharts";
+import { useSelector } from "react-redux";
+import { useEffect,useState } from "react";
+import axios from "axios";
+
 
 const mockTestData = [
-  { test: 1, score: 150 },
-  { test: 2, score: 200 },
-  { test: 3, score: 187 },
-  { test: 4, score: 220 },
-  { test: 5, score: 180 },
-  { test: 6, score: 250 },
-  { test: 7, score: 230 },
-  { test: 8, score: 275 },
-  { test: 9, score: 260 },
-  { test: 10, score: 300 },
+  { test: 1, scoredMarks: 150 },
+  { test: 2, scoredMarks: 200 },
+  { test: 3, scoredMarks: 187 },
+  { test: 4, scoredMarks: 220 },
+  { test: 5, scoredMarks: 180 },
+  { test: 6, scoredMarks: 250 },
+  { test: 7, scoredMarks: 230 },
+  { test: 8, scoredMarks: 275 },
+  { test: 9, scoredMarks: 260 },
+  { test: 10, scoredMarks: 300 },
 ];
 
 // Custom Tooltip
 const CustomTooltip = ({ active, payload }) => {
+
   if (active && payload && payload.length) {
     return (
       <div style={{
@@ -26,7 +31,7 @@ const CustomTooltip = ({ active, payload }) => {
         textAlign: "center"
       }}>
         <p style={{ fontWeight: "bold", margin: 0 }}>Test {payload[0].payload.test}</p>
-        <p style={{ color: "#333", margin: 0 }}>Score: {payload[0].value}</p>
+        <p style={{ color: "#333", margin: 0 }}>scoredMarks: {payload[0].value}</p>
       </div>
     );
   }
@@ -36,16 +41,38 @@ const CustomTooltip = ({ active, payload }) => {
 // Function to return a color based on previous data
 const getStrokeColor = (data, index) => {
   if (index === 0) return "#00C49F"; // First point, default to green
-  return data[index].score > data[index - 1].score ? "#00C49F" : "#FF4D4D";
+  return data[index].scoredMarks > data[index - 1].scoredMarks ? "#00C49F" : "#FF4D4D";
 };
 
 const PerformanceChart = () => {
+  const id_data = useSelector((state) => state.user.data._id);
+
+  const [data, setdata] = useState([]);
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const response = await axios.post("http://localhost:8000/mock/attemptedmocktests",
+            {id : id_data}
+        );
+        const data = await response.data;
+        console.log(data);
+        if(data.error!=true){
+            setdata(data); // Make sure to access 'data' key in the response
+        }
+    } catch (error) {
+        console.error("Error fetching mock tests:", error);
+      }
+    }
+    fetchData();
+  }, []);
+
   return (
     <div style={{ width: "90%", margin: "auto", textAlign: "center", padding: "20px", background: "#fff", borderRadius: "12px", boxShadow: "0px 4px 20px rgba(0,0,0,0.1)" }}>
       <h2 style={{ color: "#333", marginBottom: "20px" }}>Mock Test Performance</h2>
 
       <ResponsiveContainer width="100%" height={400}>
-        <LineChart data={mockTestData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
+        <LineChart data={data} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
           <XAxis 
             dataKey="test" 
             tickCount={mockTestData.length} 
@@ -64,7 +91,7 @@ const PerformanceChart = () => {
           {/* Single Line with dynamic stroke */}
           <Line
             type="monotone"
-            dataKey="score"
+            dataKey="scoredMarks"
             strokeWidth={3}
             stroke="#00C49F"
             dot={{ r: 6, strokeWidth: 2, stroke: "#fff" }}
@@ -87,7 +114,7 @@ const PerformanceChart = () => {
       }}>
         <h4 style={{ color: "#00C49F", marginBottom: "10px" }}>Analysis</h4>
         <p><strong>Attempted:</strong> {mockTestData.length}</p>
-        <p><strong>Max Score:</strong> {Math.max(...mockTestData.map(d => d.score))}</p>
+        <p><strong>Max scoredMarks:</strong> {Math.max(...mockTestData.map(d => d.score))}</p>
       </div> */}
     </div>
   );
