@@ -7,6 +7,7 @@ import axios from "axios";
 const InstructionPage = () => {
   const id = useSelector((state) => state.timer.id);
   const dispatch = useDispatch();
+  const testData = useSelector((state) => state.mocktest.mockTestData);
   useEffect(() => {
     async function fetchData(){
       const response = await axios.post(`http://localhost:8000/mock/mocktestdata`, {id});
@@ -19,6 +20,15 @@ const InstructionPage = () => {
     }
     fetchData();
   }, []);
+
+  async function onStart(){
+    const res = await axios.post('http://localhost:8000/mock/addMocktoUser', {id, data: testData});
+      if(res.status === 200){
+        console.log("Your test is paused");
+      }else{
+        console.log("Error in pausing the test");
+      }
+    }
 
   return (
     <div className="InstructionPage">
@@ -79,7 +89,7 @@ const InstructionPage = () => {
           <button className="cancelBtn">Cancel</button>
         </Link>
         <Link to="/test">
-          <button className="startBtn">Start</button>
+          <button className="startBtn" onClick={() => {onStart()}}>Start</button>
         </Link>
       </div>
     </div>

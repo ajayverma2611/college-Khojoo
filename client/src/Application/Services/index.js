@@ -24,15 +24,3 @@ const faqs = [
     answer: "Practice regularly, take mock tests, and analyze your performance to improve your score."
   }
 ];
-
-export default faqs;
-
-const tests = [
-  "JEE MAINS Mock Test - 1", 
-  "JEE MAINS Mock Test - 2", 
-  "JEE MAINS Mock Test - 3", 
-  "JEE MAINS Mock Test - 4", 
-  "JEE MAINS Mock Test - 5",
-  "JEE MAINS Mock Test - 6",
-];
-export { tests };

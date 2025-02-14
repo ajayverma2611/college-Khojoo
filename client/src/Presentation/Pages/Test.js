@@ -14,6 +14,8 @@ const Test = () => {
   const [selectedoption, setSelectedoption] = useState("");
 
   const dispatch = useDispatch();
+  const id = useSelector((state) => state.timer.id);
+  const testData = useSelector((state) => state.mocktest.mockTestData);
   const time = useSelector((state) => state.timer.time);
   const isRunning = useSelector((state) => state.timer.isRunning);
   const testSubmitted = useSelector((state) => state.timer.testSubmitted);
@@ -53,6 +55,16 @@ const Test = () => {
       window.removeEventListener("beforeunload", handleBeforeUnload);
   };
   }, []);
+
+  async function onTestEnd(){
+    dispatch(submitTest());
+    navigate("/tests");
+    const res = await axios.post('http://localhost:8000/mock/addAttemptedMocktoUser', {id, data: testData});
+    if(res.status === 200){
+      console.log("Mock test submitted successfully");
+    }
+    console.log("Unable to submit mock test");
+  }
 
   return (
     <div className="testPage">
@@ -136,7 +148,7 @@ const Test = () => {
                 <button className="herobutton" id="test-nav-btn">Next</button>
               </div>
               <div className="submit-container">
-              <button className="herobutton" id="submit-nav-btn" onClick={() => {dispatch(submitTest()); navigate("/tests")}}>Submit</button>
+              <button className="herobutton" id="submit-nav-btn" onClick={() => {onTestEnd()}}>Submit</button>
               </div>
             </div>
             )
