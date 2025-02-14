@@ -15,6 +15,7 @@ const timerSlice = createSlice({
       state.time -= 1;
     },
     startTime(state, action){
+      state.id = action.payload;
       state.isRunning = true;
       state.testSubmitted = false;
     },
