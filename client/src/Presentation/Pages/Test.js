@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { decrementTime, autoSubmit, submitTest } from "../../Application/StateManagement/slices/TimerSlice";
 import { selectOption, clearOption, setQuestionindex, setSubindex } from "../../Application/StateManagement/slices/MocktestSlice";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 const Test = () => {
   const [subject, setSubject] = useState("Physics");
   const [sidebarOpen, setSidebarOpen] = useState(false);
