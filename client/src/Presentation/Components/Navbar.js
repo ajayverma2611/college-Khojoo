@@ -6,6 +6,7 @@ import materials from '../Assests/navbar-icons/materials.svg';
 import { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
+
 const Navbar = () => {
     const [showDropdown, setShowDropdown] = useState(false);
     const [showSidebar, setShowSidebar] = useState(false);
@@ -32,6 +33,7 @@ const Navbar = () => {
             document.removeEventListener('mousedown', handleClickOutside);
         };
     }, []);
+
 
     return (
         <nav>
