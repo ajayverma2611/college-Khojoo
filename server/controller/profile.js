@@ -3,16 +3,20 @@ const User = require('../models/userschema.js');
 
 async function userprofile(req,res){
     //localhost:8000/user/profile 
-    const {id} = req.body;
-    console.log(id);
-
-    const user = await User.findById(id);
-
-    if(!user){
-        return res.status(404).json({message: "User not found"});
+    if (req.session.user) {
+        // If session exists, send the user data
+        const user = await User.findById(req.session.user.id);
+        
+        return res.status(200).json({
+          data : user,
+        });
+      } 
+    else {
+        // If no session exists, return an error
+        return res.status(401).json({
+          message: "User not logged in",
+        });
     }
-    
-    res.status(200).json({user: user});
 }
 
 module.exports = userprofile;

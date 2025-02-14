@@ -9,7 +9,9 @@ const session = require("express-session");
 require("dotenv").config();
 const isAuthenticated = require("../middleware/auth");
 // Existing Routes (Kept Unchanged)
-router.post("/profile", isAuthenticated, profile);
+
+//  Profile Routes
+router.get("/profile", isAuthenticated, profile);
 router.post("/updateprofile", isAuthenticated, updatedprofile);
 router.post("/feedbacks", isAuthenticated, feedback);
 router.post("/colleges",colleges);

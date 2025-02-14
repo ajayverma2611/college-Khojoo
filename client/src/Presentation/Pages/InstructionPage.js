@@ -6,6 +6,7 @@ import { setMockTestData } from "../../Application/StateManagement/slices/Mockte
 import axios from "axios";
 const InstructionPage = () => {
   const id = useSelector((state) => state.timer.id);
+  const user_id = useSelector((state) => state.user.data._id);
   const dispatch = useDispatch();
   const testData = useSelector((state) => state.mocktest.mockTestData);
   useEffect(() => {
@@ -22,7 +23,7 @@ const InstructionPage = () => {
   }, []);
 
   async function onStart(){
-    const res = await axios.post('http://localhost:8000/mock/addMocktoUser', {id, data: testData});
+    const res = await axios.post('http://localhost:8000/mock/addMocktoUser', {id : user_id, data: testData});
       if(res.status === 200){
         console.log("Your test is paused");
       }else{
