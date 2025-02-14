@@ -1,18 +1,6 @@
-import React from "react";
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, Legend } from "recharts";
+import {useSelector} from "react-redux";
 
-const mockTestData = [
-  { test: 1, score: 150 },
-  { test: 2, score: 200 },
-  { test: 3, score: 187 },
-  { test: 4, score: 220 },
-  { test: 5, score: 180 },
-  { test: 6, score: 250 },
-  { test: 7, score: 230 },
-  { test: 8, score: 275 },
-  { test: 9, score: 260 },
-  { test: 10, score: 300 },
-];
 
 // Custom Tooltip
 const CustomTooltip = ({ active, payload }) => {
@@ -25,21 +13,19 @@ const CustomTooltip = ({ active, payload }) => {
         boxShadow: "0px 4px 10px rgba(0,0,0,0.1)",
         textAlign: "center"
       }}>
-        <p style={{ fontWeight: "bold", margin: 0 }}>Test {payload[0].payload.test}</p>
-        <p style={{ color: "#333", margin: 0 }}>Score: {payload[0].value}</p>
+        <p style={{ fontWeight: "bold", margin: 0 }}>{payload[0].payload.test}</p>
+        <p style={{ color: "#333", margin: 0 }}>{payload[0].value}</p>
       </div>
     );
   }
   return null;
 };
 
-// Function to return a color based on previous data
-const getStrokeColor = (data, index) => {
-  if (index === 0) return "#00C49F"; // First point, default to green
-  return data[index].score > data[index - 1].score ? "#00C49F" : "#FF4D4D";
-};
+
 
 const PerformanceChart = () => {
+  const testData = useSelector(state => state.mocktest.data);
+  const mockTestData = testData.map((d, i) => ({ test: d.title, scoredMarks: d.scoredMarks }));
   return (
     <div style={{ width: "90%", margin: "auto", textAlign: "center", padding: "20px", background: "#fff", borderRadius: "12px", boxShadow: "0px 4px 20px rgba(0,0,0,0.1)" }}>
       <h2 style={{ color: "#333", marginBottom: "20px" }}>Mock Test Performance</h2>

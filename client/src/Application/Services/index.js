@@ -24,3 +24,4 @@ const faqs = [
     answer: "Practice regularly, take mock tests, and analyze your performance to improve your score."
   }
 ];
+export default faqs;
