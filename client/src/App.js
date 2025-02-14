@@ -15,8 +15,31 @@ import store from './Application/StateManagement/store';
 import {persistor} from './Application/StateManagement/store';
 import {PersistGate} from 'redux-persist/integration/react';
 import ExamExplanation from './Presentation/Pages/ExamExplanation';
+import {useDispatch} from 'react-redux';
+import {setUserData} from './Application/StateManagement/slices/UserSlice';
+import { useEffect } from 'react';
+import axios from 'axios';
 
 function App() {
+  const dispatch = useDispatch();
+
+  const fetUserDetails = async () => {
+    try{
+      const response = await axios.get("http://localhost:8000/auth/profile", { withCredentials: true });
+      console.log(response.data);
+      dispatch(setUserData(response.data));
+
+    }
+    catch(err){
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    fetUserDetails();
+  }, []);
+
+
   const location = useLocation();
   const shownavbar = location.pathname !== "/signup" && location.pathname !== "/signin" && location.pathname !== "/test";
   return (

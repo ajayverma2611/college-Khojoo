@@ -21,6 +21,8 @@ const Test = () => {
   const isRunning = useSelector((state) => state.timer.isRunning);
   const testSubmitted = useSelector((state) => state.timer.testSubmitted);
 
+  const userid = useSelector((state) => state.user.data._id);
+
   const navigate = useNavigate();
 
   const formatTime = (seconds) => { // gives format as HH:MM:SS
@@ -60,7 +62,7 @@ const Test = () => {
   async function onTestEnd(){
     dispatch(submitTest());
     navigate("/tests");
-    const res = await axios.post('http://localhost:8000/mock/addAttemptedMocktoUser', {id, data: testData});
+    const res = await axios.post('http://localhost:8000/mock/addAttemptedMocktoUser', {id : userid, data: testData});
     if(res.status === 200){
       console.log("Mock test submitted successfully");
     }
