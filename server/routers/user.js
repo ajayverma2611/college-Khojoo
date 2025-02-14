@@ -11,6 +11,7 @@ const isAuthenticated = require("../middleware/auth");
 router.post("/profile", isAuthenticated, profile);
 router.post("/updateprofile", isAuthenticated, updatedprofile);
 router.post("/feedbacks", isAuthenticated, feedback);
+
 //  Signup Route
 router.post("/signup", async (req, res) => {
   try {
