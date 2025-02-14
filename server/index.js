@@ -38,7 +38,7 @@ app.use(
 
 // Routes
 app.use("/auth", userRoutes);
-app.use("/mocktest", mocktestRoutes);
+app.use("/mock", mocktestRoutes);
 app.use("/material", bookRoutes);
 
 

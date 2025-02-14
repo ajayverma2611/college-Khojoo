@@ -3,6 +3,7 @@ const feedback = require('../controller/feedback');
 const profile = require("../controller/profile");
 const updatedprofile = require("../controller/updatedprofile");
 const User = require("../models/userschema");
+const colleges = require("../controller/collegedetails");
 const bcrypt = require("bcrypt");
 const session = require("express-session");
 require("dotenv").config();
@@ -11,7 +12,7 @@ const isAuthenticated = require("../middleware/auth");
 router.post("/profile", isAuthenticated, profile);
 router.post("/updateprofile", isAuthenticated, updatedprofile);
 router.post("/feedbacks", isAuthenticated, feedback);
-
+router.post("/colleges",colleges);
 //  Signup Route
 router.post("/signup", async (req, res) => {
   try {
