@@ -37,7 +37,7 @@ app.use(
 
 // Routes
 app.use("/auth", userRoutes);
-app.use("/mocktest", mocktestRoutes);
+app.use("/mock", mocktestRoutes);
 
 connectToDatabase().then(
 // Start Server after Database Connection

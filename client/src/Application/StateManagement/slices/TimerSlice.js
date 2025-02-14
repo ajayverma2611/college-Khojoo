@@ -3,7 +3,8 @@ import {createSlice} from "@reduxjs/toolkit";
 const initialState = {
   time: 3 * 60 * 60,
   isRunning: false,
-  testSubmitted: false
+  testSubmitted: false,
+  id: ""
 }
 
 const timerSlice = createSlice({
@@ -13,7 +14,7 @@ const timerSlice = createSlice({
     decrementTime(state){
       state.time -= 1;
     },
-    startTime(state){
+    startTime(state, action){
       state.isRunning = true;
       state.testSubmitted = false;
     },

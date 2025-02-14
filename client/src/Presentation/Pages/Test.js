@@ -1,7 +1,6 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import "../Styles/Test.css"
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
 import { decrementTime, autoSubmit, submitTest } from "../../Application/StateManagement/slices/TimerSlice";
 
 const Test = () => {
@@ -20,7 +19,6 @@ const Test = () => {
     const secs = seconds % 60;
     return `${String(hrs).padStart(2, "0")}:${String(mins).padStart(2, "0")}:${String(secs).padStart(2, "0")}`;
   }
-
   useEffect(() => {
     if(testSubmitted) return;
     if(time <= 0){
@@ -36,6 +34,15 @@ const Test = () => {
   const toggleSidebar = () => {
     setSidebarOpen(!sidebarOpen);
   };
+
+  // useEffect(() => {
+  //   async function fetchData() {
+  //     const response = await axios.post("http://localhost:8000/mock/mocktestdata",{
+  //       id: 
+  //     })
+  //   }
+  // }, []);
+
   return (
     <div className="testPage">
       <button className={`toggle-sidebar-btn ${sidebarOpen ? " colouring": ""}`} onClick={toggleSidebar}>

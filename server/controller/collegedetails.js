@@ -1,4 +1,4 @@
-const College = require('../models/College');
+const College = require('../Models/College');
 
 async function collegeDetails(req, res) {
     const { category, percentile, marks, gender, location } = req.body;

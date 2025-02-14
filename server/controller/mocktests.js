@@ -10,7 +10,6 @@ async function mocktests (req,res){
         return res.status(404).json({error:true,message: "Test not found"});
     }
     res.status(200).json({error:false,data:mocktests});
-
 }
 
 

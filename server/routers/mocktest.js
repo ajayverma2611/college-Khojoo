@@ -1,12 +1,11 @@
 const router = require('express').Router();
-const mocktest =  require("../controller/mocktestdata");
+const mocktestdata =  require("../controller/mocktestdata");
 const mocktests = require("../controller/mocktests");
+const isAuthenticated = require("../middleware/auth");
 
 
-
-router.post("/mocktest",mocktest);
-
-router.post("/mocktestsdata",mocktests);
+router.post("/mocktests", mocktests);
+router.post("/mocktestdata", mocktestdata);
 
 
 
