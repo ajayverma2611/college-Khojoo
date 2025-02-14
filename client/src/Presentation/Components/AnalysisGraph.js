@@ -1,6 +1,7 @@
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, Legend } from "recharts";
 import {useSelector} from "react-redux";
-
+import axios from "axios";
+import { useState, useEffect } from "react";
 
 // Custom Tooltip
 const CustomTooltip = ({ active, payload }) => {
@@ -25,9 +26,10 @@ const CustomTooltip = ({ active, payload }) => {
 
 
 const PerformanceChart = () => {
-  const id_data = useSelector((state) => state.user.data._id);
+  const id_data = useSelector((state) => state.user.id);
 
   const [data, setdata] = useState([]);
+  const mockTestData = data.map((d, i) => ({ test: d.title, scoredMarks: d.scoredMarks }));
 
   useEffect(() => {
     async function fetchData() {
