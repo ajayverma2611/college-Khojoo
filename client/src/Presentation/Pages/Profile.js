@@ -2,16 +2,23 @@ import Navbar from '../Components/Navbar';
 import '../Styles/Profile.css';
 import profileimg from  '../Assests/profile.svg';
 import editbtn from '../Assests/edit.svg';
-import { useState } from 'react';
-
+import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 
 const Profile = () =>{
+    const [user,setUser] = useSelector((state)=>state.user);
     const [name,setName]= useState('SUDHARSAN B');
     const [location,setLocation] = useState("");
 
     const [nameedit,setnameedit] = useState(false);
     const [locationedit,setlocationedit] = useState(false);
-
+    
+    useEffect(()=>{
+        const data = localStorage.getItem("user");
+        console.log(data);
+        setName(user.name);
+        setLocation(user.location);
+    },[]);
 
     return (
         <div className="profile-page">

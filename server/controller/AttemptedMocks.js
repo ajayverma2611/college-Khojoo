@@ -27,4 +27,4 @@ async function addAttemptedMockToUser(req, res) {
   }
 }
 
-export default addAttemptedMockToUser;
+module.exports = addAttemptedMockToUser;

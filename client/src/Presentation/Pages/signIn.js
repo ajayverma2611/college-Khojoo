@@ -3,23 +3,27 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../Styles/style.css";
 import signInImage from "../Assests/SignIn-signUp/sign_in_image.png";
+import {useSelector,useDispatch} from "react-redux";
+import {setUserData} from "../../Application/StateManagement/slices/UserSlice";
+
 
 export default function SignIn() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const navigate = useNavigate();
-
+    const dispatch = useDispatch();
     async function handleSubmit(event) {
         event.preventDefault();
-
         try {
             const response = await axios.post("http://localhost:8000/auth/login", {
                 email,
                 password
             }, { withCredentials: true });
-
+            
             localStorage.setItem("user", JSON.stringify(response.data.user)); // Store user info
+            // const respo = await axios.post("http://localhost:8000/auth/profile")
+            // dispatch(setUserData(respo.data.user));
             navigate("/home"); // Redirect after login
         } catch (err) {
             setError(err.response?.data?.message || "Invalid email or password");

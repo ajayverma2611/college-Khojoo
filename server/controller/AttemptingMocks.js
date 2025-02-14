@@ -1,4 +1,4 @@
-const User = require("../Models/userschema");
+const User = require("../models/userschema");
 
 async function addMockToUser(req, res) {
   const { userId, data } = req.body;

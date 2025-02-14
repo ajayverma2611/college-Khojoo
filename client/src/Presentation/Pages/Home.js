@@ -4,8 +4,13 @@ import About from "../Components/About";
 import Paths from "../Components/Paths";
 import FindCollege from "../Components/FindCollege";
 import Footer from "../Components/Footer";
+import { useEffect } from "react";
 
 const Home = () =>{
+    useEffect(()=>{
+        const data = localStorage.getItem("user");
+        console.log(data);
+    },[]);
     return (
     <div >
         <Navbar/>

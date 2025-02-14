@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { decrementTime, autoSubmit, submitTest } from "../../Application/StateManagement/slices/TimerSlice";
 import { selectOption, clearOption, setQuestionindex, setSubindex } from "../../Application/StateManagement/slices/MocktestSlice";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+
 const Test = () => {
   const [subject, setSubject] = useState("Physics");
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -19,6 +21,8 @@ const Test = () => {
   const time = useSelector((state) => state.timer.time);
   const isRunning = useSelector((state) => state.timer.isRunning);
   const testSubmitted = useSelector((state) => state.timer.testSubmitted);
+
+  const userid = useSelector((state) => state.user.data._id);
 
   const navigate = useNavigate();
 
@@ -59,7 +63,7 @@ const Test = () => {
   async function onTestEnd(){
     dispatch(submitTest());
     navigate("/tests");
-    const res = await axios.post('http://localhost:8000/mock/addAttemptedMocktoUser', {id, data: testData});
+    const res = await axios.post('http://localhost:8000/mock/addAttemptedMocktoUser', {id : userid, data: testData});
     if(res.status === 200){
       console.log("Mock test submitted successfully");
     }
