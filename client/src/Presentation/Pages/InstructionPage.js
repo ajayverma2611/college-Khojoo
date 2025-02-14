@@ -1,6 +1,12 @@
 import { Link } from "react-router-dom"
 import "../Styles/InstructionPage.css"
+import { useSelector } from "react-redux"
+import { useEffect } from "react";
+
 const InstructionPage = () => {
+  const id = useSelector((state) => state.timer.id);
+  
+
   return (
     <div className="InstructionPage">
       <div>
