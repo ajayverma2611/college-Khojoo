@@ -53,7 +53,7 @@ const Test = () => {
     await axios.post('http://localhost:8000/mock/addMocktoUser', {
       userId: user_id,
       data: testData,
-      change: true,
+      change: "modify",
     });
 
     navigate("/tests");
