@@ -1,79 +1,47 @@
 const User = require("../models/userschema");
 
 async function addMockToUser(req, res) {
-  const { userId, data, change } = req.body;
-
-  console.log(data);
-  console.log("crossed 1");
-
   try {
-    // Find the user by userId
-    const user = await User.findById(userId);
-    console.log("crossed 2");
+    const { userId, data, change } = req.body;
 
+    console.log("Received data:", data);
+
+    // Find user and ensure they exist
+    const user = await User.findById(userId);
     if (!user) {
       return res.status(404).json({ error: "User not found" });
     }
 
-    // Ensure attempting_mocks is an array, otherwise initialize it as empty
-    if (!user.attempting_mocks) {
+    console.log("User found:", userId);
+
+    // Ensure attempting_mocks is an array
+    if (!Array.isArray(user.attempting_mocks)) {
       user.attempting_mocks = [];
     }
 
-    console.log("Current attempting_mocks:", user.attempting_mocks);
+    // Check if the mock already exists
+    const mockIndex = user.attempting_mocks.findIndex(
+      (mock) => mock._id.toString() === data._id
+    );
 
-    // Ensure data is not null or undefined before proceeding
-    if (!data || !data._id) {
-      return res.status(400).json({ error: "Invalid data received" });
-    }
-
-    let index = -1;
-
-    // Check if the mock already exists in attempting_mocks array
-    for (let i = 0; i < user.attempting_mocks.length; i++) {
-      if (user.attempting_mocks[i] && user.attempting_mocks[i]._id) {
-        if (user.attempting_mocks[i]._id.equals(data._id)) {
-          index = i;
-          break;
-        }
-      }
-    }
-
-    let existing = false;
-    let mockModified = false;  // To track if mock was modified
-
-    if (index !== -1) {
-      existing = true;
-      if (change === "modify") {
-        // If the mock already exists, update it
-        user.attempting_mocks[index] = { ...data };
-        mockModified = true; // Mark as modified
-      }
-    } else {
-      // If the mock doesn't exist, add it
+    if (mockIndex !== -1 && change === "modify") {
+      user.attempting_mocks[mockIndex] = { ...data };
+    } else if (mockIndex === -1) {
       user.attempting_mocks.push(data);
     }
 
-    // Save the user document with the updated attempting_mocks
-    await user.save();
+    // Save using findOneAndUpdate to avoid version errors
+    await User.findOneAndUpdate(
+      { _id: userId },
+      { $set: { attempting_mocks: user.attempting_mocks } },
+      { new: true }
+    );
 
-    if (existing && !mockModified) {
-      res.status(200).json({
-        message: "Mock updated successfully",
-        data: user.attempting_mocks[index], // Return the updated mock
-        existing
-      });
-    } else {
-      res.status(200).json({
-        message: "Mock added successfully",
-        existing
-      });
-    }
-
+    console.log("Mock processed successfully");
+    res.status(200).json({ message: "Mock processed successfully" });
   } catch (err) {
-    // Catch any errors and send an error response
-    console.error(err);
-    return res.status(500).json({ error: err.message });
+    console.error("Error:", err);
+    res.status(500).json({ error: err.message });
   }
 }
 

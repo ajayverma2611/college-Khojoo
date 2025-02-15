@@ -15,7 +15,7 @@ const CustomTooltip = ({ active, payload }) => {
         boxShadow: "0px 4px 10px rgba(0,0,0,0.1)",
         textAlign: "center"
       }}>
-        <p style={{ fontWeight: "bold", margin: 0 }}>{payload[0].payload.test}</p>
+        <p style={{ fontWeight: "bold", margin: 0 }}>{payload[0].test}</p>
         <p style={{ color: "#333", margin: 0 }}>{payload[0].value}</p>
       </div>
     );
@@ -54,7 +54,7 @@ const PerformanceChart = () => {
       <h2 style={{ color: "#333", marginBottom: "20px" }}>Mock Test Performance</h2>
 
       <ResponsiveContainer width="100%" height={400}>
-        <LineChart data={data} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
+        <LineChart data={mockTestData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
           <XAxis 
             dataKey="test" 
             tickCount={mockTestData.length} 
