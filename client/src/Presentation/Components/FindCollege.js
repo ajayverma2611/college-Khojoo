@@ -1,41 +1,95 @@
 import '../Styles/FindCollege.css';
 import { useEffect, useState } from 'react';
+import axios from 'axios';
 
-const College = ({key,index,college}) =>{
+const College = ({ key, college }) => {
     return (
         <div key={key} className="college">
-            <div style={{display:"flex",flexDirection:"column"}}>
+            <div style={{ display: "flex", flexDirection: "column" }}>
                 <h1 className="college-course">{college["Academic Program Name"]}</h1>
-                <div style={{display:"flex",alignItems:"center",gap:"30px",flexWrap:"wrap",paddingTop:"20px"}}>
+                <div style={{ display: "flex", alignItems: "center", gap: "30px", flexWrap: "wrap", paddingTop: "20px" }}>
                     <h1 className="college-name">{college.Institute}</h1>
                     <div className="college-info">
                         <h1 className="tag">{college.State}</h1>
-                        <h1 className={"tag"+ (college.Tier=="2" ? " tag-sad" : (college.Tier=="3" ? " tag-poor":"" ))}>Tier {college.Tier}</h1>
+                        <h1 className={"tag" + (college.Tier === "2" ? " tag-sad" : (college.Tier === "3" ? " tag-poor" : ""))}>Tier {college.Tier}</h1>
                     </div>
                 </div>
             </div>
         </div>
-    )
-}
+    );
+};
 
-
-
-const FindCollege = () =>{
+const FindCollege = () => {
     const [selectedOption, setSelectedOption] = useState("");
     const [selectedLocation, setSelectedLocation] = useState("");
     const [selectedCat, setSelectedCat] = useState("");
     const [collegs, setCollegs] = useState([]);
-    const handleChangeOption = (e) => {
-        setSelectedOption(e.target.value);
+    const [totalPages, setTotalPages] = useState(1);  // Total pages for pagination
+    const [pagenumber, setPage] = useState(1);
+    const [marksdata, setMarks] = useState(300);
+    const [percentiledata, setPercentile] = useState(100);
+    const [rankingdata, setRanking] = useState(10000000);
+    const [tiertype, setTiertype] = useState("");
+
+
+    const fetchColleges = async () => {
+        try {
+            const response = await axios.post("http://localhost:8000/auth/colleges", {
+                page: pagenumber,
+                marks: marksdata,
+                percentile: percentiledata,
+                ranking: rankingdata,
+                examtype : selectedOption,
+                tiertype : tiertype,
+                location: selectedLocation,
+            });
+            console.log(response);
+            if(response.data.colleges.length === 0) {
+                alert("No colleges found matching the criteria");
+            }
+
+            setCollegs(response.data.colleges);
+            setTotalPages(response.data.totalPages);  // Assuming the backend returns totalPages
+        } catch (error) {
+            console.error("Error fetching college data: ", error);
+        }
     };
 
-    const colleges = [
-        {"Institute":"Assam University, Silchar","Academic Program Name":"Electronics and Communication Engineering (4 Years, Bachelor of Technology)","Quota":"AI","Seat Type":"SC","Gender":"Gender-Neutral","Opening Rank":7537,"Closing Rank":8263,"Tier":"3","State":"Assam","Exam Type":"JEE Mains","Percentile":96.04,"Marks":258.68},{"Institute":"Assam University, Silchar","Academic Program Name":"Agricultural Engineering (4 Years, Bachelor of Technology)","Quota":"AI","Seat Type":"EWS","Gender":"Gender-Neutral","Opening Rank":9696,"Closing Rank":10211,"Tier":"3","State":"Assam","Exam Type":"JEE Mains","Percentile":94.89,"Marks":249.47},{"Institute":"Assam University, Silchar","Academic Program Name":"Electronics and Communication Engineering (4 Years, Bachelor of Technology)","Quota":"HS","Seat Type":"EWS","Gender":"Gender-Neutral","Opening Rank":13132,"Closing Rank":13527,"Tier":"3","State":"Assam","Exam Type":"JEE Mains","Percentile":93.24,"Marks":241.18},{"Institute":"Assam University, Silchar","Academic Program Name":"Agricultural Engineering (4 Years, Bachelor of Technology)","Quota":"AI","Seat Type":"OPEN","Gender":"Gender-Neutral","Opening Rank":49868,"Closing Rank":58067,"Tier":"3","State":"Assam","Exam Type":"JEE Mains","Percentile":61.93,"Marks":163.87},{"Institute":"Assam University, Silchar","Academic Program Name":"Computer Science and Engineering (4 Years, Bachelor of Technology)","Quota":"AI","Seat Type":"OPEN","Gender":"Gender-Neutral","Opening Rank":27106,"Closing Rank":37990,"Tier":"3","State":"Assam","Exam Type":"JEE Mains","Percentile":81,"Marks":198.01},{"Institute":"Assam University, Silchar","Academic Program Name":"Electronics and Communication Engineering (4 Years, Bachelor of Technology)","Quota":"HS","Seat Type":"OPEN","Gender":"Gender-Neutral","Opening Rank":73085,"Closing Rank":80526,"Tier":"3","State":"Assam","Exam Type":"JEE Mains","Percentile":49.74,"Marks":139.47},
-    ]
-    useEffect(()=>{
-        setCollegs(colleges);
-    },[])
-    
+    useEffect(() => {
+        fetchColleges();
+    }, [pagenumber]);
+
+   
+
+    const handlePageChange = (newPage) => {
+        setPage(newPage);
+    };
+
+    const handleSubmit = (e) => {
+       e.preventDefault();
+        fetchColleges();
+    };
+
+    const handleMarksChange = (page2) => {
+        setMarks(page2);
+        setPercentile(0);
+        setRanking(0);
+        setPage(1);
+    };
+
+    const handlePercentileChange = (page2) => {
+        setMarks(0);
+        setPercentile(page2);
+        setRanking(0);
+        setPage(1);
+    };
+
+    const handleRankChange = (page2) => {
+        setMarks(0);
+        setPercentile(0);
+        setRanking(page2);
+        setPage(1);
+    };
 
     return (
         <div className="find-college">
@@ -45,18 +99,20 @@ const FindCollege = () =>{
                     id="dropdown"
                     name="exam"
                     value={selectedOption}
-                    onChange={handleChangeOption}
+                    onChange={(e) => setSelectedOption(e.target.value)}
                 >
                     <option value="" disabled>Select Exam</option>
-                    <option value="JEE Mains">JEE Mains</option>
+                    <option value="JEE" >JEE</option>
                     <option value="Boards">Boards</option>
                 </select>
+                
                 <select
                     id="dropdown"
                     name="location"
                     value={selectedLocation}
-                    onChange={(e) => { setSelectedLocation(e.target.value) }}
+                    onChange={(e) => setSelectedLocation(e.target.value)}
                 >
+                    {/* Add location options here */}
                     <option value="" disabled>Select Location</option>
                     <option value="Andhra Pradesh">Andhra Pradesh</option>
                     <option value="Arunachal Pradesh">Arunachal Pradesh</option>
@@ -92,38 +148,79 @@ const FindCollege = () =>{
                     <option value="Lakshadweep">Lakshadweep</option>
                     <option value="Delhi">Delhi</option>
                     <option value="Puducherry">Puducherry</option>
+                    {/* Add other locations here */}
                 </select>
 
-                {
-                    selectedOption=="JEE Mains" ?
-                        <>
-                            <select
-                                id="dropdown"
-                                name="basedon"
-                                value={selectedLocation}
-                                onChange={(e)=>{setSelectedLocation(e.target.value)}}
-                            >
-                                <option value="Marks" disabled>Marks</option>
-                                <option value="Percentile">Percentile</option>
-                                <option value="Ranking">Ranking</option>
-                            </select>
-                            <input id="dropdown" type="text" name="value" placeholder="Enter the value" />
-                        </>
-                    : null
-                }
-                
+                {(selectedOption === "JEE" || selectedOption==="") && (
+                    <>
+                        <select
+                            id="dropdown"
+                            name="basedon"
+                            value={tiertype}
+                            onChange={(e) => setTiertype(e.target.value)}
+                        >
+                            <option value="" disabled>Select Tier</option>
+                            <option value="1">Tier 1</option>
+                            <option value="2">Tier 2</option>
+                            <option value="3">Tier 3</option>
+                        </select>
+                        <select
+                            id="dropdown"
+                            name="basedon"
+                            value={selectedCat}
+                            onChange={(e) => setSelectedCat(e.target.value)}
+                        >
+                            <option value="Marks">Marks</option>
+                            <option value="Percentile">Percentile</option>
+                            <option value="Ranking">Ranking</option>
+                        </select>
+                        <input 
+                            id="dropdown" 
+                            type="text" 
+                            name="value" 
+                            placeholder="Enter the value" 
+                            onChange={(e) => {
+                                const value = e.target.value;
+                                if (selectedCat === 'Marks') {
+                                    handleMarksChange(value);
+                                } else if (selectedCat === 'Percentile') {
+                                    handlePercentileChange(value);
+                                } else if (selectedCat === 'Ranking') {
+                                    handleRankChange(value);
+                                }
+                            }}
+                        />
+                        <button id="find-button" className='herobutton' type="submit" onClick={handleSubmit}>Find</button>
+                    </>
+                )}
             </form>
+
             <div className="college-cont">
-                {collegs.map((college,index)=>{
-                    return (
-                        <College key={index} college={college} index={index}/>
-                    )
-                })}
+                {collegs.map((college, index) => (
+                    <College key={index} college={college} />
+                ))}
+            </div>
+
+            <div className="pagination">
+                <button 
+                    className="herobutton"
+                    disabled={pagenumber === 1}
+                    id="find-colleges-btn"
+
+                    onClick={() => handlePageChange(pagenumber - 1)}>
+                    Prev
+                </button>
+                <span>Page {pagenumber} of {totalPages}</span>
+                <button 
+                    className="herobutton"
+                    id="find-colleges-btn"
+                    disabled={pagenumber === totalPages}
+                    onClick={() => handlePageChange(pagenumber + 1)}>
+                    Next
+                </button>
             </div>
         </div>
-    )
-}
-
-
+    );
+};
 
 export default FindCollege;

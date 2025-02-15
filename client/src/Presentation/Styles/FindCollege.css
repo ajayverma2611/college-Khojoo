@@ -2,6 +2,7 @@
     width:100%;
     /* padding:30px; */
     padding-top:70px;
+    padding-bottom: 50px;
     box-sizing: border-box;
     display:flex;
     flex-direction:column;
@@ -74,6 +75,15 @@
     background-color: #B97105;
 }
 
+#find-button{
+    margin-left:30px;
+    margin-right:30px;
+}
+
+#find-colleges-btn{
+    margin-left:20px;
+    margin-right: 20px;
+}
 
 @media screen and (max-width:770px){
     #find-form{

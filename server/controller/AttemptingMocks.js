@@ -3,8 +3,12 @@ const User = require("../models/userschema");
 async function addMockToUser(req, res) {
   try {
     const { userId, data, change } = req.body;
-
-    console.log("Received data:", data);
+    console.log(req.body);
+   
+    // Check if data is valid
+    if (!data || !data._id) {
+      return res.status(400).json({ error: "Invalid data: missing _id" });
+    }
 
     // Find user and ensure they exist
     const user = await User.findById(userId);
@@ -14,17 +18,19 @@ async function addMockToUser(req, res) {
 
     console.log("User found:", userId);
 
-    // Ensure attempting_mocks is an array
+    // Ensure attempting_mocks is an array and filter out invalid entries
     if (!Array.isArray(user.attempting_mocks)) {
       user.attempting_mocks = [];
     }
+    user.attempting_mocks = user.attempting_mocks.filter(mock => mock && typeof mock === 'object');
 
     // Check if the mock already exists
     const mockIndex = user.attempting_mocks.findIndex(
-      (mock) => mock._id.toString() === data._id
+      (mock) => mock && mock._id && mock._id.toString() === data._id
     );
 
     if (mockIndex !== -1 && change === "modify") {
+      console.log("modified ");
       user.attempting_mocks[mockIndex] = { ...data };
     } else if (mockIndex === -1) {
       user.attempting_mocks.push(data);
@@ -38,6 +44,9 @@ async function addMockToUser(req, res) {
     );
 
     console.log("Mock processed successfully");
+    if(mockIndex !== -1 && change !== "modify") {
+      return res.status(200).json({ message: "Mock modified successfully", data: user.attempting_mocks[mockIndex], existing: true });
+    }
     res.status(200).json({ message: "Mock processed successfully" });
   } catch (err) {
     console.error("Error:", err);
