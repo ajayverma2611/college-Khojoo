@@ -13,6 +13,8 @@ export default function SignUp() {
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
     const navigate = useNavigate();
+    const [otpsection, setOtpsection] = useState(false);
+    const [otp, setOtp] = useState('');
 
     async function handleSubmit(event) {
         event.preventDefault();
@@ -29,18 +31,49 @@ export default function SignUp() {
                 password
             }, { withCredentials: true });
 
-            setSuccess("Account created successfully!");
-            setError('');
-            setTimeout(() => navigate("/signin"), 1500);
+            if(response.data.message === "User registered successfully. Please verify OTP."){
+                setError("");
+                setSuccess(response.data.message);
+                setOtpsection(true);
+            }
+            else{
+                setError(response.data.message);
+            }
+            
+
         } catch (err) {
             setError(err.response?.data?.message || "Signup failed");
         }
     }
 
+    async function handleOTPSubmit(event) {
+        event.preventDefault();
+        try {
+            const response = await axios.post("http://localhost:8000/auth/verifyotp", {
+                email,
+                otp
+            }, { withCredentials: true });
+
+            if(response.data.message ==="OTP verified successfully. Account created."){
+                setTimeout(() => navigate("/signin"), 1500);
+            }
+            else{
+                setError("Invalid OTP");
+            }
+            // setTimeout(() => navigate("/signin"), 1500);
+        } catch (err) {
+            setError(err.response?.data?.message || "OTP verification failed");
+        }
+
+    }
     return (
         <div className="container">
             {/* Left Side - Sign Un Form */}
+
+            {!otpsection ?
+            
             <div className="sign-up-content">
+                
                 <h1>Welcome!</h1>
                 <p className="subheading">create a free account</p>
 
@@ -126,7 +159,22 @@ export default function SignUp() {
                     <p className="signin-link">Already have an account? <a href="/signin">Sign in</a></p>
                 </form>
             </div>
+                :
+                <div className="sign-up-content">
+                    <h1>Verify Your OTP</h1>
+                    <form onSubmit={handleOTPSubmit} className="sign-up-form">
+                        <label>OTP</label>
+                        <input
+                            type="number"
+                            value={otp}
+                            onChange={(e) => setOtp(e.target.value)}
+                        />
+                        <button type="submit" className="sign-up-btn">Verify OTP</button>
+                    </form>
 
+                </div>
+                }
+            
             {/* Right Side - Image */}
             <div className="sign-up-image">
                 <img src={signUpImage} alt="Educational theme" />

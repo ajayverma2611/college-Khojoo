@@ -9,35 +9,103 @@ const session = require("express-session");
 require("dotenv").config();
 const isAuthenticated = require("../middleware/auth");
 // Existing Routes (Kept Unchanged)
+const sendEmail = require('../controller/emailService');
 
 //  Profile Routes
 router.get("/profile", isAuthenticated, profile);
-router.post("/updateprofile", isAuthenticated, updatedprofile);
+router.post("/updateprofile", updatedprofile);
 router.post("/feedbacks", isAuthenticated, feedback);
 router.post("/colleges",colleges);
+const TempUser = require("../models/TempUser");
+
+
+
 //  Signup Route
+// Signup Route
 router.post("/signup", async (req, res) => {
   try {
-    console.log('hyy signup');
+    console.log('Signup request received');
     const { name, location, email, password } = req.body;
 
-    // Check if user already exists
+    // Validate the email format using a regex pattern
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (!emailRegex.test(email)) {
+      return res.status(400).json({ message: "Invalid email format" });
+    }
+
+    // Check if the user already exists
     const existingUser = await User.findOne({ email });
-    if (existingUser) return res.status(400).json({ message: "User already exists" });
+    if (existingUser) {
+      return res.status(400).json({ message: "User already exists" });
+    }
 
     // Hash the password
     const hashedPassword = await bcrypt.hash(password, 10);
+    // Generate a 6-digit OTP
+    const otp = Math.floor(100000 + Math.random() * 900000);
 
-    // Create and save user
-    const newUser = new User({ name, location, email, password: hashedPassword });
+    // Create and save the temporary user
+    const tempuser = await TempUser.find({ email });
+    if(tempuser){
+      await TempUser.deleteOne({ email, otp });
+    }
+
+    const newTempUser = new TempUser({ 
+      name, 
+      location, 
+      email, 
+      password: hashedPassword, 
+      otp 
+    });
+
+
+    await newTempUser.save();
+
+    // Send OTP email
+    sendEmail(email, otp);
+
+    // Respond to the client
+    res.status(201).json({ message: "User registered successfully. Please verify OTP." });
+  } catch (error) {
+    console.error('Error during user registration:', error);
+    res.status(500).json({ message: "Error registering user", error: error.message });
+  }
+});
+
+
+router.post("/verifyotp", async (req, res) => {
+  try {
+    const { email, otp } = req.body;
+
+    // Find the temporary user with the provided email and OTP
+    const tempUser = await TempUser.findOne({ email, otp });
+
+    if (!tempUser) {
+      return res.status(400).json({ message: "Invalid OTP" });
+    }
+
+    // Destructure user information from temp user
+    const { name, location, password } = tempUser;
+
+    // Remove the temporary user after OTP verification
+    await TempUser.deleteOne({ email, otp });
+
+    // Create and save the final user
+    const newUser = new User({ 
+      name, 
+      location, 
+      email, 
+      password 
+    });
+
     await newUser.save();
 
-    res.status(201).json({ message: "User registered successfully" });
+    // Respond to the client that OTP was verified successfully
+    res.status(200).json({ message: "OTP verified successfully. Account created." });
   } catch (error) {
-    res.status(500).json({ message: "Error registering user", error });
+    console.error('Error during OTP verification:', error);
+    res.status(500).json({ message: "Error verifying OTP", error: error.message });
   }
-
-  
 });
 
 // ✅ Login Route
