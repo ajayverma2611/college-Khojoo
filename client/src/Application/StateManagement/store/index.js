@@ -21,7 +21,7 @@ const persistedMocktestReducer = persistReducer(persistMocktestConfig, mocktests
 
 
 const persistUserConfig = {
-  key: "user145",
+  key: "user",
   storage
 }
 const persistedUserReducer = persistReducer(persistUserConfig, userSlice);

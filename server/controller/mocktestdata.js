@@ -7,7 +7,7 @@ async function mockTestData(req,res){
     if(!test){
         res.status(404).send("Not found");
     }
-    console.log(test);
+    // console.log(test);
     res.status(200).send(test);
 };
 

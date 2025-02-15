@@ -34,8 +34,8 @@ const PerformanceChart = () => {
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await axios.post("http://localhost:8000/mock/attemptedmocktests",
-            {id : id_data}
+        const response = await axios.post("http://localhost:8000/mock/attemptedmocks",
+            {userId : id_data}
         );
         const data = await response.data;
         console.log(data);

@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const questionSchema = new mongoose.Schema({
   question: {
     type: String,
-    required: true
+    required: false
   },
   question_image: {
     type: String,  // giving url for this question image...

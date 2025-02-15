@@ -1,9 +1,11 @@
 import { useState, useEffect } from "react"
 import "../Styles/Test.css"
 import { useDispatch, useSelector } from "react-redux";
-import { decrementTime, autoSubmit, submitTest } from "../../Application/StateManagement/slices/TimerSlice";
+import { decrementTime, autoSubmit, submitTest, startTime } from "../../Application/StateManagement/slices/TimerSlice";
 import { selectOption, clearOption, setQuestionindex, setSubindex } from "../../Application/StateManagement/slices/MocktestSlice";
 import { useNavigate } from "react-router-dom";
+import { setMockTestData } from "../../Application/StateManagement/slices/MocktestSlice";
+
 import axios from "axios";
 const Test = () => {
   const [subject, setSubject] = useState("Physics");
@@ -16,12 +18,13 @@ const Test = () => {
 
   const dispatch = useDispatch();
   const id = useSelector((state) => state.timer.id);
-  const testData = useSelector((state) => state.mocktest.mockTestData);
+  const user_id = useSelector((state) => state.user.id);
+  const testData = useSelector((state) => state.mocktest.data);
   const time = useSelector((state) => state.timer.time);
   const isRunning = useSelector((state) => state.timer.isRunning);
   const testSubmitted = useSelector((state) => state.timer.testSubmitted);
 
-  const userid = useSelector((state) => state.user.data._id);
+  const userid = useSelector((state) => state.user.id);
 
   const navigate = useNavigate();
 
@@ -46,28 +49,34 @@ const Test = () => {
   const toggleSidebar = () => {
     setSidebarOpen(!sidebarOpen);
   };
+  async function fetchData(){
+    await axios.post('http://localhost:8000/mock/addMocktoUser', {
+      userId: user_id,
+      data: testData,
+      change: true,
+    });
 
-  useEffect(() => {
-    const handleBeforeUnload = (event) => {
-      const message = "Are you sure you want to leave?";
-      event.returnValue = message;
-      return message;
-    };
-    window.addEventListener("beforeunload", handleBeforeUnload);
-    return () => {
-      window.removeEventListener("beforeunload", handleBeforeUnload);
-  };
-  }, []);
+    navigate("/tests");
+
+  }
+
 
   async function onTestEnd(){
-    dispatch(submitTest());
-    navigate("/tests");
-    const res = await axios.post('http://localhost:8000/mock/addAttemptedMocktoUser', {id : userid, data: testData});
+    console.log(testData);
+    console.log(userid);
+    const res = await axios.post('http://localhost:8000/mock/addAttemptedMocktoUser', {userId : userid, data: testData});
     if(res.status === 200){
+      navigate("/tests");
       console.log("Mock test submitted successfully");
     }
     console.log("Unable to submit mock test");
   }
+
+  useEffect(() => {
+    dispatch(startTime());
+
+    console.log("test data "+testData);
+  }, []);
 
   return (
     <div className="testPage">
@@ -107,18 +116,8 @@ const Test = () => {
           <button className={"herobutton" + (subIndex !== 0 ? " test-disabled" : "")} id="test-nav-btn" onClick={(e) => {setSubject("Physics"); dispatch(setSubindex({subIndex:0})); dispatch(setQuestionindex({questionIndex:0})); window.location.reload()}}>Physics</button>
           <button className={"herobutton" + (subIndex !== 1 ? " test-disabled" : "")} id="test-nav-btn" onClick={(e) => {setSubject("Chemistry"); dispatch(setSubindex({subIndex:1})); dispatch(setQuestionindex({questionIndex:0})); window.location.reload()}}>Chemistry</button>
         </div>
-        {
-          testSubmitted ? (
-            <div className="test-body" id="test-submitted">
-              <h2>Test Submitted Successfully...</h2>
-            </div>
-          ) : (
-            isRunning ? (
-              <div className="test-body" id="test-submitted">
-                <h2>Time is up! Test submitted.</h2>
-              </div>
-            ) :
-            (
+        
+            
               <div className="test-body">
               <h1>Question {questionIndex+1}.</h1>
               <h2>{data.sections[subIndex].questions[questionIndex].question}</h2>
@@ -149,13 +148,13 @@ const Test = () => {
                 <button className="herobutton" id="test-nav-btn" onClick={(e) => {dispatch(clearOption({subIndex, questionIndex})); setSelectedoption("")}}>Clear</button>
                 <button className="herobutton" id="test-nav-btn">Previous</button>
                 <button className="herobutton" id="test-nav-btn">Next</button>
+                <button className="herobutton" id="test-nav-btn" onClick={fetchData}>Save</button>
               </div>
               <div className="submit-container">
               <button className="herobutton" id="submit-nav-btn" onClick={() => {onTestEnd()}}>Submit</button>
               </div>
             </div>
-            )
-          )}
+            
       </div>
     </div>
   )
