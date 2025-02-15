@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 // Define the schema for individual questions
 const questionSchema = new mongoose.Schema({
-  question: { type: String, required: true },
+  question: { type: String, required:false},
   question_image: { type: String, default: '' },
   options: {
     a: { type: String, required: false },

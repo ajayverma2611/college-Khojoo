@@ -45,15 +45,15 @@ const getStrokeColor = (data, index) => {
 };
 
 const PerformanceChart = () => {
-  const id_data = useSelector((state) => state.user.data._id);
+  const id_data = useSelector((state) => state.user.id);
 
   const [data, setdata] = useState([]);
 
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await axios.post("http://localhost:8000/mock/attemptedmocktests",
-            {id : id_data}
+        const response = await axios.post("http://localhost:8000/mock/attemptedmocks",
+            {userId : id_data}
         );
         const data = await response.data;
         console.log(data);

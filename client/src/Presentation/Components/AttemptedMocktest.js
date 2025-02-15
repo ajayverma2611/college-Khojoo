@@ -8,7 +8,7 @@ import { useSelector } from "react-redux";
 
 const AttemptedMocktests = () => {
   const navigate = useNavigate();
-  const id_data = useSelector((state) => state.user.data._id);
+  const id_data = useSelector((state) => state.user.id);
 //   const dispatch = useDispatch();
   
   // Start test function
@@ -20,9 +20,10 @@ const AttemptedMocktests = () => {
   // Fetch mocktests data from the server
   useEffect(() => {
     async function fetchData() {
+        console.log(id_data);
       try {
-        const response = await axios.post("http://localhost:8000/mock/attemptedmocktests",
-            {id : id_data}
+        const response = await axios.post("http://localhost:8000/mock/attemptedmocks",
+            {userId : id_data}
         );
         const data = await response.data;
         console.log(data);

@@ -17,6 +17,7 @@ import {PersistGate} from 'redux-persist/integration/react';
 import ExamExplanation from './Presentation/Pages/ExamExplanation';
 import {useDispatch} from 'react-redux';
 import {setUserData} from './Application/StateManagement/slices/UserSlice';
+import { setUserId } from './Application/StateManagement/slices/UserSlice';
 import { useEffect } from 'react';
 import axios from 'axios';
 
@@ -26,9 +27,9 @@ function App() {
   const fetUserDetails = async () => {
     try{
       const response = await axios.get("http://localhost:8000/auth/profile", { withCredentials: true });
-      console.log(response.data);
-      dispatch(setUserData(response.data));
-
+      console.log(response.data.data);
+      dispatch(setUserData(response.data.data));
+      dispatch(setUserId(response.data.data._id));
     }
     catch(err){
       console.log(err);

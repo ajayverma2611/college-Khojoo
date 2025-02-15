@@ -6,9 +6,9 @@ import { setMockTestData } from "../../Application/StateManagement/slices/Mockte
 import axios from "axios";
 const InstructionPage = () => {
   const id = useSelector((state) => state.timer.id);
-  const user_id = useSelector((state) => state.user.data._id);
+  const user_id = useSelector((state) => state.user.id);
   const dispatch = useDispatch();
-  const testData = useSelector((state) => state.mocktest.mockTestData);
+  var testData = useSelector((state) => state.mocktest.mockTestData);
   useEffect(() => {
     async function fetchData(){
       const response = await axios.post(`http://localhost:8000/mock/mocktestdata`, {id});
@@ -17,17 +17,21 @@ const InstructionPage = () => {
       if(!data){
         console.log("Not found");
       }
+      // console.log("test data ");
+      // console.log(data);
       dispatch(setMockTestData(data));
+      testData = data;
     }
     fetchData();
   }, []);
 
   async function onStart(){
-    const res = await axios.post('http://localhost:8000/mock/addMocktoUser', {id : user_id, data: testData});
-      if(res.status === 200){
-        console.log("Your test is paused");
-      }else{
-        console.log("Error in pausing the test");
+    console.log(testData);
+    const res = await axios.post('http://localhost:8000/mock/addMocktoUser', {userId : user_id, data: testData});
+    const exists = await res.existing;
+      if(exists){
+        console.log("Test already exists");
+        dispatch(setMockTestData(res.data));
       }
     }
 
