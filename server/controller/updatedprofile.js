@@ -17,7 +17,7 @@ async function updateProf(req,res){
         user.location = location;
     }
     await user.save();
-    res.status(200).json({error:false,message:"User updated successfully"});
+    res.status(200).json({error:false,message:"User updated successfully",data:user});
 };
 
 module.exports = updateProf;
