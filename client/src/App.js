@@ -20,6 +20,7 @@ import {setUserData} from './Application/StateManagement/slices/UserSlice';
 import { setUserId } from './Application/StateManagement/slices/UserSlice';
 import { useEffect } from 'react';
 import axios from 'axios';
+import Analysis from './Presentation/Pages/AnalysisPags';
 
 function App() {
   const dispatch = useDispatch();
@@ -42,7 +43,7 @@ function App() {
 
 
   const location = useLocation();
-  const shownavbar = location.pathname !== "/signup" && location.pathname !== "/signin" && location.pathname !== "/test";
+  const shownavbar = location.pathname !== "/signup" && location.pathname !== "/signin" && location.pathname !== "/test" && location.pathname.indexOf("/analysis", 0);
   return (
     <div style={{boxSizing:'border-box'}}>
       {shownavbar && <Navbar />}
@@ -58,6 +59,7 @@ function App() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/materials" element={<Materials />} />
         <Route path="/exam/:id" element={<ExamExplanation/>} />
+        <Route path="/analysis/:index" element={<Analysis />} />
       </Routes>
     </div>
   );

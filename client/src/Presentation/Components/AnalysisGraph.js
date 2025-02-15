@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 
 // Custom Tooltip
 const CustomTooltip = ({ active, payload }) => {
-
+  
   if (active && payload && payload.length) {
     return (
       <div style={{
@@ -38,7 +38,6 @@ const PerformanceChart = () => {
             {userId : id_data}
         );
         const data = await response.data;
-        console.log(data);
         if(data.error!=true){
             setdata(data); // Make sure to access 'data' key in the response
         }
@@ -82,22 +81,6 @@ const PerformanceChart = () => {
           />
         </LineChart>
       </ResponsiveContainer>
-
-      {/* Analysis Box */}
-      {/* <div style={{
-        marginTop: 20,
-        padding: "15px",
-        borderRadius: "10px",
-        background: "white",
-        boxShadow: "0px 4px 10px rgba(0,0,0,0.1)",
-        textAlign: "left",
-        display: "inline-block",
-        minWidth: "200px"
-      }}>
-        <h4 style={{ color: "#00C49F", marginBottom: "10px" }}>Analysis</h4>
-        <p><strong>Attempted:</strong> {mockTestData.length}</p>
-        <p><strong>Max scoredMarks:</strong> {Math.max(...mockTestData.map(d => d.score))}</p>
-      </div> */}
     </div>
   );
 };

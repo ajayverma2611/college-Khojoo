@@ -5,19 +5,13 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useSelector } from "react-redux";
+import Analysis from "../Pages/AnalysisPags";
 
 const AttemptedMocktests = () => {
   const navigate = useNavigate();
   const id_data = useSelector((state) => state.user.id);
-//   const dispatch = useDispatch();
-  
-  // Start test function
-  
-
-  // State to hold the tests data
   const [tests, setTests] = useState([]);
 
-  // Fetch mocktests data from the server
   useEffect(() => {
     async function fetchData() {
         console.log(id_data);
@@ -36,6 +30,9 @@ const AttemptedMocktests = () => {
     }
     fetchData();
   }, []);
+  async function showAnalysis(index) {
+    navigate(`/analysis/${index}`);
+  }
 
   return (
     <div className="mocktestmaincontainer">
@@ -54,7 +51,7 @@ const AttemptedMocktests = () => {
                         <a
                           style={{ color: "white", textDecoration: "none" }}
                           onClick={() => {
-                           
+                           showAnalysis(index);
                           }}
                         >
                           Analysis

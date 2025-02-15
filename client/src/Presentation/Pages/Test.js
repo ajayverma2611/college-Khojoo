@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { decrementTime, autoSubmit, submitTest, startTime } from "../../Application/StateManagement/slices/TimerSlice";
 import { selectOption, clearOption, setQuestionindex, setSubindex } from "../../Application/StateManagement/slices/MocktestSlice";
 import { useNavigate } from "react-router-dom";
-import { setMockTestData } from "../../Application/StateManagement/slices/MocktestSlice";
 
 import axios from "axios";
 const Test = () => {
@@ -78,6 +77,17 @@ const Test = () => {
     console.log("test data "+testData);
   }, []);
 
+  function onPrevious(){
+    if(questionIndex > 0){
+      dispatch(setQuestionindex({ questionIndex: questionIndex - 1 }));
+    }
+  }
+  function onNext(){
+    if(questionIndex < 24){
+      dispatch(setQuestionindex({ questionIndex: questionIndex + 1 }));
+    }
+  }
+
   return (
     <div className="testPage">
       <button className={`toggle-sidebar-btn ${sidebarOpen ? " colouring": ""}`} onClick={toggleSidebar}>
@@ -146,8 +156,8 @@ const Test = () => {
               </div>
               <div className="test-header" id="test-buttons">
                 <button className="herobutton" id="test-nav-btn" onClick={(e) => {dispatch(clearOption({subIndex, questionIndex})); setSelectedoption("")}}>Clear</button>
-                <button className="herobutton" id="test-nav-btn">Previous</button>
-                <button className="herobutton" id="test-nav-btn">Next</button>
+                <button className="herobutton" id="test-nav-btn" onClick={() => {onPrevious()}}>Previous</button>
+                <button className="herobutton" id="test-nav-btn" onClick={() => {onNext()}}>Next</button>
                 <button className="herobutton" id="test-nav-btn" onClick={fetchData}>Save</button>
               </div>
               <div className="submit-container">
