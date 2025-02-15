@@ -8,6 +8,7 @@ const bcrypt = require("bcrypt");
 const session = require("express-session");
 require("dotenv").config();
 const isAuthenticated = require("../middleware/auth");
+const privateuniversities = require("../controller/PrivateUniversity");
 // Existing Routes (Kept Unchanged)
 
 //  Profile Routes
@@ -15,6 +16,7 @@ router.get("/profile", isAuthenticated, profile);
 router.post("/updateprofile", isAuthenticated, updatedprofile);
 router.post("/feedbacks", isAuthenticated, feedback);
 router.post("/colleges",colleges);
+router.get("/privateuniversities", privateuniversities)
 //  Signup Route
 router.post("/signup", async (req, res) => {
   try {
@@ -74,7 +76,7 @@ router.post("/logout", (req, res) => {
 
 //  Get Authenticated User (Session Check)
 router.get("/me", (req, res) => {
-  if (!req.session.user) return res.status(401).json({ message: "Not authenticated" });
+  if (!req.session.user) return res.status(201).json({ message: "Not authenticated" });
   res.status(200).json({ user: req.session.user });
 });
 

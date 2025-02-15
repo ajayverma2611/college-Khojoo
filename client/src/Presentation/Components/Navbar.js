@@ -67,6 +67,10 @@ const Navbar = () => {
                     <Link to="/materials">Materials</Link>
                 </div>
                 <div className="nav-link">
+                    <img src={materials} alt="Materials" />
+                    <Link to="/entrancexams">Entrance Tests</Link>
+                </div>
+                <div className="nav-link">
                     <Link to="/helpandfeedback">? Help</Link>
                 </div>
             </div>
@@ -94,6 +98,10 @@ const Navbar = () => {
                 <div className="nav-link">
                     <img src={materials} alt="Materials" />
                     <Link to="/materials">Materials</Link>
+                </div>
+                <div className="nav-link">
+                    <img src={materials} alt="Materials" />
+                    <Link to="/entrancexams">Entrance Tests</Link>
                 </div>
                 <div className="nav-link">
                     <Link to="/helpandfeedback">? Help</Link>

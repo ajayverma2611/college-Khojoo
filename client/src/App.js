@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, useLocation, Navigate, useNavigate } from 'react-router-dom';
 import './App.css';
 import FeedBack from './Presentation/Pages/FeedBack';
 import Home from './Presentation/Pages/Home';
@@ -21,10 +21,11 @@ import { setUserId } from './Application/StateManagement/slices/UserSlice';
 import { useEffect } from 'react';
 import axios from 'axios';
 import Analysis from './Presentation/Pages/AnalysisPags';
+import PrivateUniversity from './Presentation/Pages/PrivateUniversity';
 
 function App() {
   const dispatch = useDispatch();
-
+  const navigate = useNavigate();
   const fetUserDetails = async () => {
     try{
       const response = await axios.get("http://localhost:8000/auth/profile", { withCredentials: true });
@@ -38,7 +39,15 @@ function App() {
   };
 
   useEffect(() => {
-    fetUserDetails();
+    async function checkUser(){
+      const res = await axios.get("http://localhost:8000/auth/me", { withCredentials: true });
+      if(res.status === 200){
+        fetUserDetails();
+      }else{
+        navigate("/signin");
+      }
+    }
+    checkUser();
   }, []);
 
 
@@ -48,7 +57,7 @@ function App() {
     <div style={{boxSizing:'border-box'}}>
       {shownavbar && <Navbar />}
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<SignIn />} />
         <Route path="/home" element={<Home />} />
         <Route path="/helpandfeedback" element={<FeedBack />} />
         <Route path="/tests" element={<MockTestPage />}/>
@@ -60,6 +69,7 @@ function App() {
         <Route path="/materials" element={<Materials />} />
         <Route path="/exam/:id" element={<ExamExplanation/>} />
         <Route path="/analysis/:index" element={<Analysis />} />
+        <Route path="/entrancexams" element={<PrivateUniversity/>} />
       </Routes>
     </div>
   );
