@@ -27,20 +27,21 @@ const CustomTooltip = ({ active, payload }) => {
 
 const PerformanceChart = () => {
   const id_data = useSelector((state) => state.user.id);
-
+  const data2 = useSelector((state) => state.user.data.attempted_mocks);
   const [data, setdata] = useState([]);
   const mockTestData = data.map((d, i) => ({ test: d.title, scoredMarks: d.scoredMarks }));
 
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await axios.post("http://localhost:8000/mock/attemptedmocks",
-            {userId : id_data}
-        );
-        const data = await response.data;
-        if(data.error!=true){
-            setdata(data); // Make sure to access 'data' key in the response
-        }
+        // const response = await axios.post("http://localhost:8000/mock/attemptedmocks",
+        //     {userId : id_data}
+        // );
+        // const data = await response.data;
+        // console.log(data);
+        // if(data.error!=true){
+            setdata(data2); // Make sure to access 'data' key in the response
+        
     } catch (error) {
         console.error("Error fetching mock tests:", error);
       }
@@ -63,7 +64,7 @@ const PerformanceChart = () => {
           <YAxis 
             domain={[0, 300]} 
             ticks={[0, 50, 100, 150, 200, 250, 300]} 
-            label={{ value: "Marks", angle: -90, position: "insideLeft" }} 
+            label={{ value: "Marks", angle: -90, position: "insideLeft" }}
             stroke="#666"
           />
           <Tooltip content={<CustomTooltip />} />

@@ -5,44 +5,40 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useSelector } from "react-redux";
-import Analysis from "../Pages/AnalysisPags";
 
-const AttemptedMocktests = () => {
+const ResumeTests = () => {
   const navigate = useNavigate();
-  const id_data = useSelector((state) => state.user.id);
-//   const dispatch = useDispatch();
-  const data  = useSelector((state) => state.user.data.attempted_mocks);
+  const dispatch = useDispatch();
+  const data = useSelector((state) => state.user.data.attempting_mocks)
   // Start test function
-  
+  const startTest = (id) => {
+    dispatch(startTime(id));
+    dispatch(resetTime());
+    navigate("/instructionpage");
+  };
 
   // State to hold the tests data
   const [tests, setTests] = useState([]);
 
+  // Fetch mocktests data from the server
   useEffect(() => {
     async function fetchData() {
-        console.log(id_data);
       try {
-        // const response = await axios.post("http://localhost:8000/mock/attemptedmocks",
-        //     {userId : id_data}
-        // );
+        // const response = await axios.post("http://localhost:8000/mock/mocktests");
         // const data = await response.data;
         // console.log(data);
-        // if(data.error!=true){
-            setTests(data); // Make sure to access 'data' key in the response
-        
-    } catch (error) {
+        console.log(data)
+        setTests(data); // Make sure to access 'data' key in the response
+      } catch (error) {
         console.error("Error fetching mock tests:", error);
       }
     }
     fetchData();
   }, []);
-  async function showAnalysis(index) {
-    navigate(`/analysis/${index}`);
-  }
 
   return (
     <div className="mocktestmaincontainer">
-      <h1 className="mocktestHeading" style={{color: "#059BB9"}}>{tests.length === 0 ? "No tests available" : "Attempted Available Mocktests"}</h1>
+      <h1 className="mocktestHeading">{tests.length === 0 ? "No Attempting Tests available" : "Resume Tests"}</h1>
       <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
         <div className="showtests">
           {tests.map((test, index) => {
@@ -52,15 +48,15 @@ const AttemptedMocktests = () => {
                     <h2 className="testName">{test.title}</h2> {/* Using 'test.title' */}
                     <div className="test-tag-cont">
                       <p id="test-tag" className="tag">3 hours</p>
-                      <p id="test-tag" className="tag">Score : {test.scoredMarks}</p>
+                      <p id="test-tag" className="tag">300 Marks</p>
                       <p id="test-tag2" className="startbtn">
                         <a
                           style={{ color: "white", textDecoration: "none" }}
                           onClick={() => {
-                           showAnalysis(index);
+                            startTest(test._id); // Using 'test._id'
                           }}
                         >
-                          Analysis
+                          Start Test
                         </a>
                       </p>
                     </div>
@@ -77,4 +73,4 @@ const AttemptedMocktests = () => {
   );
 };
 
-export default AttemptedMocktests;
+export default ResumeTests;

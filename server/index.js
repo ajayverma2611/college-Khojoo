@@ -46,7 +46,7 @@ connectToDatabase().then(
 // Start Server after Database Connection
 async () => {
   try {
-    await connectToDatabase();
+    // await connectToDatabase();
 
     app.listen(8000, () => {
       console.log("Server is running on http://localhost:8000");
