@@ -4,13 +4,11 @@ import storage from "redux-persist/lib/storage";
 import timerSlice from "../slices/TimerSlice";
 import mocktestslice from "../slices/MocktestSlice";import bookReducer from "../slices/BookSlice";
 import userSlice from "../slices/UserSlice";
-
+import privateCollegesSlice from "../slices/PrivateColleges";
 const persistConfig = {
   key: "timer",
   storage
 }
-
-
 
 const persistedReducer = persistReducer(persistConfig, timerSlice);
 const persistMocktestConfig = {
@@ -27,12 +25,20 @@ const persistUserConfig = {
 const persistedUserReducer = persistReducer(persistUserConfig, userSlice);
 
 
+const persistPrivateCollegesConfig = {
+  key: "privateCollegs",
+  storage
+}
+
+const persistedPrivateCollegesReducer = persistReducer(persistPrivateCollegesConfig, privateCollegesSlice);
+
 const store = configureStore({
   reducer: {
     timer: persistedReducer,
     mocktest: persistedMocktestReducer,
     books: bookReducer,
-    user: persistedUserReducer
+    user: persistedUserReducer,
+    privateColleges: persistedPrivateCollegesReducer
   }
 });
 

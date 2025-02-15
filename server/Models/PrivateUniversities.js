@@ -28,4 +28,6 @@ const privateUniversitySchema = new mongoose.Schema({
     }
 })
 
-module.exports = mongoose.model('PrivateUniversity',privateUniversitySchema);
+const PrivateUniversities = mongoose.model('PrivateUniversity',privateUniversitySchema);
+
+module.exports = PrivateUniversities;
