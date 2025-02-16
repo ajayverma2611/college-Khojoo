@@ -1,6 +1,7 @@
 import '../Styles/FindCollege.css';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import Loading from '../Pages/Loading';
 
 const College = ({ key, college }) => {
     return (
@@ -30,10 +31,11 @@ const FindCollege = () => {
     const [percentiledata, setPercentile] = useState(100);
     const [rankingdata, setRanking] = useState(10000000);
     const [tiertype, setTiertype] = useState("");
-
+    const [isloading, setIsloading] = useState(false);
 
     const fetchColleges = async () => {
         try {
+            setIsloading(true);
             const response = await axios.post("http://localhost:8000/auth/colleges", {
                 page: pagenumber,
                 marks: marksdata,
@@ -52,6 +54,8 @@ const FindCollege = () => {
             setTotalPages(response.data.totalPages);  // Assuming the backend returns totalPages
         } catch (error) {
             console.error("Error fetching college data: ", error);
+        } finally{
+            setIsloading(false);
         }
     };
 
@@ -92,6 +96,8 @@ const FindCollege = () => {
     };
 
     return (
+        <>
+        {isloading && <Loading />}
         <div className="find-college">
             <h1 id="find-heading" className="heading">Find Your Best College</h1>
             <form id="find-form">
@@ -220,6 +226,7 @@ const FindCollege = () => {
                 </button>
             </div>
         </div>
+        </>
     );
 };
 

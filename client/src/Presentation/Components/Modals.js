@@ -1,7 +1,8 @@
+import { useNavigate } from "react-router-dom";
 import "../Styles/Modals.css"
 import "../Styles/feedbackModal.css";
 const StartTestModal = ({showModal, confirmation, initializeTest}) => {
-
+  const navigate = useNavigate();
   const cancelTest= () => {
     showModal()
   }
@@ -9,9 +10,10 @@ const StartTestModal = ({showModal, confirmation, initializeTest}) => {
     confirmation("start");
     initializeTest();
     showModal();
+    navigate("/instructionpage");
   }
   return (
-    <div className="feedbackModalmain">
+    <div className="feedbackModalmain" id="Modal-background">
       <div className="feedbackModal" id="startModal">
         <div>
           <p className="confirmation-text">Are you ready to start the test?</p>

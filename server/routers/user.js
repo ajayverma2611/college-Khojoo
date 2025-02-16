@@ -15,7 +15,7 @@ const sendEmail = require('../controller/emailService');
 //  Profile Routes
 router.get("/profile", isAuthenticated, profile);
 router.post("/updateprofile", updatedprofile);
-router.post("/feedbacks", isAuthenticated, feedback);
+router.post("/feedback", feedback);
 router.post("/colleges",colleges);
 const TempUser = require("../models/TempUser");
 

@@ -1,12 +1,15 @@
 import "../Styles/PrivateUniversity.css";
 import {useDispatch, useSelector} from 'react-redux';
 import { setPrivateColleges } from '../../Application/StateManagement/slices/PrivateColleges';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import Loading from "./Loading";
 const PrivateUniversity = () => {
+  const [isloading, setIsloading] = useState(false);
   const dispatch = useDispatch();
   const data = useSelector(state => state.privateColleges.data);
   useEffect(() => {
     async function fetchData() {
+      setIsloading(true);
       const response = await fetch('http://localhost:8000/auth/privateuniversities');
       const collegedata = await response.json();
       if(!data){
@@ -14,12 +17,15 @@ const PrivateUniversity = () => {
       }
       console.log(collegedata);
       dispatch(setPrivateColleges(collegedata));
+      setIsloading(false);
     }
     fetchData();
   }, []);
 
   return (
-    <div className='private-university-main-container'>
+    <>
+      {isloading && <Loading />}
+      <div className='private-university-main-container'>
       <div className='private-university-container'>
         <div className='private-university-header'>
           <h1>Entrance Exams after 12th (MPC students)</h1>
@@ -52,6 +58,7 @@ const PrivateUniversity = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 

@@ -2,19 +2,22 @@ import heroimg from '../Assests/hero.png';
 import '../Styles/Hero.css';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import Loading from '../Pages/Loading';
 
 const Hero = () =>{
-
+    const [isloading, setIsloading] = useState(true);
     useEffect(()=>{
         AOS.init({
             duration: 1000,
             once: true,
             easing: 'ease-in-out'
         });
+        setIsloading(false);
     },[])
     return (
         <div className="hero">
+            {isloading && <Loading />}
             <div className="hero-left">
                 <h1 data-aos="fade-up">“Your future starts with the right choice. Let us guide you to the path that fits you best.”</h1>
                 <button data-aos="fade-up"  data-aos-delay="400" className="herobutton">Find you Path</button>

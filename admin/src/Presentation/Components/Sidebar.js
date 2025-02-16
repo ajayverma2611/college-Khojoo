@@ -3,7 +3,9 @@ import '../Styles/Sidebar.css';
 const Sidebar = () => {
     return (
         <div className="sidebar">
-            <h2 className="sidebar-heading">Sidebar</h2>
+            <div className="logo">
+                <h1>College Khojo</h1>
+            </div>
             <div className="sidebar-links">
                 <a href="/dashboard" className="sidebar-link">Dashboard</a>
                 <a href="/mockTests" className="sidebar-link">Mock Tests</a>

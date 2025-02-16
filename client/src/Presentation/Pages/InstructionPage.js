@@ -6,7 +6,7 @@ import { setMockTestData } from "../../Application/StateManagement/slices/Mockte
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { resetTime, setTime } from "../../Application/StateManagement/slices/TimerSlice";
-
+import Loading from "./Loading";
 const InstructionPage = () => {
   const id = useSelector((state) => state.timer.id);
   const user_id = useSelector((state) => state.user.id);
@@ -15,10 +15,12 @@ const InstructionPage = () => {
   const [testData, setTestData] = useState(
     useSelector((state) => state.mocktest.mockTestData)
   );
+  const [isloading, setIsloading] = useState(false);
 
   useEffect(() => {
     async function fetchData() {
       try {
+        setIsloading(true);
         const response = await axios.post(
           `http://localhost:8000/mock/mocktestdata`,
           { id }
@@ -34,6 +36,8 @@ const InstructionPage = () => {
         }
       } catch (error) {
         console.error("Error fetching data: ", error);
+      } finally{
+        setIsloading(false);
       }
     }
     if (id) fetchData();
@@ -41,6 +45,7 @@ const InstructionPage = () => {
 
   async function onStart() {
     try {
+      setIsloading(true);
       console.log(testData);
       const res = await axios.post("http://localhost:8000/mock/addMocktoUser", {
         userId: user_id,
@@ -57,10 +62,14 @@ const InstructionPage = () => {
       }
     } catch (error) {
       console.error("Error starting the test: ", error);
+    } finally{
+      setIsloading(false);
     }
   }
 
   return (
+    <>
+    {isloading && <Loading />}
     <div className="InstructionPage">
       <div>
         <h1 className="InstructionHeading">Mock Test Instructions</h1>
@@ -177,6 +186,7 @@ const InstructionPage = () => {
         </button>
       </div>
     </div>
+    </>
   );
 };
 

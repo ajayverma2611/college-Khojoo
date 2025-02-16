@@ -32,6 +32,10 @@
   color: #05B97D;
   text-align: center;
 }
+#Modal-background{
+  height: 100vh;
+  width: 100vw;
+}
 
 .instruction-container-sm{
   padding: 20px;

@@ -5,6 +5,8 @@ import exam from '../Assests/navbar-icons/exams.svg';
 import materials from '../Assests/navbar-icons/materials.svg';
 import { useState, useRef, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { LiaUniversitySolid } from "react-icons/lia";
+import { MdCancel } from "react-icons/md";
 import axios from "axios";
 
 
@@ -52,7 +54,9 @@ const Navbar = () => {
             {/* Sidebar */}
             <div ref={sidebarRef} className={"sidebar" + (showSidebar ? " sidebar-active" : "")}>
                 <div className="sidebar-btn">
-                    <button onClick={() => setShowSidebar(false)}>X</button>
+                    <button onClick={() => setShowSidebar(false)}>
+                        <MdCancel color="#05B97D" size="1.5rem" />
+                    </button>
                 </div>
                 <div className="nav-link">
                     <img src={home} alt="Home" />
@@ -67,7 +71,7 @@ const Navbar = () => {
                     <Link to="/materials">Materials</Link>
                 </div>
                 <div className="nav-link">
-                    <img src={materials} alt="Materials" />
+                    <LiaUniversitySolid className="onHover"/>
                     <Link to="/entrancexams">Entrance Tests</Link>
                 </div>
                 <div className="nav-link">
@@ -100,7 +104,7 @@ const Navbar = () => {
                     <Link to="/materials">Materials</Link>
                 </div>
                 <div className="nav-link">
-                    <img src={materials} alt="Materials" />
+                    <LiaUniversitySolid className="onHover"/>
                     <Link to="/entrancexams">Entrance Tests</Link>
                 </div>
                 <div className="nav-link">
