@@ -1,0 +1,27 @@
+
+
+.dashboard{
+    display:flex;
+    height:100%;
+    width:100%;
+
+}
+
+
+.dashboard-content{
+    display:flex;
+    flex-direction: column;
+    width:100%;
+    padding:50px;
+    padding-left: 250px;
+    align-items: center;
+    /* background-color: #f9f9f9; */
+ 
+}
+.dashboard-heading{
+    color: #05B97D;
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
