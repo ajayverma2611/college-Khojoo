@@ -6,7 +6,7 @@
 }
 
 
-.container {
+.signUp-container {
     display: flex;
     height: 100vh;
     width: 100vw;
@@ -22,22 +22,22 @@
 }
 
 .sign-up-content h1 {
-    font-size: 50px;
+    font-size: 40px;
     font-weight: bold;
     color: #000;
     margin-top: 40px;
     align-self: left;
 }
 
-.subheading {
-    font-size: 16px;
+.sign-up-subheading {
+    font-size: 14px;
     color: #666;
     text-align: center;
 }
 
 
 .sign-up-form {
-    margin-top: 30px;
+    margin-top: 22px;
     display: flex;
     flex-direction: column;
     width: 80%;
@@ -46,11 +46,11 @@
 }
 
 .sign-up-form label {
-    font-size: 14px;
+    font-size: 12px;
     font-weight: 500;
     color: #030303;
-    margin-top: 20px;
-    margin-bottom: 5px;
+    margin-top: 15px;
+    margin-bottom: 3px;
 }
 
 .sign-up-content select {
@@ -76,26 +76,13 @@
     border-radius: 4px;
     font-size: 16px;
     outline: none;
-    height: 35px;
+    height: 30px;
     
 }
 
 .sign-up-form input:focus {
     border-color: #05B97D;
     box-shadow: 0px 0px 10px rgba(5, 185, 125, 0.5);
-}
-
-
-.forgot-password {
-    text-align: right;
-    color: #05B97D;
-    font-size: 14px;
-    text-decoration: none;
-    margin-top: 20px;
-}
-
-.forgot-password:hover {
-    text-decoration: underline;
 }
 
 
@@ -116,7 +103,7 @@
     height: 35px;
     width: 130px;
     margin-left: 135px;
-    margin-top: 60px;
+    margin-top: 40px;
 }
 
 .sign-up-btn:hover {
@@ -125,7 +112,7 @@
 
 
 .signin-link {
-    margin-top: 45px;
+    margin-top: 35px;
     margin-left: 101px;
     font-size: 13px;
     color: #333;
@@ -144,10 +131,12 @@
 
 .sign-up-image {
     width: 40%;
+    height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
     background-color: #05B97D;
+    
 }
 
 .sign-up-image img {

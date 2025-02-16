@@ -1,7 +1,6 @@
 import Navbar from '../Components/Navbar';
 import '../Styles/Profile.css';
 import profileimg from  '../Assests/profile.svg';
-import editbtn from '../Assests/edit.svg';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
@@ -45,7 +44,7 @@ const Profile = () =>{
                 <div className="profile-image">
                     <img src={profileimg} alt="edit" />
                 </div>
-                <img className="editbtn" src={editbtn} alt="edit" />
+                <img className="editbtn" src="https://res.cloudinary.com/duyuxtpau/image/upload/v1739688082/dauvzwbng0zaxudckdgb.webp" alt="edit" />
             </div>
             <div className="prof-details">
                 <div className="prof-detail">
