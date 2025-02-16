@@ -1,5 +1,4 @@
 import "../Styles/HelpAndFeedBack.css";
-import helpAndFeedbackImage from "../Assests/helpandfeedback.png";
 import FeedbackModal from "./feedbackModal";
 import { useState } from "react";
 const HelpAndFeedBack = () => {
@@ -20,7 +19,7 @@ const HelpAndFeedBack = () => {
         </div>
       </div>
       <div>
-        <img src={helpAndFeedbackImage} alt="helpandfeedback" className="hfImage"/>
+        <img src="https://res.cloudinary.com/duyuxtpau/image/upload/v1739688083/kfrhxsbkl1racym5pnhi.webp" alt="helpandfeedback" className="hfImage"/>
       </div>
     </div>
     </>

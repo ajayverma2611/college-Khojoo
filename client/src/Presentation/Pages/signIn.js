@@ -2,7 +2,6 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../Styles/style.css";
-import signInImage from "../Assests/SignIn-signUp/sign_in_image.png";
 import {useSelector,useDispatch} from "react-redux";
 import {setUserData} from "../../Application/StateManagement/slices/UserSlice";
 
@@ -69,7 +68,7 @@ export default function SignIn() {
 
             {/* Right Side - Image */}
             <div className="sign-in-image">
-                <img src={signInImage} alt="Educational theme" />
+                <img src="https://res.cloudinary.com/duyuxtpau/image/upload/v1739688085/eyvitigtz2x8nphsj6i6.webp" alt="Educational theme" />
             </div>
         </div>
     );

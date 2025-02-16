@@ -28,32 +28,35 @@
     width: 100%;
     text-align: center;
     position: relative;
+   
 
 }
 
 .sign-in-content h1 {
-    font-size: 50px;
+    font-size: 45px;
     font-weight: bold;
     color: #000;
     margin-top: 40px;
-    text-wrap: none;
+    /* text-wrap: none; */
     
 }
 
 .subheading {
-    font-size: 16px;
+    font-size: 12px;
+    display: block;
     color: #666;
     margin-bottom: 20px;
     margin-left: 0;
     align-self: center;
     width: 100%;
+  
     
-    
+
 }
 
 
 .sign-in-form {
-    margin-top: 60px;
+    margin-top: 30px;
     display: flex;
     flex-direction: column;
     width: 80%;
@@ -62,7 +65,7 @@
 }
 
 .sign-in-form label {
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 500;
     color: #030303;
     margin-top: 25px;
@@ -146,6 +149,7 @@
 
 .sign-in-image {
     width: 40%;
+    height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;

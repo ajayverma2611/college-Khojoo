@@ -2,7 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "../Styles/style1.css";
-import signUpImage from "../Assests/SignIn-signUp/sign_Up_Image.png";
+
 
 export default function SignUp() {
     const [email, setEmail] = useState('');
@@ -67,7 +67,7 @@ export default function SignUp() {
 
     }
     return (
-        <div className="container">
+        <div className="signUp-container">
             {/* Left Side - Sign Un Form */}
 
             {!otpsection ?
@@ -75,7 +75,7 @@ export default function SignUp() {
             <div className="sign-up-content">
                 
                 <h1>Welcome!</h1>
-                <p className="subheading">create a free account</p>
+                <p className="sign-up-subheading">create a free account</p>
 
                 {error && <p className="error">{error}</p>}
                 {success && <p className="success">{success}</p>}
@@ -177,7 +177,7 @@ export default function SignUp() {
             
             {/* Right Side - Image */}
             <div className="sign-up-image">
-                <img src={signUpImage} alt="Educational theme" />
+                <img src="https://res.cloudinary.com/duyuxtpau/image/upload/v1739688085/a0lw8uv3cny5efun3ksq.webp" alt="Educational theme" />
             </div>
         </div>
     );
