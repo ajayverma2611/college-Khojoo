@@ -14,7 +14,7 @@ const questionSchema = new mongoose.Schema({
     d: { type: String, required: false },
     d_image_link: { type: String, required: false }
   },  // Assuming options are an array of strings
-  correctOption: { type: String, required: true },  // Assuming a single correct option is a string
+  correctOption: { type: String, required: false },  // Assuming a single correct option is a string
   selectedOption: { type: String, default: '' },  // Default empty selected option
   explanation: { type: String, default: '' },
   explanation_image: { type: String, default: '' }

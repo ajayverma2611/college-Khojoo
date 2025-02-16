@@ -14,7 +14,7 @@ const app = express();
 app.use(express.json());
 app.use(cors({ 
   credentials: true, 
-  origin: "http://localhost:3000"  // Adjust to frontend URL
+  origin: ["http://localhost:3000","http://localhost:5000"]  // Adjust to frontend URL
 }));
 
 // Setup session middleware
