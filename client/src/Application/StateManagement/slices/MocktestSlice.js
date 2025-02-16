@@ -4,7 +4,7 @@ const initialState = {
   status: false,
   data: {},
   subjectIndex: 0,
-  questionIndex: 0
+  questionIndex: 0,
 }
 
 const mocktestslice = createSlice({
@@ -28,7 +28,7 @@ const mocktestslice = createSlice({
     },
     setQuestionindex(state, action){
       state.questionIndex = action.payload.questionIndex;
-  }
+    }
   },
 });
 

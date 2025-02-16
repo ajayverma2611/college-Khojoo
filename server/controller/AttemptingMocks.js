@@ -2,7 +2,7 @@ const User = require("../models/userschema");
 
 async function addMockToUser(req, res) {
   try {
-    const { userId, data, change } = req.body;
+    const { userId, data, change, timer } = req.body;
     console.log(req.body);
    
     // Check if data is valid
@@ -31,7 +31,7 @@ async function addMockToUser(req, res) {
 
     if (mockIndex !== -1 && change === "modify") {
       console.log("modified ");
-      user.attempting_mocks[mockIndex] = { ...data };
+      user.attempting_mocks[mockIndex] = { ...data, timer: timer };
     } else if (mockIndex === -1) {
       user.attempting_mocks.push(data);
     }

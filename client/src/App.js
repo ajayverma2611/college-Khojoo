@@ -22,6 +22,7 @@ import { useEffect } from 'react';
 import axios from 'axios';
 import Analysis from './Presentation/Pages/AnalysisPags';
 import PrivateUniversity from './Presentation/Pages/PrivateUniversity';
+import StartTestModal from './Presentation/Components/Modals';
 
 function App() {
   const dispatch = useDispatch();
@@ -52,7 +53,7 @@ function App() {
 
 
   const location = useLocation();
-  const shownavbar = location.pathname !== "/signup" && location.pathname !== "/signin" && location.pathname !== "/test" && location.pathname.indexOf("/analysis", 0);
+  const shownavbar = location.pathname !== "/" && location.pathname !== "/signup" && location.pathname !== "/signin" && location.pathname !== "/test" && location.pathname.indexOf("/analysis", 0);
   return (
     <div style={{boxSizing:'border-box'}}>
       {shownavbar && <Navbar />}
@@ -70,6 +71,7 @@ function App() {
         <Route path="/exam/:id" element={<ExamExplanation/>} />
         <Route path="/analysis/:index" element={<Analysis />} />
         <Route path="/entrancexams" element={<PrivateUniversity/>} />
+        <Route path="/modals" element={<StartTestModal />} />
       </Routes>
     </div>
   );

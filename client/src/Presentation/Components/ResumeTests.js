@@ -38,7 +38,10 @@ const ResumeTests = () => {
 
   return (
     <div className="mocktestmaincontainer">
-      <h1 className="mocktestHeading">{tests.length === 0 ? "No Attempting Tests available" : "Resume Tests"}</h1>
+      <div className="mocktestheader">
+        <h1>Resume your test</h1>
+      </div>
+      <h1 className="mocktestresumeHeading">{tests.length === 0 ? "No Attempting Tests" : ""}</h1>
       <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
         <div className="showtests">
           {tests.map((test, index) => {

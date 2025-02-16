@@ -108,10 +108,9 @@ router.post("/verifyotp", async (req, res) => {
   }
 });
 
-// ✅ Login Route
+// Login Route
 router.post("/login", async (req, res) => {
   try {
-    console.log('hyyy done');
     const { email, password } = req.body;
 
     // Check if user exists
@@ -135,7 +134,6 @@ router.post("/logout", (req, res) => {
   req.session.destroy((err) => {
     if (err) return res.status(500).json({ message: "Error logging out" });
     res.clearCookie("connect.sid"); // Clear session cookie
-    console.log('hyy logout');
     res.status(200).json({ message: "Logout successful" });
   });
 });

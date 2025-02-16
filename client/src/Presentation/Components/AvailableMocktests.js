@@ -4,18 +4,36 @@ import { startTime, resetTime } from "../../Application/StateManagement/slices/T
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import StartTestModal from "./Modals";
 
 const AvailableMocktests = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  
-  
+  const [showModal, setShowModal] = useState(false);
+  const [confirmation, setConfirmation] = useState(false);
+  const [id, setId] = useState("");
+  function confirmationModal(work){
+    if(work === "start"){
+      setConfirmation(true);
+      return;
+    }
+    setConfirmation(false);
+  } 
+  const initializeTest = () => {
+    if(confirmation){
+      dispatch(startTime(id));
+      dispatch(resetTime());
+      navigate("/instructionpage");
+    }
+  }
   // Start test function
-  const startTest = (id) => {
-    dispatch(startTime(id));
-    dispatch(resetTime());
-    navigate("/instructionpage");
+  const startTest = () => {
+    setShowModal(true);
   };
+
+  const closeModal = () => {
+    setShowModal(false);
+  }
 
   // State to hold the tests data
   const [tests, setTests] = useState([]);
@@ -37,7 +55,8 @@ const AvailableMocktests = () => {
 
   return (
     <div className="mocktestmaincontainer">
-      <h1 className="mocktestHeading">{tests.length === 0 ? "No tests available" : "Available Mocktests"}</h1>
+      {showModal && <StartTestModal showModal={closeModal} confirmation={confirmationModal} initializeTest = {initializeTest}/>}
+      <h1 className="mocktestheader">{tests.length === 0 ? "No tests available" : "Available Mocktests"}</h1>
       <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
         <div className="showtests">
           {tests.map((test, index) => {
@@ -52,7 +71,8 @@ const AvailableMocktests = () => {
                         <a
                           style={{ color: "white", textDecoration: "none" }}
                           onClick={() => {
-                            startTest(test._id); // Using 'test._id'
+                            setId(test._id);
+                            startTest();
                           }}
                         >
                           Start Test

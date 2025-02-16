@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { setMockTestData } from "../../Application/StateManagement/slices/MocktestSlice";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { resetTime, setTime } from "../../Application/StateManagement/slices/TimerSlice";
 
 const InstructionPage = () => {
   const id = useSelector((state) => state.timer.id);
@@ -29,6 +30,7 @@ const InstructionPage = () => {
         } else {
           setTestData(data);
           dispatch(setMockTestData(data));
+          dispatch(resetTime());
         }
       } catch (error) {
         console.error("Error fetching data: ", error);
@@ -48,6 +50,7 @@ const InstructionPage = () => {
       if (res.data.existing === true) {
         console.log("Test already exists");
         dispatch(setMockTestData(res.data.data));
+        dispatch(setTime(res.data.data.timer));
         navigate("/test");
       } else {
         navigate("/test");

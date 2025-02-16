@@ -92,11 +92,42 @@
   padding: 5px 7px;
 }
 
+.mocktestheader{
+  background-color: #05B97D;
+  color: white;
+  padding: 10px;
+  width: fit-content;
+  border-radius: 10px;
+  font-size: 20px;
+}
+.mocktestheader h1{
+  font-size: 20px;
+  font-weight: 500;
+}
+.mocktestresumeHeading{
+  color: #05B97D;
+  font-size: 20px;
+  text-align: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+#attemptedMocktest-header{
+  background-color:#059BB9;
+  margin-bottom: 20px;
+}
+.attemptedmocktesttext{
+  color: #059BB9;
+  font-size: 20px;
+  text-align: center;
+}
+
 @media (max-width: 768px) {
  .test-tag-cont{
   gap:10px;
  }
-  
+  .mocktestmaincontainer{
+    padding-top: 20%;
+  }
 #test-tag{
   font-size: 13px;
   color: white;
@@ -104,9 +135,8 @@
   border-radius: 8px;
   padding: 5px 7px;
 }
-  .mocktestHeading {
-    font-size: 24px; 
-    padding-top: 80px;
+  .mocktestheader {
+    font-size: 24px;
   }
 
   .testsContainer {
