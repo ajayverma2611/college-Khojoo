@@ -59,7 +59,7 @@ export default function SignIn() {
                         // placeholder="Enter your password"
                     />
 
-                    <a href="#" className="forgot-password">Forget Password?</a>
+                    <a href="/forgetpassword" className="forgot-password">Forget Password?</a>
 
                     <button type="submit" className="sign-in-btn">Sign in</button>
 
