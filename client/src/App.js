@@ -22,7 +22,7 @@ import { useEffect } from 'react';
 import axios from 'axios';
 import Analysis from './Presentation/Pages/AnalysisPags';
 import PrivateUniversity from './Presentation/Pages/PrivateUniversity';
-import StartTestModal from './Presentation/Components/Modals';
+import ForgetPassword from './Presentation/Pages/ForgetPassword';
 
 function App() {
   const dispatch = useDispatch();
@@ -45,7 +45,9 @@ function App() {
       if(res.status === 200){
         fetUserDetails();
       }else{
-        navigate("/signin");
+        if(window.location.pathname !== "/signin" && window.location.pathname !== "/signup" && window.location.pathname !== "/forgetpassword"){
+          navigate("/signin");
+        }
       }
     }
     checkUser();
@@ -53,7 +55,7 @@ function App() {
 
 
   const location = useLocation();
-  const shownavbar = location.pathname !== "/" && location.pathname !== "/signup" && location.pathname !== "/signin" && location.pathname !== "/test" && location.pathname.indexOf("/analysis", 0);
+  const shownavbar = location.pathname !== "/signup" && location.pathname !== "/signin" && location.pathname !== "/test" && location.pathname.indexOf("/analysis", 0);
   return (
     <div style={{boxSizing:'border-box'}}>
       {shownavbar && <Navbar />}
@@ -65,13 +67,13 @@ function App() {
         <Route path="/instructionpage" element={<InstructionPage />} />
         <Route path="/signin" element={<SignIn />} />
         <Route path="/signup" element={<SignUp />} />
+        <Route path="/forgetpassword" element={<ForgetPassword/>} />
         <Route path="/test" element={<Test />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/materials" element={<Materials />} />
         <Route path="/exam/:id" element={<ExamExplanation/>} />
         <Route path="/analysis/:index" element={<Analysis />} />
         <Route path="/entrancexams" element={<PrivateUniversity/>} />
-        <Route path="/modals" element={<StartTestModal />} />
       </Routes>
     </div>
   );
