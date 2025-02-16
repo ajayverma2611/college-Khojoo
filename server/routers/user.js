@@ -108,6 +108,70 @@ router.post("/verifyotp", async (req, res) => {
   }
 });
 
+router.post("/resetpassword", async (req, res) => {
+  try {
+    const { email,password,confirmpassword } = req.body;
+
+    // Check if the user exists
+    if(password !== confirmpassword){
+      return res.status(400).json({ message: "Passwords do not match" });
+    }
+    const user = await User.findOne({ email });
+    if (!user) return res.status(400).json({ message: "User not found" });
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+    // Generate a 6-digit OTP
+    const otp = Math.floor(100000 + Math.random() * 900000);
+
+    const tempuser = await TempUser.find({ email });
+
+    if(tempuser){
+      await TempUser.deleteMany({ email });
+    }
+
+    const tempUser = new TempUser({
+      email,
+      password : hashedPassword,
+      otp
+    });
+    tempUser.save();
+    sendEmail(email, otp);
+
+    res.status(201).json({error:false, message: "Password reset successfully. Please verify OTP." });
+
+  }
+  catch (error) {
+    console.error('Error during password reset:', error);
+    res.status(500).json({error:true, message: "Error resetting password", error: error.message });
+  }
+});
+
+router.post("/verifyresetotp", async (req, res) => {
+  try {
+    const { email, otp } = req.body;
+
+    // Find the temporary user with the provided email and OTP
+    const tempUser
+      = await TempUser.findOne({ email, otp });
+
+    if (!tempUser) {
+      return res.status(400).json({ message: "Invalid OTP" });
+    }
+    const user = await User.findOne({ email });
+    await User.updateOne({email}, {password: tempUser.password});
+    await TempUser.deleteMany({email});
+    // Respond to the client that OTP was verified successfully
+    res.status(200).json({error:false, message: "OTP verified successfully. Password reset." });
+
+  }
+  catch (error) {
+    console.error('Error during OTP verification:', error);
+    res.status(500).json({error:true, message: "Error verifying OTP", error: error.message });
+  }
+});
+
+
+
 // ✅ Login Route
 router.post("/login", async (req, res) => {
   try {
