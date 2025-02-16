@@ -1,14 +1,35 @@
 import { useState } from "react";
 import "../Styles/feedbackModal.css";
 import { MdCancel } from "react-icons/md";
+import Loading from "../Pages/Loading";
+import axios from "axios";
+import { useSelector } from "react-redux";
 const FeedbackModal = ({showModal}) => {
   const [username, setUsername] = useState("");
   const [description, setDescription] = useState("");
-  const submitFeedback = (e) => {
+  const [isloading, setIsloading] = useState(false);
+  const [stat, setStat] = useState(false);
+  const email = useSelector((state) => state.user.data.email);
+  async function submitFeedback(e){
     e.preventDefault();
-    console.log("Feedback submitted");
-    setUsername("");
-    setDescription("");
+    console.log(email);
+    try{
+      setIsloading(true);
+      const res = await axios.post("http://localhost:8000/auth/feedback", {
+        name: username,
+        email: email,
+        message: description,
+      });
+      if(res.status === 200){
+        setStat(true);
+      }else{
+        setStat(false);
+      }
+    }catch(err){
+      console.log(err);
+    }finally{
+      setIsloading(false);
+    }
   }
   const handleUsername = (e) => {
     setUsername(e.target.value);
@@ -18,6 +39,15 @@ const FeedbackModal = ({showModal}) => {
   }
   return (
     <div className="feedbackModalmain">
+      {isloading && <Loading />}
+      {stat ? 
+        <div className="feedbackModal">
+          <div className="cancelIcon" onClick={() => showModal(false)}>
+            <MdCancel className="cancelIcon" color="#05B97D" size="1.5rem"/>
+          </div>
+          <h1 className="receivedFeedback">Thanks for your valuable feedback!!!</h1>
+        </div>
+      : 
       <div className="feedbackModal">
         <form onSubmit={(e) => submitFeedback(e)}>
           <div className="cancelIcon" onClick={() => showModal(false)}>
@@ -25,7 +55,7 @@ const FeedbackModal = ({showModal}) => {
           </div>
           <div style={{marginBottom: "15px"}}>
             <label className="feedbackmodallabels">Username: </label><br/>
-            <input type="text" placeholder="Enter you name..." className="feedbackmodalinputs" value={username} onChange={handleUsername}></input><br/>
+            <input type="text" placeholder="Enter your name..." className="feedbackmodalinputs" value={username} onChange={handleUsername}></input><br/>
           </div>
           <div>
             <label className="feedbackmodallabels">Description: </label><br/>
@@ -36,6 +66,8 @@ const FeedbackModal = ({showModal}) => {
           </div>
         </form>
       </div>
+      }
+      
     </div>
   )
 }

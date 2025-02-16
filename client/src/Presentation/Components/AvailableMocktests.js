@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import StartTestModal from "./Modals";
+import Loading from "../Pages/Loading";
 
 const AvailableMocktests = () => {
   const navigate = useNavigate();
@@ -12,6 +13,7 @@ const AvailableMocktests = () => {
   const [showModal, setShowModal] = useState(false);
   const [confirmation, setConfirmation] = useState(false);
   const [id, setId] = useState("");
+  const [isloading, setIsloading] = useState(true);
   function confirmationModal(work){
     if(work === "start"){
       setConfirmation(true);
@@ -48,14 +50,19 @@ const AvailableMocktests = () => {
         setTests(data.data); // Make sure to access 'data' key in the response
       } catch (error) {
         console.error("Error fetching mock tests:", error);
+      }finally{
+        setIsloading(false);
       }
     }
     fetchData();
   }, []);
 
   return (
+    <>
+    {showModal && <StartTestModal showModal={closeModal} confirmation={confirmationModal} initializeTest = {initializeTest}/>}
     <div className="mocktestmaincontainer">
-      {showModal && <StartTestModal showModal={closeModal} confirmation={confirmationModal} initializeTest = {initializeTest}/>}
+      {isloading && <Loading />}
+      
       <h1 className="mocktestheader">{tests.length === 0 ? "No tests available" : "Available Mocktests"}</h1>
       <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
         <div className="showtests">
@@ -89,6 +96,8 @@ const AvailableMocktests = () => {
         </div>
       </div>
     </div>
+    </>
+    
   );
 };
 

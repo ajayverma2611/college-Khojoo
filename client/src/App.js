@@ -23,7 +23,7 @@ import axios from 'axios';
 import Analysis from './Presentation/Pages/AnalysisPags';
 import PrivateUniversity from './Presentation/Pages/PrivateUniversity';
 import ForgetPassword from './Presentation/Pages/ForgetPassword';
-
+import Loading from './Presentation/Pages/Loading';
 function App() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -55,7 +55,7 @@ function App() {
 
 
   const location = useLocation();
-  const shownavbar = location.pathname !== "/signup" && location.pathname !== "/signin" && location.pathname !== "/test" && location.pathname.indexOf("/analysis", 0);
+  const shownavbar = location.pathname !== "/" && location.pathname !== "/signup" && location.pathname !== "/signin" && location.pathname !== "/test" && location.pathname.indexOf("/analysis", 0) && location.pathname !== "/loading";
   return (
     <div style={{boxSizing:'border-box'}}>
       {shownavbar && <Navbar />}
@@ -74,6 +74,7 @@ function App() {
         <Route path="/exam/:id" element={<ExamExplanation/>} />
         <Route path="/analysis/:index" element={<Analysis />} />
         <Route path="/entrancexams" element={<PrivateUniversity/>} />
+        <Route path="/loading" element={<Loading />} />
       </Routes>
     </div>
   );

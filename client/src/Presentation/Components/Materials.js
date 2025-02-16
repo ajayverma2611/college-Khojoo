@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchBooks } from "../../Application/StateManagement/slices/BookSlice";
 import "../Styles/Materials.css";
+import Loading from "../Pages/Loading";
 
 const Materials = () => {
   const dispatch = useDispatch();
@@ -11,9 +12,6 @@ const Materials = () => {
     dispatch(fetchBooks()); // Fetch books when the component loads
   }, [dispatch]);
 
-  console.log("📚 Books in Redux state:", books);
-
-  // ✅ Group books by category
   const groupedBooks = books?.reduce((acc, book) => {
     const { category } = book;
     if (!acc[category]) {
@@ -25,7 +23,7 @@ const Materials = () => {
 
   return (
     <div className="gallery">
-      {status === "loading" && <p>Loading books...</p>}
+      {status === "loading" && <Loading />}
       {status === "failed" && <p>Error fetching books: {error}</p>}
       {status === "succeeded" && Object.keys(groupedBooks).length > 0 ? (
         Object.entries(groupedBooks).map(([category, books]) => (

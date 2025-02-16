@@ -3,7 +3,7 @@ import "../Styles/Test.css";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
 import { setQuestionindex, setSubindex } from "../../Application/StateManagement/slices/MocktestSlice";
-
+import "../Styles/AnalysisPage.css";
 const Analysis = () => {
   const { index } = useParams();
   const parsedIndex = Number(index);
@@ -12,8 +12,8 @@ const Analysis = () => {
 
   const [subject, setSubject] = useState("Physics");
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const subIndex = useSelector((state) => state.mocktest.subjectIndex) || 0;
-  const questionIndex = useSelector((state) => state.mocktest.questionIndex) || 0;
+  const subIndex = useSelector((state) => state.mocktest.subjectIndex);
+  const questionIndex = useSelector((state) => state.mocktest.questionIndex);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -150,6 +150,17 @@ const Analysis = () => {
             <button className="herobutton" id="test-nav-btn" onClick={() => {onNext()}}>
               Next
             </button>
+          </div>
+          <div className="explanation-container">
+            <h2>Explanation for this question:</h2>
+            <p>{data?.sections?.[subIndex]?.questions?.[questionIndex]?.explanation || ""}</p>
+            {data?.sections?.[subIndex]?.questions?.[questionIndex]?.explanation_image && (
+              <img
+                src={data.sections[subIndex].questions[questionIndex].explanation_image}
+                className="test-question-image"
+                alt="Explanation"
+              />
+            )}
           </div>
           <div className="submit-container">
             <button className="herobutton" id="submit-nav-btn" onClick={() => navigate("/tests")}>

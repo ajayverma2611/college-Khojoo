@@ -129,6 +129,18 @@ nav{
     transition: 0.3s;
 }
 
+.onHover{
+    color:#555555;
+    height: 1.4rem;
+    width: 1.5rem;
+}
+
+.onHover:hover{
+    color:#05B97D;
+    height: 1.6rem;
+    width: 1.6rem;
+}
+
 
 .nav-link img {
     height: 20px;

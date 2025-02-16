@@ -13,7 +13,6 @@ const Home = () =>{
     },[]);
     return (
     <div >
-        <Navbar/>
         <Hero/>
         <About/>
         <div className="paths">

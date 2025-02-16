@@ -6,40 +6,51 @@ import { useSelector } from 'react-redux';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import {setUserData} from '../../Application/StateManagement/slices/UserSlice';
-
+import Loading from './Loading';
+import PerformanceChart from '../Components/AnalysisGraph';
+import AttemptedMocktests from '../Components/AttemptedMocktest';
 const Profile = () =>{
     const [user,setUser] = useState(useSelector((state)=>state.user.data));
     const [name,setName]= useState('');
     const [location,setLocation] = useState("");
+    const [isloading, setIsloading] = useState(false);
     const dispatch = useDispatch();
 
     const [nameedit,setnameedit] = useState(false);
     const [locationedit,setlocationedit] = useState(false);
     
     useEffect(()=>{
+        setIsloading(true);
         const data = localStorage.getItem("user");
         console.log(data);
         console.log(user);
         setName(user.name);
         setLocation(user.location);
+        setIsloading(false);
     },[]);
 
     const HandleChange =async () =>{
-        const response = await axios.post("http://localhost:8000/auth/updateprofile",{
-            id : user._id,
-            name : name,
-            location : location
-        });
-        console.log(response);
-        if(response.data.error === false){
-            dispatch(setUserData(response.data.data));
-            window.location.reload();
+        try{
+            setIsloading(true);
+            const response = await axios.post("http://localhost:8000/auth/updateprofile",{
+                id : user._id,
+                name : name,
+                location : location
+            });
+            if(response.data.error === false){
+                dispatch(setUserData(response.data.data));
+                window.location.reload();
+            }
+        }catch(err){
+            console.log("Error");
+        }finally{
+            setIsloading(false);
         }
     }
 
     return (
         <div className="profile-page">
-            <Navbar/>
+            {isloading && <Loading />}
             <div className="profile-header">
                 <div className="profile-image">
                     <img src={profileimg} alt="edit" />
@@ -126,6 +137,8 @@ const Profile = () =>{
                 </div>
                 
             </div>
+            <PerformanceChart />
+            <AttemptedMocktests />
         </div>
     )
 }
