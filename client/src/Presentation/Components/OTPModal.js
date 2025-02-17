@@ -47,7 +47,7 @@ const OTPModalSignUp = ({ email, setIsModalOpen, navigate, setError, showModal }
 
       if (response.data.message === "OTP verified successfully. Account created.") {
         setIsModalOpen(false);
-        setTimeout(() => navigate("/signin"), 1500); // Navigate to sign-in after OTP verification
+        setTimeout(() => navigate("/signin"), 1500); 
       } else {
         setError("Invalid OTP");
       }
