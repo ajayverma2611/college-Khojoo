@@ -11,7 +11,7 @@ require("dotenv").config();
 const app = express();
 
 // Middleware
-app.use(express.json());
+app.use(express.json({ limit: '10mb' }));
 app.use(cors({ 
   credentials: true, 
   origin: ["http://localhost:3000","http://localhost:5000"]  // Adjust to frontend URL
