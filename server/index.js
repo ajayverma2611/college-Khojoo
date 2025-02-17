@@ -61,7 +61,8 @@ async () => {const express = require("express");
   app.use(
     cors({
       credentials: true,
-      origin: ["http://localhost:3000", "http://localhost:5000", "https://khojo-college.vercel.app"], // Add Vercel frontend URL
+      origin: ["https://khojo-college.vercel.app"], // Add Vercel frontend URL
+      methods: ['GET', 'POST', 'PUT', 'DELETE']
     })
   );
   
@@ -76,7 +77,7 @@ async () => {const express = require("express");
       }),
       cookie: {
         httpOnly: true,
-        secure: process.env.NODE_ENV === "production", // Secure in production
+        secure: true, // Secure in production
         sameSite: "lax",
         maxAge: 24 * 60 * 60 * 1000, // 1 day
       },
