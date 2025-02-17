@@ -2,7 +2,7 @@ const router = require('express').Router();
 const feedback = require('../controller/feedback');
 const profile = require("../controller/profile");
 const updatedprofile = require("../controller/updatedprofile");
-const User = require("../models/userschema");
+const User = require("../Models/userschema");
 const colleges = require("../controller/collegedetails");
 const bcrypt = require("bcrypt");
 const session = require("express-session");
@@ -81,7 +81,7 @@ router.post("/updateprofile", updatedprofile);
 router.post("/contactus", contactus);
 router.post("/feedback", feedback);
 router.post("/colleges",colleges);
-const TempUser = require("../models/TempUser");
+const TempUser = require("../Models/TempUser");
 
 
 

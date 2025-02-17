@@ -1,4 +1,4 @@
-const MockTest = require('../models/MockTestSchema');
+const MockTest = require('../Models/MockTestSchema');
 
 
 const AddMockTest = async (req,res) => {

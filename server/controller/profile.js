@@ -1,4 +1,4 @@
-const User = require('../models/userschema.js');
+const User = require('../Models/userschema.js');
 
 
 async function userprofile(req,res){
