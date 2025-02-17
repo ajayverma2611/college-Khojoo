@@ -20,13 +20,17 @@ const Profile = () =>{
     const [locationedit,setlocationedit] = useState(false);
     
     useEffect(()=>{
+
         setIsloading(true);
         const data = localStorage.getItem("user");
+
+        
         console.log(data);
         console.log(user);
         setName(user.name);
         setLocation(user.location);
         setIsloading(false);
+
     },[]);
 
     const HandleChange =async () =>{

@@ -16,25 +16,20 @@ const AvailableMocktests = () => {
   function confirmationModal(work){
     if(work === "start"){
       setConfirmation(true);
+      console.log("reched here 2");
       return;
     }
     setConfirmation(false);
   } 
-  const initializeTest = () => {
-    if(confirmation){
-      console.log(id);
-      dispatch(startTime(id));
-      dispatch(resetTime());
-      dispatch(settestId(id));
-      navigate("/instructionpage");
-    }
-  }
+  
   // Start test function
   const startTest = () => {
+    dispatch(startTime(id));
     setShowModal(true);
   };
 
   const closeModal = () => {
+    dispatch(startTime(""));
     setShowModal(false);
   }
 
@@ -48,11 +43,14 @@ const AvailableMocktests = () => {
         const response = await axios.post("http://localhost:8000/mock/mocktests");
         const data = await response.data;
         console.log(data);
-        setTests(data.data); // Make sure to access 'data' key in the response
+        setTests(data.data || []); 
+        // Make sure to access 'data' key in the response
+        console.log(data.data);
+        setIsloading(false);
       } catch (error) {
         console.error("Error fetching mock tests:", error);
       }finally{
-        setIsloading(false);
+        // setIsloading(false);
       }
     }
     fetchData();
@@ -60,14 +58,19 @@ const AvailableMocktests = () => {
 
   return (
     <>
-    {showModal && <StartTestModal showModal={closeModal} confirmation={confirmationModal} initializeTest = {initializeTest}/>}
+    {showModal && <StartTestModal showModal={closeModal} confirmation={confirmationModal} id={id}/>}
     <div className="mocktestmaincontainer">
       {isloading && <Loading />}
       
-      <h1 className="mocktestheader">{tests.length === 0 ? "No tests available" : "Available Mocktests"}</h1>
+      <h1 className="mocktestheader">Available Mocktests</h1>
       <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
         <div className="showtests">
-          {tests.map((test, index) => {
+          {
+            // If there are no tests available, display a message
+            (tests===undefined) ? <h2>No tests available</h2>
+
+            :
+            tests.map((test, index) => {
               return (
                 <div key={index} className="testContainer">
                   <div style={{ display: "flex", flexWrap: "wrap", gap: "20px" }}>
@@ -93,7 +96,9 @@ const AvailableMocktests = () => {
                   </p>
                 </div>
               );
-            })}
+            })
+          }
+          
         </div>
       </div>
     </div>
