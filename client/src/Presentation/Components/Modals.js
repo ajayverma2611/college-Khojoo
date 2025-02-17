@@ -1,15 +1,22 @@
 import { useNavigate } from "react-router-dom";
 import "../Styles/Modals.css"
 import "../Styles/feedbackModal.css";
-const StartTestModal = ({showModal, confirmation, initializeTest}) => {
+import { startTime, resetTime } from "../../Application/StateManagement/slices/TimerSlice";
+import { useDispatch } from "react-redux";
+
+
+const StartTestModal = ({showModal, confirmation,id}) => {
   const navigate = useNavigate();
+  const disptach = useDispatch();
   const cancelTest= () => {
     showModal()
   }
   function handleStart(){
+    console.log("reached here");
     confirmation("start");
-    initializeTest();
-    showModal();
+    disptach(startTime(id))
+    console.log("id dispatched:",id);
+    disptach(resetTime());
     navigate("/instructionpage");
   }
   return (

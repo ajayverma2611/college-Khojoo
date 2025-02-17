@@ -25,8 +25,6 @@
     margin-bottom: 20px;
     margin-top: 40px;
 }
-.sidebar-heading{
-    color: #05B97D;
 
 .sidebar-heading {
     color: rgb(66, 64, 64);
@@ -103,8 +101,4 @@
 
 .arrow.down {
     transform: rotate(270deg);
-}
-
-.sidebar-sub-links{
-
 }
