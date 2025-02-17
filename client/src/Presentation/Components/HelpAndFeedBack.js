@@ -1,8 +1,22 @@
 import "../Styles/HelpAndFeedBack.css";
 import FeedbackModal from "./feedbackModal";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
 const HelpAndFeedBack = () => {
+  const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false);
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.hash) {
+      const element = document.getElementById(location.hash.substring(1)); // Remove the '#' symbol
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+  }, [location]);
   return (
     <>
     {showModal && <FeedbackModal showModal = {setShowModal}/>}
@@ -15,7 +29,7 @@ const HelpAndFeedBack = () => {
         </div>
         <div className="hfBtnContainer">
           <button className="hfBtn" onClick={(e) => setShowModal(true)}>FeedBack</button>
-          <button className="hfBtn">Contact Us</button>
+          <button onClick={()=>{ navigate("/home#footer-box")}} className="hfBtn">Contact Us</button>
         </div>
       </div>
       <div>

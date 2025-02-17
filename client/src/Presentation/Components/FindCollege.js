@@ -13,6 +13,11 @@ const College = ({ key, college }) => {
                     <div className="college-info">
                         <h1 className="tag">{college.State}</h1>
                         <h1 className={"tag" + (college.Tier === "2" ? " tag-sad" : (college.Tier === "3" ? " tag-poor" : ""))}>Tier {college.Tier}</h1>
+                        <h1 className="tag">{college.Gender}</h1>
+                        <h1 className="tag">{college.Percentile}%ile</h1>
+                        <h1 className="tag">{college["Seat Type"]}</h1>
+                        <h1 className="tag">Closing Rank {college["Closing Rank"]}</h1>
+                        <h1 className="tag">{college.Marks} / 300</h1>
                     </div>
                 </div>
             </div>
@@ -29,13 +34,23 @@ const FindCollege = () => {
     const [pagenumber, setPage] = useState(1);
     const [marksdata, setMarks] = useState(300);
     const [percentiledata, setPercentile] = useState(100);
-    const [rankingdata, setRanking] = useState(10000000);
+    const [rankingdata, setRanking] = useState(1);
     const [tiertype, setTiertype] = useState("");
     const [isloading, setIsloading] = useState(false);
-
+    const [gender, setGender] = useState("");
+    const [seattype, setSeattype] = useState("");
     const fetchColleges = async () => {
         try {
             setIsloading(true);
+            console.log({
+                page: pagenumber,
+                marks: marksdata,
+                percentile: percentiledata,
+                ranking: rankingdata,
+                examtype : selectedOption,
+                tiertype : tiertype,
+                location: selectedLocation
+            });
             const response = await axios.post("http://localhost:8000/auth/colleges", {
                 page: pagenumber,
                 marks: marksdata,
@@ -44,16 +59,22 @@ const FindCollege = () => {
                 examtype : selectedOption,
                 tiertype : tiertype,
                 location: selectedLocation,
+                gender : gender,
+                seattype : seattype,
             });
             console.log(response);
             if(response.data.colleges.length === 0) {
+                console.log("no colleges");
                 alert("No colleges found matching the criteria");
             }
-
+            console.log(response);
             setCollegs(response.data.colleges);
             setTotalPages(response.data.totalPages);  // Assuming the backend returns totalPages
         } catch (error) {
             console.error("Error fetching college data: ", error);
+            setCollegs([]);
+            setPage(1);
+            setTotalPages(0);
         } finally{
             setIsloading(false);
         }
@@ -62,6 +83,12 @@ const FindCollege = () => {
     useEffect(() => {
         fetchColleges();
     }, [pagenumber]);
+
+    useEffect(()=>{
+        // console.log("marksdata",marksdata);
+        // console.log("percentiledata",percentiledata);
+        // console.log("rankingdata",rankingdata);
+    },[marksdata,percentiledata,rankingdata])
 
    
 
@@ -76,21 +103,26 @@ const FindCollege = () => {
 
     const handleMarksChange = (page2) => {
         setMarks(page2);
-        setPercentile(0);
-        setRanking(0);
+        setPage(1);
+    };
+    const handleGenderChange = (page2) => {
+        setGender(page2);
+        setPage(1);
+    };
+
+    const handleSeatTypeChange = (page2) => {
+        setSeattype(page2);
         setPage(1);
     };
 
     const handlePercentileChange = (page2) => {
-        setMarks(0);
+        // console.log("percentile2");
         setPercentile(page2);
-        setRanking(0);
         setPage(1);
     };
 
     const handleRankChange = (page2) => {
-        setMarks(0);
-        setPercentile(0);
+        // console.log("ranking2");
         setRanking(page2);
         setPage(1);
     };
@@ -120,6 +152,7 @@ const FindCollege = () => {
                 >
                     {/* Add location options here */}
                     <option value="" disabled>Select Location</option>
+                    <option value="">All States</option>
                     <option value="Andhra Pradesh">Andhra Pradesh</option>
                     <option value="Arunachal Pradesh">Arunachal Pradesh</option>
                     <option value="Assam">Assam</option>
@@ -166,6 +199,7 @@ const FindCollege = () => {
                             onChange={(e) => setTiertype(e.target.value)}
                         >
                             <option value="" disabled>Select Tier</option>
+                            <option value="">All Tiers</option>
                             <option value="1">Tier 1</option>
                             <option value="2">Tier 2</option>
                             <option value="3">Tier 3</option>
@@ -173,8 +207,46 @@ const FindCollege = () => {
                         <select
                             id="dropdown"
                             name="basedon"
+                            value={seattype}
+                            onChange={(e) => setSeattype(e.target.value)}
+                        >
+                            <option value="" disabled>Select Seat Type</option>
+                            <option value="">All Category</option>
+                            <option value="OPEN">OPEN</option>
+                            <option value="OBC-NCL">OBC-NCL</option>
+                            <option value="SC">SC</option>
+                            <option value="EWS">EWS</option>
+                            <option value="ST">ST</option>
+                        </select>
+                        <select
+                            id="dropdown"
+                            name="basedon"
+                            value={gender}
+                            onChange={(e) => setGender(e.target.value)}
+                        >
+                            <option value="" disabled>Select Gender</option>
+                            <option value="">All Category</option>
+                            <option value="Gender-Neutral">Gender-Neutral</option>
+                            <option value="Female-only">Female-only</option>
+
+                        </select>
+                        <select
+                            id="dropdown"
+                            name="basedon"
                             value={selectedCat}
-                            onChange={(e) => setSelectedCat(e.target.value)}
+                            onChange={(e) =>{
+
+                             setSelectedCat(e.target.value);
+                                if(e.target.value === "Marks"){
+                                    handleMarksChange(-1);
+                                }
+                                else if(e.target.value === "Percentile"){
+                                    handlePercentileChange(-1);
+                                }
+                                else if(e.target.value === "Ranking"){
+                                    handleRankChange(-1);
+                                }
+                           }}
                         >
                             <option value="Marks">Marks</option>
                             <option value="Percentile">Percentile</option>
@@ -182,16 +254,32 @@ const FindCollege = () => {
                         </select>
                         <input 
                             id="dropdown" 
-                            type="text" 
+                            type="number" 
                             name="value" 
+                            value={(selectedCat === "Marks") ? marksdata : (selectedCat === "Percentile") ? percentiledata : rankingdata}
                             placeholder="Enter the value" 
                             onChange={(e) => {
                                 const value = e.target.value;
-                                if (selectedCat === 'Marks') {
+                                if (selectedCat === "Marks") {
+                                    console.log("marks");
+
+                                    handlePercentileChange(-1);
+                                    setSelectedCat("Marks");
+                                    handleRankChange(-1);
+
                                     handleMarksChange(value);
-                                } else if (selectedCat === 'Percentile') {
+                                } else if (selectedCat === "Percentile") {
+                                    console.log("percentile");
+                                    handleMarksChange(-1);
+                                    setSelectedCat("Percentile");
+                                    handleRankChange(-1);
+
                                     handlePercentileChange(value);
-                                } else if (selectedCat === 'Ranking') {
+                                } else if (selectedCat === "Ranking") {
+                                    console.log("ranking");
+                                    handleMarksChange(-1);
+                                    handlePercentileChange(-1);
+                                    setSelectedCat("Ranking");
                                     handleRankChange(value);
                                 }
                             }}

@@ -8,8 +8,13 @@ import { useEffect } from "react";
 
 const Home = () =>{
     useEffect(()=>{
-        const data = localStorage.getItem("user");
-        console.log(data);
+        if (window.location.hash === "#footer-box") {
+            const element = document.getElementsByTagName("footer")[0];
+            if (element) {
+              // Scroll to the element with a smooth scroll
+              element.scrollIntoView({ behavior: 'smooth' ,offsetTop: 500});
+            }
+          }
     },[]);
     return (
     <div >

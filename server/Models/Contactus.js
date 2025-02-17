@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const FeedBackSchema = new mongoose.Schema({
+const Contact = new mongoose.Schema({
   name:{
     type: String,
     required: true
@@ -12,12 +12,8 @@ const FeedBackSchema = new mongoose.Schema({
   message:{
     type: String,
     required: true
-  },
-  rating:{
-    type: Number,
-    required: true
   }
 });
 
-const FeedBack = mongoose.model('FeedBack', FeedBackSchema);
-module.exports = FeedBack;
+const Contactus = mongoose.model('Contactus', Contact);
+module.exports = Contactus;

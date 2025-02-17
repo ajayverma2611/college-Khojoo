@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "../Styles/feedbackModal.css";
 import { MdCancel } from "react-icons/md";
 import Loading from "../Pages/Loading";
@@ -10,6 +10,7 @@ const FeedbackModal = ({showModal}) => {
   const [isloading, setIsloading] = useState(false);
   const [stat, setStat] = useState(false);
   const email = useSelector((state) => state.user.data.email);
+  const [rating, setRating] = useState(0);
   async function submitFeedback(e){
     e.preventDefault();
     console.log(email);
@@ -19,6 +20,7 @@ const FeedbackModal = ({showModal}) => {
         name: username,
         email: email,
         message: description,
+        rating: rating
       });
       if(res.status === 200){
         setStat(true);
@@ -60,6 +62,20 @@ const FeedbackModal = ({showModal}) => {
           <div>
             <label className="feedbackmodallabels">Description: </label><br/>
             <textarea rows="6" placeholder="Give us your valuable feedbacks" className="feedbackmodalinputs" value={description} onChange={handleDesc}></textarea>
+          </div>
+          <div className="rating-container">
+              <h3 style={{color: "#05B97D"}}>Rate Our Website:</h3>
+              <div className="stars">
+                  {[1, 2, 3, 4, 5].map((num) => (
+                      <span
+                          key={num}
+                          className={num <= rating ? "star filled" : "star"}
+                          onClick={() => setRating(num)}
+                      >
+                          ★
+                      </span>
+                  ))}
+              </div>
           </div>
           <div className="btncontainer">
             <button type="submit" className="feedbackSubmitbtn">Submit</button>

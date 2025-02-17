@@ -8,14 +8,20 @@ import { Link, useNavigate } from 'react-router-dom';
 import { LiaUniversitySolid } from "react-icons/lia";
 import { MdCancel } from "react-icons/md";
 import axios from "axios";
-
-
+import {persistor} from '../../Application/StateManagement/store';
+import { resetUserData } from '../../Application/StateManagement/slices/UserSlice';
+import { resetPrivateColleges } from '../../Application/StateManagement/slices/PrivateColleges';
+import { resetTestData } from '../../Application/StateManagement/slices/MocktestSlice';
+import { resetTimer } from '../../Application/StateManagement/slices/TimerSlice';
+import { clearBooks } from '../../Application/StateManagement/slices/BookSlice';
+import { useDispatch } from 'react-redux';
 const Navbar = () => {
     const [showDropdown, setShowDropdown] = useState(false);
     const [showSidebar, setShowSidebar] = useState(false);
     const dropdownRef = useRef(null);
     const sidebarRef = useRef(null);
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     useEffect(() => {
         const handleClickOutside = (event) => {
@@ -42,7 +48,15 @@ const Navbar = () => {
         try {
             await axios.post("http://localhost:8000/auth/logout", {}, { withCredentials: true });
             // Clear session from frontend
-            navigate("/signin"); 
+            dispatch(resetUserData());
+            dispatch(resetPrivateColleges());
+            dispatch(resetTestData());
+            dispatch(resetTimer());
+            dispatch(clearBooks());
+
+            persistor.purge().then(() =>{
+                navigate("/signin");
+            });
         } catch (error) {
             console.error("Logout failed:", error);
         }
@@ -86,7 +100,7 @@ const Navbar = () => {
 
             {/* Logo */}
             <div className="logo">
-                <h1>College Khojo</h1>
+                <h1>Khojo College</h1>
             </div>
 
             {/* Navigation Links */}
