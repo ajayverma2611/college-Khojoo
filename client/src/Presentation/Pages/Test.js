@@ -2,10 +2,10 @@ import { useState, useEffect } from "react"
 import "../Styles/Test.css"
 import { useDispatch, useSelector } from "react-redux";
 import { decrementTime, autoSubmit, submitTest, startTime, setTime } from "../../Application/StateManagement/slices/TimerSlice";
-import { selectOption, clearOption, setQuestionindex, setSubindex } from "../../Application/StateManagement/slices/MocktestSlice";
+import { selectOption, clearOption, setQuestionindex, setSubindex, resetTestData } from "../../Application/StateManagement/slices/MocktestSlice";
 import { useNavigate } from "react-router-dom";
 import Loading from "./Loading";
-
+import { setUserData, setUserId } from "../../Application/StateManagement/slices/UserSlice";
 import axios from "axios";
 const Test = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -36,7 +36,8 @@ const Test = () => {
   }
   useEffect(() => {
     setSubject(data.sections[subIndex].name);
-  },[subIndex])
+  },[subIndex]);
+  
   useEffect(() => {
     if(testSubmitted) return;
     if(time <= 0){
@@ -74,11 +75,14 @@ const Test = () => {
     try{
       setIsloading(true);
       const res = await axios.post('http://localhost:8000/mock/addAttemptedMocktoUser', {userId : userid, data: testData});
+      const response = await axios.get("http://localhost:8000/auth/profile", { withCredentials: true });
+      dispatch(setUserData(response.data.data));
+      dispatch(setUserId(response.data.data._id));
       if(res.status === 200){
         navigate("/tests");
         console.log("Mock test submitted successfully");
       }
-      console.log("Unable to submit mock test");
+      resetTestData();
     }catch(err){
       console.log(err);
     }finally{

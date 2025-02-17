@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "../Styles/Test.css";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
@@ -10,7 +10,7 @@ const Analysis = () => {
   const attemptedMocks = useSelector((state) => state.user.data?.attempted_mocks || []);
   const data = attemptedMocks[parsedIndex] || { sections: [] }; // Fallback to avoid undefined errors
 
-  const [subject, setSubject] = useState("Physics");
+  const [subject, setSubject] = useState(useSelector((state) => state.mocktest.data.sections[0].name));
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const subIndex = useSelector((state) => state.mocktest.subjectIndex);
   const questionIndex = useSelector((state) => state.mocktest.questionIndex);
@@ -30,6 +30,10 @@ const Analysis = () => {
       dispatch(setQuestionindex({ questionIndex: questionIndex + 1 }));
     }
   }
+
+  useEffect(()=>{
+    setSubject(data.sections[subIndex].name);
+  }, [subIndex]);
   return (
     <div className="testPage">
       <button className={`toggle-sidebar-btn ${sidebarOpen ? " colouring" : ""}`} onClick={toggleSidebar}>

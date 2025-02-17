@@ -24,7 +24,7 @@ const InstructionPage = () => {
         setIsloading(true);
         const response = await axios.post(
           `http://localhost:8000/mock/mocktestdata`,
-          { id }
+          { id: id }
         );
         const data = await response.data;
         console.log(data);
@@ -44,7 +44,7 @@ const InstructionPage = () => {
       }
     }
     if (id) fetchData();
-  }, [id, dispatch]);
+  }, []);
 
   async function onStart() {
     try {

@@ -55,7 +55,7 @@ export default function SignUp() {
             }, { withCredentials: true });
 
             if(response.data.message ==="OTP verified successfully. Account created."){
-                setTimeout(() => navigate("/signin"), 1500);
+                setTimeout(() => navigate("/home"), 1500);
             }
             else{
                 setError("Invalid OTP");

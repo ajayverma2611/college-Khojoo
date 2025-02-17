@@ -18,10 +18,15 @@ const userSlice = createSlice({
         },
         setUserId(state,action){
             state.id = action.payload;
+        },
+        resetUserData(state){
+            state.data = [];
+            state.session = '';
+            state.id = '';
         }
     }
 });
 
 
-export const {setUserData,setSession,setUserId} = userSlice.actions;
+export const {setUserData,setSession,setUserId, resetUserData} = userSlice.actions;
 export default userSlice.reducer;

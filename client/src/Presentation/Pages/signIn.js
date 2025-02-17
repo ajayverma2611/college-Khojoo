@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../Styles/style.css";
 import {useSelector,useDispatch} from "react-redux";
-import {setUserData} from "../../Application/StateManagement/slices/UserSlice";
+import {setUserData, setUserId} from "../../Application/StateManagement/slices/UserSlice";
 
 
 export default function SignIn() {
@@ -19,9 +19,11 @@ export default function SignIn() {
                 email,
                 password
             }, { withCredentials: true });
-            
-            localStorage.setItem("user", JSON.stringify(response.data.user)); // Store user info
-            // const respo = await axios.post("http://localhost:8000/auth/profile")
+            if(response.status === 200){
+                const respo = await axios.get("http://localhost:8000/auth/profile", {withCredentials: true});
+                dispatch(setUserData(respo.data.data));
+                dispatch(setUserId(respo.data.data._id));
+            }
             // dispatch(setUserData(respo.data.user));
             navigate("/home"); // Redirect after login
         } catch (err) {
@@ -48,6 +50,7 @@ export default function SignIn() {
                         value={email} 
                         onChange={(e) => setEmail(e.target.value)} 
                         // placeholder="Enter your email"
+                        required
                     />
 
                     <label>Password</label>
@@ -55,6 +58,7 @@ export default function SignIn() {
                         type="password" 
                         value={password} 
                         onChange={(e) => setPassword(e.target.value)} 
+                        required
                         // placeholder="Enter your password"
                     />
 
