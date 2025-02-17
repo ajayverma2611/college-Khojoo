@@ -1,9 +1,25 @@
 import '../Styles/Footer.css';
+import { useState } from 'react';
+import axios from 'axios';
+import { useSelector } from 'react-redux';
+
 
 const Footer = () =>{
+    const [contact, setContact] = useState("");
+    const user = useSelector(state => state.user.data);
+    const handleSubmit = (e) => {
+        const res = axios.post("http://localhost:8000/auth/contactus",{
+            name : user.name,
+            email : user.email,
+            message : contact
+        })
+        console.log(contact);
+        setContact("");
+        alert("Message sent successfully");
+    }
     return (
         <footer>
-            <div className="line">
+            <div id="footer-box" className="line">
             </div>
 
             <div className="footer-container">
@@ -15,7 +31,7 @@ const Footer = () =>{
                         <h2 className="footer-links">Ajay Verma</h2>
                     </div>
                     <div className="logo" id="first-footer">
-                        <h1 >College Khojo</h1>
+                        <h1 >Khojo College</h1>
                     </div>
                 </div>
                 <div className="footer-left">
@@ -40,7 +56,10 @@ const Footer = () =>{
                 </div>
                 <div className="footer-left">
                     <h1 className="footer-heading">Contact Us</h1>
-                    <textarea className="footer-textarea" placeholder="Enter your message"></textarea>
+                    <textarea className="footer-textarea" placeholder="Enter your message"
+                        onChange={(e) => setContact(e.target.value)} value={contact}
+                    ></textarea>
+                    <button style={{marginTop:"20px"}} className="herobutton" onClick={handleSubmit} >Send</button>
                 </div>
             </div>
 

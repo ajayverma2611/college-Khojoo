@@ -13,7 +13,7 @@ const Sidebar = () => {
     return (
         <div className="sidebar">
             <div className="logo">
-                <h1>College Khojo</h1>
+                <h1>Khojo College</h1>
             </div>
             <div className="sidebar-links">
                 <a href="/dashboard" className="sidebar-link">Dashboard</a>

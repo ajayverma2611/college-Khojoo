@@ -6,6 +6,16 @@
 *{
 }
 
+.profile-image-2{
+    border-radius:50%;
+    object-fit:contain;
+}
+
+.profile-image-form-cont{
+    display:flex;
+    flex-direction:column;
+}
+
 
 .profile-header{
     padding-top:70px;
@@ -21,7 +31,8 @@
 .profile-image{
     background-color: white;
     box-shadow: 0 0 10px rgba(0,0,0,0.3);
-    padding:20px;
+    /* padding:20px; */
+
     border-radius: 50%;
 }
 .profile-image img{
@@ -61,4 +72,11 @@
     font-family: 'Inter', 'sans serif';
     font-size: 20px;
     font-weight: 300;
+}
+
+@media screen and (max-width:770px)
+{
+    .profile-header{
+        flex-direction:column;
+    }
 }

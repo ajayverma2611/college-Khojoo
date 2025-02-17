@@ -100,7 +100,7 @@ const Navbar = () => {
 
             {/* Logo */}
             <div className="logo">
-                <h1>College Khojo</h1>
+                <h1>Khojo College</h1>
             </div>
 
             {/* Navigation Links */}
