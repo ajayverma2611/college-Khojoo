@@ -32,6 +32,9 @@ const Hero = () =>{
                     <img data-aos="fade-left" data-aos-delay="600" className="pic4" src="https://res.cloudinary.com/duyuxtpau/image/upload/v1739687194/qt4bdidydegwjfpfttov.webp" alt="hero" />
                 </div>
             </div>
+            <div className="hero-right" id="hero-for-mobile-3">
+                    <img data-aos="fade-right" data-aos-delay="" className="pic1" src="https://res.cloudinary.com/duyuxtpau/image/upload/v1739783423/user_profiles/zaknr1xab0k2aslahuge.webp "  alt="hero" />
+            </div>
         </div>
     )
 }
