@@ -59,10 +59,13 @@ async function collegeDetails(req, res) {
                 $lte: percentile,
             },
             "Closing Rank": {
-                $lte : rank 
+                $gte : rank 
             },
             State: {
                 $regex: location ? new RegExp(location, 'i') : '', // Case-insensitive matching
+            },
+            "Exam Type": {
+                $regex: examtype ? new RegExp(examtype, 'i') : '', // Case-insensitive matching
             },
             Tier : {
                 $regex: tiertype ? new RegExp(tiertype, 'i') : '', // Case-insensitive matching

@@ -67,7 +67,7 @@ const FindCollege = () => {
                 console.log("no colleges");
                 alert("No colleges found matching the criteria");
             }
-
+            console.log(response);
             setCollegs(response.data.colleges);
             setTotalPages(response.data.totalPages);  // Assuming the backend returns totalPages
         } catch (error) {

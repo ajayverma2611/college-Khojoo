@@ -18,7 +18,7 @@ async function sendEmail(email, otp) {
   const mailOptions = {
     from: "04sudharsan25@gmail.com", // Sender's email address
     to: email, // Recipient's email address
-    subject: 'OTP Verification for Account Creation on College Khojo', // Email subject
+    subject: 'OTP Verification for Account Creation on Khojo College', // Email subject
     text: `Your OTP is: ${otp}`, // Plain-text body with OTP
     html: `
       <html>

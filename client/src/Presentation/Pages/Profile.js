@@ -12,13 +12,14 @@ import AttemptedMocktests from '../Components/AttemptedMocktest';
 const Profile = () =>{
     const [user,setUser] = useState(useSelector((state)=>state.user.data));
     const [name,setName]= useState('');
+    const [profileimage,setProfileimage] = useState('');
     const [location,setLocation] = useState("");
     const [isloading, setIsloading] = useState(false);
     const dispatch = useDispatch();
 
     const [nameedit,setnameedit] = useState(false);
     const [locationedit,setlocationedit] = useState(false);
-    
+    const [imageedit,setimageedit] = useState(false);
     useEffect(()=>{
 
         setIsloading(true);
@@ -52,14 +53,49 @@ const Profile = () =>{
         }
     }
 
+    const handleuploadimage = async () =>{
+        try{
+            setIsloading(true);
+            const data = new FormData();
+            data.append("profilepic",profileimage);
+            data.append("id",user._id);
+
+            const response = await axios.post("http://localhost:8000/auth/updateuserprofile",data);
+            if(response.data.error === false){
+                dispatch(setUserData(response.data.data));
+                window.location.reload();
+            }
+            else{
+                console.log("Error");
+            }
+        }
+        catch(err){
+            console.log("Error");
+        }
+    }
+
     return (
         <div className="profile-page">
             {isloading && <Loading />}
             <div className="profile-header">
                 <div className="profile-image">
-                    <img src={profileimg} alt="edit" />
+                    <img className="profile-image-2" src={user.image || profileimg} alt="edit" />
                 </div>
-                <img className="editbtn" src="https://res.cloudinary.com/duyuxtpau/image/upload/v1739688082/dauvzwbng0zaxudckdgb.webp" alt="edit" />
+                <form className="profile-image-form-cont" onSubmit={(e)=>{handleuploadimage(); setimageedit(false); e.preventDefault()}}>
+                {
+                    imageedit ?
+                    
+                    <input type="file"  onChange={(e)=>{setProfileimage(e.target.files[0])}} />
+                    :
+                    <></>
+                }
+                {
+                    imageedit ?
+                    <button className="herobutton" style={{marginTop:"20px"}} onClick={()=>{handleuploadimage(); setimageedit(false)}}>Save</button>
+                    :
+                    <img onClick={()=>{setimageedit(true)}} className="editbtn" src="https://res.cloudinary.com/duyuxtpau/image/upload/v1739688082/dauvzwbng0zaxudckdgb.webp" alt="edit" />
+                }
+                </form>
             </div>
             <div className="prof-details">
                 <div className="prof-detail">
