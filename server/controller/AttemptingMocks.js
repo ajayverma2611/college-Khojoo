@@ -6,10 +6,11 @@ async function addMockToUser(req, res) {
     console.log(req.body);
    
     // Check if data is valid
-    if (!data || !data._id) {
+    console.log("1." + data);
+    if (change==="modify" && (!data || !data._id)) {
       return res.status(400).json({ error: "Invalid data: missing _id" });
     }
-
+    console.log("crossed 2");
     // Find user and ensure they exist
     const user = await User.findById(userId);
     if (!user) {

@@ -1,15 +1,19 @@
 const College = require('../models/College');
 
 async function collegeDetails(req, res) {
-    const {
+    var {
         category = "", percentile = 100, marks = 300, gender = "", location = "",
-        page = 1, limit = 5,rank  = 1000000,examtype = "JEE Mains", tiertype
+        page = 1, limit = 5,rank  = 0,examtype = "JEE Mains", tiertype,
+        seattype = ""
     } = req.body;
     
     const skip = (page - 1) * limit;  // Calculate the number of items to skip
 
-    console.log("Request body: ", req.body);
-
+    percentile = (percentile===-1) ? 100 : percentile;
+    marks = (marks===-1) ? 300 : marks;
+    rank = (rank===-1) ? 0 : rank;
+    console.log("percentile : ",percentile,", marks :",marks,", rank : ",rank );
+ 
     try {
         // Fetch colleges based on query parameters
         const collegedata = await College.find({
@@ -20,7 +24,7 @@ async function collegeDetails(req, res) {
                 $lte: percentile,
             },
             "Closing Rank": {
-                $lte : rank 
+                $gte : rank 
             },
             State: {
                 $regex: location ? new RegExp(location, 'i') : '', // Case-insensitive matching
@@ -30,7 +34,14 @@ async function collegeDetails(req, res) {
             },
             Tier : {
                 $regex: tiertype ? new RegExp(tiertype, 'i') : '', // Case-insensitive matching
+            },
+            "Seat Type":{
+                $regex: seattype ? new RegExp(seattype, 'i') : '', // Case-insensitive matching
+            },
+            "Gender":{
+                $regex : gender ? new RegExp(gender,'i') : ''
             }
+
         })
         .skip(skip) // Skip the number of items based on page
         .limit(limit); // Limit the number of results returned per page
@@ -48,11 +59,24 @@ async function collegeDetails(req, res) {
                 $lte: percentile,
             },
             "Closing Rank": {
-                $lte : rank 
+                $gte : rank 
             },
             State: {
                 $regex: location ? new RegExp(location, 'i') : '', // Case-insensitive matching
             },
+            "Exam Type": {
+                $regex: examtype ? new RegExp(examtype, 'i') : '', // Case-insensitive matching
+            },
+            Tier : {
+                $regex: tiertype ? new RegExp(tiertype, 'i') : '', // Case-insensitive matching
+            },
+            "Seat Type":{
+                $regex: seattype ? new RegExp(seattype, 'i') : '', // Case-insensitive matching
+            },
+            "Gender":{
+                $regex : gender ? new RegExp(gender,'i') : ''
+            }
+
         });
 
         const totalPages = Math.ceil(totalCount / limit); // Total number of pages

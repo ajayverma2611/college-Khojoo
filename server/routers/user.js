@@ -10,14 +10,80 @@ require("dotenv").config();
 const isAuthenticated = require("../middleware/auth");
 const privateuniversities = require("../controller/PrivateUniversity");
 // Existing Routes (Kept Unchanged)
+const updateuserprofilepic = require("../controller/updateuserprofilepic");
 const sendEmail = require('../controller/emailService');
+const contactus = require("../controller/contactus");
+const multer = require('multer');
+const path = require('path');
+const cloudinary = require('cloudinary').v2;
+cloudinary.config({
+  cloud_name: 'duyuxtpau',  // Replace with your Cloudinary cloud name
+  api_key: '521557337532656',  // Replace with your Cloudinary API key
+  api_secret: 'EPtKwTFYbMqq6Zb7Fz_Y9sUSshk'  // Replace with your Cloudinary API secret
+});
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
+
+
+
+const uploadImageIfPresent = async (req, res, next) => {
+  // Access the uploaded file from multer
+  const { file } = req; // Accessing the uploaded file from req.file
+  console.log("Uploaded file:", file); // Log the file object for debugging
+  const { profilepic } = req.body;
+  console.log("profilepic", profilepic);
+
+  if (file) {
+      try {
+          console.log("Uploading image to Cloudinary...");
+          // Use the upload_stream method to upload a Buffer to Cloudinary
+          const stream = cloudinary.uploader.upload_stream(
+              {
+                  resource_type: 'auto', // Automatically detect the file type
+                  // public_id: `profilepics/${hashedUserId}`, // Optional: Set a custom public_id
+                  folder: 'user_profiles', // Optional: Organize uploads in a folder
+                  format: 'webp', // Force the image to be stored in WebP format
+                  transformation: [{ width: 800, height: 800, crop: 'fill' }] // Optional: You can add transformations
+                  
+              },
+              (error, result) => {
+                  if (error) {
+                      console.error("Cloudinary upload error:", error);
+                      return res.status(500).json({ error: "Error uploading image to Cloudinary" });
+                  }
+
+                  // Save the secure URL of the uploaded image to the request body
+                  req.body.pic = result.secure_url;
+                  console.log("Image uploaded to Cloudinary:", result.secure_url);
+                  // Proceed to the next middleware or route handler
+                  next();
+              }
+          );
+
+          // Pipe the file buffer into the Cloudinary upload stream
+          stream.end(file.buffer); // End the stream with the buffer (this triggers the upload)
+      } catch (error) {
+          console.error("Error in image upload:", error);
+          return res.status(500).json({ error: "Error in image upload" });
+      }
+  } else {
+      next(); // If no file, continue to the next middleware
+  }
+};
+
+
+
 
 //  Profile Routes
 router.get("/profile", isAuthenticated, profile);
+router.post("/updateuserprofile", upload.single('profilepic') ,uploadImageIfPresent ,updateuserprofilepic)
 router.post("/updateprofile", updatedprofile);
+router.post("/contactus", contactus);
 router.post("/feedback", feedback);
 router.post("/colleges",colleges);
 const TempUser = require("../models/TempUser");
+
+
 
 router.get("/privateuniversities", privateuniversities)
 //  Signup Route

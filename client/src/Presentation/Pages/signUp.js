@@ -45,7 +45,6 @@ export default function SignUp() {
         }
     }
 
-
     return (
         <>
             {isModalOpen && <OTPModalSignUp

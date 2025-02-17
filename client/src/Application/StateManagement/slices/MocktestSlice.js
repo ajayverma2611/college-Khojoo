@@ -28,9 +28,15 @@ const mocktestslice = createSlice({
     },
     setQuestionindex(state, action){
       state.questionIndex = action.payload.questionIndex;
+    },
+    resetTestData(state){
+      state.data = {};
+      state.subjectIndex = 0;
+      state.questionIndex = 0;
+      state.status = false;
     }
   },
 });
 
-export const {setMockTestData, selectOption, clearOption, setSubindex, setQuestionindex} = mocktestslice.actions;
+export const {setMockTestData, selectOption, clearOption, setSubindex, setQuestionindex, resetTestData} = mocktestslice.actions;
 export default mocktestslice.reducer;

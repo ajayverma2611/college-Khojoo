@@ -1,14 +1,14 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-// ✅ Correct API URL
+
 export const fetchBooks = createAsyncThunk("books/fetchBooks", async () => {
     const response = await axios.get("http://localhost:8000/material"); 
-    return response.data || [];  // ✅ Ensure response is an array
+    return response.data || [];
 });
 
 const initialState = {
-    books: [],  // ✅ Ensure books is always an array
+    books: [],
     status: "idle",
     error: null
 };
@@ -20,6 +20,7 @@ const bookSlice = createSlice({
         clearBooks(state) {
             state.books = [];
             state.status = "idle";
+            state.error = null;
         }
     },
     extraReducers: (builder) => {
@@ -29,7 +30,7 @@ const bookSlice = createSlice({
             })
             .addCase(fetchBooks.fulfilled, (state, action) => {
                 state.status = "succeeded";
-                state.books = action.payload || []; // ✅ Ensure books is an array
+                state.books = action.payload || [];
             })
             .addCase(fetchBooks.rejected, (state, action) => {
                 state.status = "failed";
