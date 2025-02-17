@@ -13,7 +13,7 @@ const privateuniversities = require("../controller/PrivateUniversity");
 const sendEmail = require('../controller/emailService');
 
 //  Profile Routes
-router.get("/profile", isAuthenticated, profile);
+router.get("/profile", profile);
 router.post("/updateprofile", updatedprofile);
 router.post("/feedback", feedback);
 router.post("/colleges",colleges);
