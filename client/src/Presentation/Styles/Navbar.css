@@ -34,11 +34,9 @@ nav{
     align-items: center;
 }
 
-.nav-link:hover img .nav-icon path {
-    fill: #05B97D; /* Change fill to green */
-    stroke: #05B97D; /* Change stroke to green */
-  }
-  
+
+
+
 .nav-link{
     display:flex;
     position: relative;
@@ -68,6 +66,11 @@ nav{
     text-decoration: none;  /* Remove default underline */
 }
 
+.nav-active a{
+    color: #05B97D;
+    text-decoration: none   ;
+}
+
 /* 
 .nav-link:hover a{
     color : #05B97D;
@@ -91,6 +94,12 @@ nav{
     background-color: #05B97D; /* The color of the underline */
     height: 3px; /* Full width of the text */
 }
+
+.nav-active a::after {
+    background-color: #05B97D; /* The color of the underline */
+    height: 3px; /* Full width of the text */
+}
+
 
 .nav-links a:hover .nav-links a{
     text-decoration: underline;
@@ -135,19 +144,26 @@ nav{
     width: 1.5rem;
 }
 
-.onHover:hover{
+ .onHover:hover{
+    color:#05B97D;
+    height: 1.6rem;
+    width: 1.6rem;
+}
+.hovered-on-hover{
     color:#05B97D;
     height: 1.6rem;
     width: 1.6rem;
 }
 
-
 .nav-link img {
-    height: 20px;
-    width: 20px;
+   
     transition: all 0.3s ease; /* Smooth transition for opacity and color */
     opacity: 0.7; /* Slightly lower opacity to make the images darker */
     filter: brightness(30%) grayscale(100%); /* Darker gray using low brightness with grayscale */
+}
+.nav-active img{
+    opacity: 1; /* Full opacity on hover */
+    filter: grayscale(0%) brightness(100%); /* Normal brightness and removes grayscale on hover */
 }
 
 /* When hovered over the image, reset the grayscale and increase opacity */
