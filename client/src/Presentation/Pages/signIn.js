@@ -41,7 +41,7 @@ export default function SignIn() {
                 <p className="subheading">create a free account</p>
                 </div>
 
-                {error && <p className="error">{error}</p>}
+                {error && <p style={{color:"red" , fontWeight:600}}>{error} !</p>}
 
                 <form onSubmit={handleSubmit} className="sign-in-form">
                     <label>Email Address</label>
