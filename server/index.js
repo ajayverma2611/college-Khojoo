@@ -44,9 +44,54 @@ app.use("/material", bookRoutes);
 
 connectToDatabase().then(
 // Start Server after Database Connection
-async () => {
+async () => {const express = require("express");
+  const session = require("express-session");
+  const MongoStore = require("connect-mongo");
+  const cors = require("cors");
+  const connectToDatabase = require("./config/connect");
+  const userRoutes = require("./routers/user");
+  const bookRoutes = require("./routers/bookRoutes");
+  const mocktestRoutes = require("./routers/mocktest");
+  require("dotenv").config();
+  
+  const app = express();
+  
+  // Middleware
+  app.use(express.json({ limit: "10mb" }));
+  app.use(
+    cors({
+      credentials: true,
+      origin: ["http://localhost:3000", "http://localhost:5000", "https://khojo-college.vercel.app"], // Add Vercel frontend URL
+    })
+  );
+  
+  app.use(
+    session({
+      secret: process.env.SESSION_SECRET || "your_strong_secret_key",
+      resave: false,
+      saveUninitialized: false,
+      store: MongoStore.create({
+        mongoUrl: process.env.MONGO_URL,
+        collectionName: "sessions",
+      }),
+      cookie: {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production", // Secure in production
+        sameSite: "lax",
+        maxAge: 24 * 60 * 60 * 1000, // 1 day
+      },
+    })
+  );
+  
+  // Routes
+  app.use("/auth", userRoutes);
+  app.use("/mock", mocktestRoutes);
+  app.use("/material", bookRoutes);
+  
+  // Export API for Vercel
+  
   try {
-    // await connectToDatabase();
+    await connectToDatabase();
 
     app.listen(8000, () => {
       console.log("Server is running on http://localhost:8000");
