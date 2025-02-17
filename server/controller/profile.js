@@ -2,7 +2,7 @@ const User = require('../Models/userschema.js');
 
 
 async function userprofile(req,res){
-    //localhost:8000/user/profile 
+    //khojo-college-server.vercel.app/user/profile 
     if (req.session.user) {
         // If session exists, send the user data
         const user = await User.findById(req.session.user.id);

@@ -29,7 +29,7 @@ function App() {
   const navigate = useNavigate();
   const fetUserDetails = async () => {
     try{
-      const response = await axios.get("http://localhost:8000/auth/profile", { withCredentials: true });
+      const response = await axios.get("https://khojo-college-server.vercel.app/auth/profile", { withCredentials: true });
       console.log(response.data.data);
       dispatch(setUserData(response.data.data));
       dispatch(setUserId(response.data.data._id));
@@ -41,7 +41,7 @@ function App() {
 
   useEffect(() => {
     async function checkUser(){
-      const res = await axios.get("http://localhost:8000/auth/me", { withCredentials: true });
+      const res = await axios.get("https://khojo-college-server.vercel.app/auth/me", { withCredentials: true });
       if(res.status === 200){
         fetUserDetails();
       }else{

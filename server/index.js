@@ -94,7 +94,7 @@ async () => {const express = require("express");
     await connectToDatabase();
 
     app.listen(8000, () => {
-      console.log("Server is running on http://localhost:8000");
+      console.log("Server is running on https://khojo-college-server.vercel.app");
     });
   } catch (error) {
     console.error("Failed to start server:", error);

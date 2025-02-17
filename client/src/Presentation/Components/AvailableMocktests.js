@@ -40,7 +40,7 @@ const AvailableMocktests = () => {
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await axios.post("http://localhost:8000/mock/mocktests");
+        const response = await axios.post("httpss://khojo-college-server.vercel.app/mock/mocktests");
         const data = await response.data;
         console.log(data);
         setTests(data.data || []); 

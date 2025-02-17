@@ -56,7 +56,7 @@ const Test = () => {
   async function fetchData(){
     try{
       setIsloading(true);
-      await axios.post('http://localhost:8000/mock/addMocktoUser', {
+      await axios.post('https://khojo-college-server.vercel.app/mock/addMocktoUser', {
         userId: user_id,
         data: testData,
         timer: time,
@@ -74,8 +74,8 @@ const Test = () => {
   async function onTestEnd(){
     try{
       setIsloading(true);
-      const res = await axios.post('http://localhost:8000/mock/addAttemptedMocktoUser', {userId : userid, data: testData});
-      const response = await axios.get("http://localhost:8000/auth/profile", { withCredentials: true });
+      const res = await axios.post('https://khojo-college-server.vercel.app/mock/addAttemptedMocktoUser', {userId : userid, data: testData});
+      const response = await axios.get("https://khojo-college-server.vercel.app/auth/profile", { withCredentials: true });
       dispatch(setUserData(response.data.data));
       dispatch(setUserId(response.data.data._id));
       if(res.status === 200){
