@@ -7,10 +7,10 @@ const StartTestModal = ({showModal, confirmation, initializeTest}) => {
     showModal()
   }
   function handleStart(){
+    console.log("initialising test");
     confirmation("start");
     initializeTest();
     showModal();
-    navigate("/instructionpage");
   }
   return (
     <div className="feedbackModalmain" id="Modal-background">

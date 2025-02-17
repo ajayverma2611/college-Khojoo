@@ -48,6 +48,7 @@ export default function SignIn() {
                         value={email} 
                         onChange={(e) => setEmail(e.target.value)} 
                         // placeholder="Enter your email"
+                        required
                     />
 
                     <label>Password</label>
@@ -55,6 +56,7 @@ export default function SignIn() {
                         type="password" 
                         value={password} 
                         onChange={(e) => setPassword(e.target.value)} 
+                        required
                         // placeholder="Enter your password"
                     />
 

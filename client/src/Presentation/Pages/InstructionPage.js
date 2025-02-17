@@ -18,15 +18,16 @@ const InstructionPage = () => {
   const [isloading, setIsloading] = useState(false);
 
   useEffect(() => {
+    console.log("reached here" + id);
     async function fetchData() {
       try {
         setIsloading(true);
         const response = await axios.post(
           `http://localhost:8000/mock/mocktestdata`,
-          { id }
+          { id: id }
         );
         const data = response.data;
-        console.log(data);
+        console.log("hello" + data);
         if (!data) {
           console.log("Test data not found");
         } else {
@@ -41,7 +42,7 @@ const InstructionPage = () => {
       }
     }
     if (id) fetchData();
-  }, [id, dispatch]);
+  }, []);
 
   async function onStart() {
     try {

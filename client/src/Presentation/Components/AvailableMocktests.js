@@ -1,12 +1,11 @@
 import "../Styles/AvailableMocktests.css";
 import { useDispatch } from "react-redux";
-import { startTime, resetTime } from "../../Application/StateManagement/slices/TimerSlice";
+import { startTime, resetTime, settestId } from "../../Application/StateManagement/slices/TimerSlice";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import StartTestModal from "./Modals";
 import Loading from "../Pages/Loading";
-
 const AvailableMocktests = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -23,8 +22,10 @@ const AvailableMocktests = () => {
   } 
   const initializeTest = () => {
     if(confirmation){
+      console.log(id);
       dispatch(startTime(id));
       dispatch(resetTime());
+      dispatch(settestId(id));
       navigate("/instructionpage");
     }
   }

@@ -35,9 +35,12 @@ const timerSlice = createSlice({
     },
     setTime(state, action){
       state.time = action.payload;
+    },
+    settestId(state, action){
+      state.id = action.payload;
     }
   },
 });
 
-export const {startTime, decrementTime, resetTime, autoSubmit, submitTest, setTime} = timerSlice.actions;
+export const {startTime, decrementTime, resetTime, autoSubmit, submitTest, setTime, settestId} = timerSlice.actions;
 export default timerSlice.reducer;
