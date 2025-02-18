@@ -12,6 +12,7 @@ const app = express();
 
 // Middleware
 app.use(express.json({ limit: '10mb' }));
+app.use(express.urlencoded({ extended: true }));
 app.use(cors({ 
   credentials: true, 
   origin: ["http://localhost:3000","http://localhost:5000"]  // Adjust to frontend URL
@@ -61,10 +62,13 @@ async () => {const express = require("express");
   app.use(
     cors({
       credentials: true,
-      origin: ["https://khojo-college.vercel.app"], // Add Vercel frontend URL
+      origin: "https://khojo-college.vercel.app", // Add Vercel frontend URL
+      allowedHeaders: ["Content-Type", "Authorization"],
       methods: ['GET', 'POST', 'PUT', 'DELETE']
     })
   );
+
+  app.options("*", cors());
   
   app.use(
     session({
