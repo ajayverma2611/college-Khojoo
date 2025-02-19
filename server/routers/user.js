@@ -317,6 +317,7 @@ router.post("/login", async (req, res) => {
 
     // Store user session
     req.session.user = { id: user._id, email: user.email, name: user.name };
+    console.log(request.session.user);
     res.status(200).json({ message: "Login successful", user: req.session.user });
   } catch (error) {
     res.status(500).json({ message: "Error logging in", error });
