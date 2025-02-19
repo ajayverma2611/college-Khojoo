@@ -31,7 +31,7 @@ app.use(
     cookie: {
       httpOnly: true,
       secure: true, // Change to true when using HTTPS
-      sameSite: "lax", 
+      sameSite: "None", 
       maxAge: 24 * 60 * 60 * 1000, // 1 day
     },
   })
@@ -53,6 +53,6 @@ async () => {
       console.log("Server is running on http://localhost:8000");
     });
   } catch (error) {
-    console.error("Failed to start server:", error);
-  }
+    console.error("Failed to start server:", error);
+  }
 });
