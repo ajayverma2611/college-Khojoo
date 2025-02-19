@@ -316,8 +316,10 @@ router.post("/login", async (req, res) => {
     if (!isMatch) return res.status(400).json({ message: "Invalid credentials" });
 
     // Store user session
+    console.log("crossed-3");
     req.session.user = { id: user._id, email: user.email, name: user.name };
     console.log(request.session.user);
+    console.log("crossed-4");
     res.status(200).json({ message: "Login successful", user: req.session.user });
   } catch (error) {
     res.status(500).json({ message: "Error logging in", error });
