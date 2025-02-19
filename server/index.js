@@ -1,4 +1,3 @@
-
 const express = require("express");
 const session = require("express-session");
 const MongoStore = require("connect-mongo");
@@ -11,10 +10,12 @@ require("dotenv").config();
 const app = express();
 
 // Middleware
-app.use(express.json({ limit: '10mb' }));
+app.use(express.json());
 app.use(cors({ 
   credentials: true, 
-  origin: ["http://localhost:3000","http://localhost:5000"]  // Adjust to frontend URL
+  origin: ["http://localhost:3000","http://localhost:5000", "https://khojo-college.vercel.app"],  // Adjust to frontend URL
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
 }));
 
 // Setup session middleware
@@ -44,60 +45,14 @@ app.use("/material", bookRoutes);
 
 connectToDatabase().then(
 // Start Server after Database Connection
-async () => {const express = require("express");
-  const session = require("express-session");
-  const MongoStore = require("connect-mongo");
-  const cors = require("cors");
-  const connectToDatabase = require("./config/connect");
-  const userRoutes = require("./routers/user");
-  const bookRoutes = require("./routers/bookRoutes");
-  const mocktestRoutes = require("./routers/mocktest");
-  require("dotenv").config();
-  
-  const app = express();
-  
-  // Middleware
-  app.use(express.json({ limit: "10mb" }));
-  app.use(
-    cors({
-      credentials: true,
-      origin: ["https://khojo-college.vercel.app"], // Add Vercel frontend URL
-      methods: ['GET', 'POST', 'PUT', 'DELETE']
-    })
-  );
-  
-  app.use(
-    session({
-      secret: process.env.SESSION_SECRET || "your_strong_secret_key",
-      resave: false,
-      saveUninitialized: false,
-      store: MongoStore.create({
-        mongoUrl: process.env.MONGO_URL,
-        collectionName: "sessions",
-      }),
-      cookie: {
-        httpOnly: true,
-        secure: true, // Secure in production
-        sameSite: "lax",
-        maxAge: 24 * 60 * 60 * 1000, // 1 day
-      },
-    })
-  );
-  
-  // Routes
-  app.use("/auth", userRoutes);
-  app.use("/mock", mocktestRoutes);
-  app.use("/material", bookRoutes);
-  
-  // Export API for Vercel
-  
+async () => {
   try {
-    await connectToDatabase();
+    // await connectToDatabase();
 
     app.listen(8000, () => {
-      console.log("Server is running on https://khojo-college-server.vercel.app");
+      console.log("Server is running on http://localhost:8000");
     });
   } catch (error) {
-    console.error("Failed to start server:", error);
-  }
+    console.error("Failed to start server:", error);
+  }
 });
