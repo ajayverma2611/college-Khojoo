@@ -1,3 +1,4 @@
+
 const express = require("express");
 const session = require("express-session");
 const MongoStore = require("connect-mongo");
@@ -13,11 +14,9 @@ const app = express();
 app.use(express.json({ limit: '10mb' }));
 app.use(cors({ 
   credentials: true, 
-  origin: "https://khojo-college.vercel.app/",  // Adjust to frontend URL
-  methods: ["GET", "POST"],
-  allowedHeaders: ["Content-Type", "Authorization"],
+  origin: ["http://localhost:3000","http://localhost:5000"]  // Adjust to frontend URL
 }));
-app.use("*", cors());
+
 // Setup session middleware
 app.use(
   session({
@@ -30,13 +29,60 @@ app.use(
     }),
     cookie: {
       httpOnly: true,
-      secure: true, // Change to true when using HTTPS
+      secure: false, // Change to true when using HTTPS
       sameSite: "lax", 
       maxAge: 24 * 60 * 60 * 1000, // 1 day
     },
   })
 );
+
+// Routes
+app.use("/auth", userRoutes);
+app.use("/mock", mocktestRoutes);
+app.use("/material", bookRoutes);
+
+
+connectToDatabase().then(
+// Start Server after Database Connection
+async () => {const express = require("express");
+  const session = require("express-session");
+  const MongoStore = require("connect-mongo");
+  const cors = require("cors");
+  const connectToDatabase = require("./config/connect");
+  const userRoutes = require("./routers/user");
+  const bookRoutes = require("./routers/bookRoutes");
+  const mocktestRoutes = require("./routers/mocktest");
+  require("dotenv").config();
   
+  const app = express();
+  
+  // Middleware
+  app.use(express.json({ limit: "10mb" }));
+  app.use(
+    cors({
+      credentials: true,
+      origin: ["https://khojo-college.vercel.app"], // Add Vercel frontend URL
+      methods: ['GET', 'POST', 'PUT', 'DELETE']
+    })
+  );
+  
+  app.use(
+    session({
+      secret: process.env.SESSION_SECRET || "your_strong_secret_key",
+      resave: false,
+      saveUninitialized: false,
+      store: MongoStore.create({
+        mongoUrl: process.env.MONGO_URL,
+        collectionName: "sessions",
+      }),
+      cookie: {
+        httpOnly: true,
+        secure: true, // Secure in production
+        sameSite: "lax",
+        maxAge: 24 * 60 * 60 * 1000, // 1 day
+      },
+    })
+  );
   
   // Routes
   app.use("/auth", userRoutes);
@@ -54,3 +100,4 @@ app.use(
   } catch (error) {
     console.error("Failed to start server:", error);
   }
+});
