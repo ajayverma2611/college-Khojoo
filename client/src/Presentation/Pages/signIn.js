@@ -21,6 +21,7 @@ export default function SignIn() {
             }, {headers:{"Content-Type": "application/json"}, withCredentials: true });
             if(response.status === 200){
                 const respo = await axios.get("https://khojo-college-server.vercel.app/auth/profile", {withCredentials: true});
+                console.log(respo);
                 dispatch(setUserData(respo.data.data));
                 dispatch(setUserId(respo.data.data._id));
             }
