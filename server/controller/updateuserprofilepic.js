@@ -1,4 +1,4 @@
-const User  = require('../models/userschema');
+const User  = require('../Models/userschema');
 
 async function updateProf(req,res){
     const {pic,id}= req.body;

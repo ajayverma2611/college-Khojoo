@@ -1,4 +1,3 @@
-
 const express = require("express");
 const session = require("express-session");
 const MongoStore = require("connect-mongo");
@@ -14,7 +13,9 @@ const app = express();
 app.use(express.json());
 app.use(cors({ 
   credentials: true, 
-  origin: ["http://localhost:3000","http://localhost:5000"]  // Adjust to frontend URL
+  origin: ["http://localhost:3000","http://localhost:5000", "https://khojo-college.vercel.app"],  // Adjust to frontend URL
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
 }));
 
 // Setup session middleware
@@ -29,7 +30,7 @@ app.use(
     }),
     cookie: {
       httpOnly: true,
-      secure: false, // Change to true when using HTTPS
+      secure: true, // Change to true when using HTTPS
       sameSite: "lax", 
       maxAge: 24 * 60 * 60 * 1000, // 1 day
     },
@@ -52,6 +53,6 @@ async () => {
       console.log("Server is running on http://localhost:8000");
     });
   } catch (error) {
-    console.error("Failed to start server:", error);
-  }
+    console.error("Failed to start server:", error);
+  }
 });

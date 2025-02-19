@@ -1,4 +1,4 @@
-const MockTestSchema = require("../models/MockTestSchema");
+const MockTestSchema = require("../Models/MockTestSchema");
 
 async function mockTestData(req,res){
     const {id} = req.body;

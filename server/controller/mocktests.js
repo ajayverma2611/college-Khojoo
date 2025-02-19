@@ -1,4 +1,4 @@
-const Mocktest = require("../models/MockTestSchema");
+const Mocktest = require("../Models/MockTestSchema");
 
 
 
