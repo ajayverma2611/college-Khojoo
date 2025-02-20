@@ -82,6 +82,7 @@ router.post("/contactus", contactus);
 router.post("/feedback", feedback);
 router.post("/colleges",colleges);
 const TempUser = require("../Models/TempUser");
+const { Console } = require('console');
 
 
 
@@ -318,7 +319,8 @@ router.post("/login", async (req, res) => {
     // Store user session
     console.log("crossed-3");
     req.session.user = { id: user._id, email: user.email, name: user.name };
-    console.log(req.session.user);
+    console.log(req.session);
+    console.log(req.sessionID);
     console.log("crossed-4");
     res.status(200).json({ message: "Login successful", user: req.session.user });
   } catch (error) {
@@ -338,6 +340,7 @@ router.post("/logout", (req, res) => {
 //  Get Authenticated User (Session Check)
 router.get("/me", (req, res) => {
   if (!req.session.user) return res.status(201).json({ message: "Not authenticated" });
+  console.log("crossed-1");
   res.status(200).json({ user: req.session.user });
 });
 
