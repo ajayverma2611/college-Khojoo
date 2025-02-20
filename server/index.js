@@ -24,10 +24,6 @@ app.use(
     secret: "your_strong_secret_key", // Use a strong secret key
     resave: false,
     saveUninitialized: false,
-    store: MongoStore.create({
-      mongoUrl: process.env.MONGO_URL, // Explicit DB name added
-      collectionName: "sessions",
-    }),
     cookie: {
       httpOnly: true,
       secure: true, // Change to true when using HTTPS
