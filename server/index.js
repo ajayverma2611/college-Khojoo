@@ -39,7 +39,7 @@ connectToDatabase()
         }),
         cookie: {
           httpOnly: true, // ✅ Prevent JavaScript access
-          secure: process.env.NODE_ENV === "production", // ✅ Only use secure cookies in production
+          secure:true, // ✅ Only use secure cookies in production
           sameSite: "None", // ✅ Allow cross-site cookies
           maxAge: 24 * 60 * 60 * 1000, // 1 day
         },
