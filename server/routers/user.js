@@ -319,8 +319,8 @@ router.post("/login", async (req, res) => {
     // Store user session
     console.log("crossed-3");
     req.session.user = { id: user._id, email: user.email, name: user.name };
-    console.log(req.session);
-    console.log(req.sessionID);
+    console.log("hi 3 "+req.session);
+    console.log("hi 4"+req.sessionID);
     console.log("crossed-4");
     res.status(200).json({ message: "Login successful", user: req.session.user });
   } catch (error) {
