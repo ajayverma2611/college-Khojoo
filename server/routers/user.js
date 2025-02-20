@@ -323,12 +323,7 @@ router.post("/login", async (req, res) => {
     console.log("hi 4"+req.sessionID);
     console.log("crossed-4");
     // assign cookie for session and send response
-    res.cookie('session-id', req.session.user, {
-      httpOnly: true,
-      secure: true, // Use secure cookies in production,
-      sameSite:"None",
-      maxAge: 24 * 60 * 60 * 1000 // 1 day
-    }).status(200).json({ message: "Login successful", user: req.session.user });
+    res.status(200).json({ message: "Login successful", user: req.session.user });
 
   } catch (error) {
     res.status(500).json({ message: "Error logging in", error });
