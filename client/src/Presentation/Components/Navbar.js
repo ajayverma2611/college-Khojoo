@@ -3,6 +3,7 @@ import profile from '../Assests/profile.svg';
 import home from '../Assests/navbar-icons/home.svg';
 import exam from '../Assests/navbar-icons/exams.svg';
 import materials from '../Assests/navbar-icons/materials.svg';
+import Loading from '../Pages/Loading';
 import { useState, useRef, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { LiaUniversitySolid } from "react-icons/lia";
@@ -21,6 +22,7 @@ const Navbar = () => {
     const [showSidebar, setShowSidebar] = useState(false);
     const dropdownRef = useRef(null);
     const [navbarActive, setNavbarActive] = useState("");
+    const [loading, setLoading] = useState(false);
     const sidebarRef = useRef(null);
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -59,23 +61,44 @@ const Navbar = () => {
         }
         console.log(path);
     }, [window.location.pathname]); // Add path as a dependency
+    const clearCookie = (name) => {
+        document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/`;
+    };
+    
+    // Function to clear all cookies
+    const clearAllCookies = () => {
+        document.cookie.split(';').forEach((c) => {
+            const cookie = c.trim();
+            const eqPos = cookie.indexOf('=');
+            const name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+            document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/`;
+        });
+    };
 
     const handleLogout = async () => {
         try {
-            await axios.post("https://khojo-college-server.vercel.app/auth/logout", {}, { withCredentials: true });
+            setLoading(true);
+            const res = await axios.post("https://khojo-college-server.vercel.app/auth/logout", {}, { withCredentials: true });
             
             // Clear session from frontend
-            dispatch(resetUserData());
-            dispatch(resetPrivateColleges());
-            dispatch(resetTestData());
-            dispatch(resetTimer());
-            dispatch(clearBooks());
+            if(res.status === 200){
+                clearCookie('token');
+                clearAllCookies();
+                window.location.reload();
+                dispatch(resetUserData());
+                dispatch(resetPrivateColleges());
+                dispatch(resetTestData());
+                dispatch(resetTimer());
+                dispatch(clearBooks());
 
-            persistor.purge().then(() => {
-                navigate("/signin");
-            });
+                persistor.purge().then(() => {
+                    navigate("/signin");
+                });
+            }
         } catch (error) {
             console.error("Logout failed:", error);
+        } finally{
+            setLoading(false);
         }
     };
 
@@ -151,6 +174,7 @@ const Navbar = () => {
                     src={profile}
                     alt="Profile"
                 />
+                {loading && <Loading />}
                 <div className={`nav-dropdown${showDropdown ? " drop-active" : ""}`}>
                     <a href="/profile">Profile</a>
                     <a onClick={handleLogout} href="/signin">Logout</a>

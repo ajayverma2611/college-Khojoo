@@ -322,10 +322,27 @@ router.post("/login", async (req, res) => {
       httpOnly: true,
       secure: true,
       sameSite: "none",
+      maxAge: 24 * 60 * 60 * 1000
     }).status(200).json({ message: "Login successful"});
 
   } catch (error) {
     res.status(500).json({ message: "Error logging in", error });
+  }
+});
+
+
+router.post("/logout", async (req, res) => {
+  try{
+    
+    res.cookie("token", "", { 
+      httpOnly: true, 
+      sameSite: "none", 
+      expires: new Date(0)  
+  });
+  
+
+  }catch(e){
+    return res.status(500).send("Internal Server Error");
   }
 });
 

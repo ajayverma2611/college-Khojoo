@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, useLocation, Navigate, useNavigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import './App.css';
 import FeedBack from './Presentation/Pages/FeedBack';
 import Home from './Presentation/Pages/Home';
@@ -24,9 +24,21 @@ import Analysis from './Presentation/Pages/AnalysisPags';
 import PrivateUniversity from './Presentation/Pages/PrivateUniversity';
 import ForgetPassword from './Presentation/Pages/ForgetPassword';
 import Loading from './Presentation/Pages/Loading';
+import { useSelector } from 'react-redux';
+
+
+const AuthRoute = ({children}) => {
+  const {data} = useSelector((state) => state.user);
+  const isAuthenticated = !!data;
+  return isAuthenticated ? children : <SignIn />;
+}
+
+
 function App() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
+  const shownavbar = location.pathname !== "/signup" && location.pathname !== "/signin" && location.pathname !== "/test" && location.pathname.indexOf("/analysis", 0) && location.pathname !== "/loading" && location.pathname !== "/forgetpassword";
   const fetUserDetails = async () => {
     try{
       const response = await axios.get("https://khojo-college-server.vercel.app/auth/profile", { withCredentials: true });
@@ -45,14 +57,11 @@ function App() {
     fetUserDetails();
   }, []);
 
-
-  const location = useLocation();
-  const shownavbar = location.pathname !== "/" && location.pathname !== "/signup" && location.pathname !== "/signin" && location.pathname !== "/test" && location.pathname.indexOf("/analysis", 0) && location.pathname !== "/loading" && location.pathname !== "/forgetpassword";
   return (
     <div style={{boxSizing:'border-box'}}>
       {shownavbar && <Navbar />}
       <Routes>
-        <Route path="/" element={<SignIn />} />
+        <Route path="/" element={<AuthRoute><Home /></AuthRoute>} />
         <Route path="/home" element={<Home />} />
         <Route path="/helpandfeedback" element={<FeedBack />} />
         <Route path="/tests" element={<MockTestPage />}/>
