@@ -16,7 +16,6 @@ const AvailableMocktests = () => {
   function confirmationModal(work){
     if(work === "start"){
       setConfirmation(true);
-      console.log("reched here 2");
       return;
     }
     setConfirmation(false);
@@ -40,12 +39,10 @@ const AvailableMocktests = () => {
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await axios.post("httpss://khojo-college-server.vercel.app/mock/mocktests");
+        const response = await axios.post("https://khojo-college-server.vercel.app/mock/mocktests");
         const data = await response.data;
-        console.log(data);
         setTests(data.data || []); 
         // Make sure to access 'data' key in the response
-        console.log(data.data);
         setIsloading(false);
       } catch (error) {
         console.error("Error fetching mock tests:", error);
