@@ -1,4 +1,4 @@
-const User = require("../models/userschema");
+const User = require("../Models/userschema");
 
 const attempted = async(req,res)=>{
     const { userId } = req.body;

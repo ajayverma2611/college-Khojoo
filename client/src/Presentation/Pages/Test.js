@@ -56,7 +56,7 @@ const Test = () => {
   async function fetchData(){
     try{
       setIsloading(true);
-      await axios.post('http://localhost:8000/mock/addMocktoUser', {
+      await axios.post('https://khojo-college-server.vercel.app/mock/addMocktoUser', {
         userId: user_id,
         data: testData,
         timer: time,
@@ -74,11 +74,13 @@ const Test = () => {
   async function onTestEnd(){
     try{
       setIsloading(true);
-      const res = await axios.post('http://localhost:8000/mock/addAttemptedMocktoUser', {userId : userid, data: testData});
-      const response = await axios.get("http://localhost:8000/auth/profile", { withCredentials: true });
+      const res = await axios.post('https://khojo-college-server.vercel.app/mock/addAttemptedMocktoUser', {userId : userid, data: testData});
+      const response = await axios.get("https://khojo-college-server.vercel.app/auth/profile", { withCredentials: true });
       dispatch(setUserData(response.data.data));
       dispatch(setUserId(response.data.data._id));
       if(res.status === 200){
+        setSubIndex(0);
+        setQuestionIndex(0);
         navigate("/tests");
         console.log("Mock test submitted successfully");
       }
@@ -185,7 +187,7 @@ const Test = () => {
               <button className="herobutton" id="test-nav-btn" onClick={(e) => {dispatch(clearOption({subIndex, questionIndex})); setSelectedoption("")}}>Clear</button>
               <button className="herobutton" id="test-nav-btn" onClick={() => {onPrevious()}}>Previous</button>
               <button className="herobutton" id="test-nav-btn" onClick={() => {onNext()}}>Next</button>
-              <button className="herobutton" id="test-nav-btn" onClick={fetchData}>Save</button>
+              <button className="herobutton" id="test-nav-btn" onClick={fetchData}>Pause test</button>
             </div>
             <div className="submit-container">
             <button className="herobutton" id="submit-nav-btn" onClick={() => {onTestEnd()}}>Submit</button>

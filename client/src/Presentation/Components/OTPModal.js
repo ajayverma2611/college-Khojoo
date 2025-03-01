@@ -40,7 +40,7 @@ const OTPModalSignUp = ({ email, setIsModalOpen, navigate, setError, showModal }
 
     try {
       const response = await axios.post(
-        "http://localhost:8000/auth/verifyotp",
+        "https://khojo-college-server.vercel.app/auth/verifyotp",
         { email, otp: otpString },
         { withCredentials: true }
       );
@@ -48,6 +48,7 @@ const OTPModalSignUp = ({ email, setIsModalOpen, navigate, setError, showModal }
       if (response.data.message === "OTP verified successfully. Account created.") {
         setIsModalOpen(false);
         setTimeout(() => navigate("/signin"), 1500); 
+
       } else {
         setError("Invalid OTP");
       }

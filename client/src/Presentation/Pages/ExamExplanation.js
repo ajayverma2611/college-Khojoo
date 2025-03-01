@@ -12,7 +12,7 @@ const ExamExplanation = () => {
       const [modelData, setModelData] = useState(paths[(id)?id:0]);
 
     return (
-        <div>
+        <div className="exam-explanation-container">
                 <div className="Path-model">
                 <div className="path-model-2">
                     <div className="cancelIcon" onClick={(e) => {navigate("/home")}}>

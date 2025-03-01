@@ -30,6 +30,7 @@
     gap:20px;
     padding-top:30px;
     box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    cursor:pointer;
 }
 
 .path h2{
@@ -113,7 +114,6 @@
     box-sizing: border-box;
 }
 
-
 .model-path-table1{
     /* padding:30px; */
 
@@ -123,12 +123,15 @@
 }
 .model-path-table1 tr td{
     padding:14px;
-    background-color: #fbfbfb;
+    background-color: #bdedff;
+    border:1px solid #006992;
+    color:#1c1c1c;
 
 }
 .model-path-table1 tr th{
+    color:white;
     padding:14px;
-    background-color: #F3F3F3;    
+    background-color: #006992;    
 }
 
 
