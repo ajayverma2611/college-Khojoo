@@ -5,22 +5,22 @@ const updatedprofile = require("../controller/updatedprofile");
 const User = require("../Models/userschema");
 const colleges = require("../controller/collegedetails");
 const bcrypt = require("bcrypt");
-const session = require("express-session");
 require("dotenv").config();
 const isAuthenticated = require("../middleware/auth");
 const privateuniversities = require("../controller/PrivateUniversity");
-// Existing Routes (Kept Unchanged)
 const updateuserprofilepic = require("../controller/updateuserprofilepic");
 const sendEmail = require('../controller/emailService');
 const contactus = require("../controller/contactus");
 const multer = require('multer');
+const jwt = require('jsonwebtoken');
 const path = require('path');
 const cloudinary = require('cloudinary').v2;
 cloudinary.config({
-  cloud_name: 'duyuxtpau',  // Replace with your Cloudinary cloud name
-  api_key: '521557337532656',  // Replace with your Cloudinary API key
-  api_secret: 'EPtKwTFYbMqq6Zb7Fz_Y9sUSshk'  // Replace with your Cloudinary API secret
+  cloud_name: 'duyuxtpau', 
+  api_key: '521557337532656',  
+  api_secret: 'EPtKwTFYbMqq6Zb7Fz_Y9sUSshk'
 });
+
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
@@ -86,8 +86,6 @@ const TempUser = require("../Models/TempUser");
 
 
 router.get("/privateuniversities", privateuniversities)
-//  Signup Route
-// Signup Route
 router.post("/signup", async (req, res) => {
   try {
     console.log('Signup request received');
@@ -186,7 +184,7 @@ router.post("/resetpassword", async (req, res) => {
     if (!user) return res.status(400).json({ message: "User not found" });
 
     const hashedPassword = await bcrypt.hash(password, 10);
-    // Generate a 6-digit OTP
+    
     const otp = Math.floor(100000 + Math.random() * 900000);
 
     const tempuser = await TempUser.find({ email });
@@ -310,33 +308,42 @@ router.post("/login", async (req, res) => {
     // Check if user exists
     const user = await User.findOne({ email });
     if (!user) return res.status(400).json({ message: "User not found" });
-
+    // console.log("User found:", user);
     // Compare password
     const isMatch = await bcrypt.compare(password, user.password);
+    // console.log("Password match:", isMatch);
     if (!isMatch) return res.status(400).json({ message: "Invalid credentials" });
 
     // Store user session
-    req.session.user = { id: user._id, email: user.email, name: user.name };
-    console.log(request.session.user);
-    res.status(200).json({ message: "Login successful", user: req.session.user });
+    // console.log("User logged in:", user);
+    const token = jwt.sign({ id: user._id }, "djbvunvuwheoufheowhfwuhefuhifwuehi", { expiresIn: "1d" });
+    console.log("Token:", token);
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "none",
+      maxAge: 24 * 60 * 60 * 1000
+    }).status(200).json({ message: "Login successful"});
+
   } catch (error) {
     res.status(500).json({ message: "Error logging in", error });
   }
 });
 
-// Logout Route
-router.post("/logout", (req, res) => {
-  req.session.destroy((err) => {
-    if (err) return res.status(500).json({ message: "Error logging out" });
-    res.clearCookie("connect.sid"); // Clear session cookie
-    res.status(200).json({ message: "Logout successful" });
-  });
-});
 
-//  Get Authenticated User (Session Check)
-router.get("/me", (req, res) => {
-  if (!req.session.user) return res.status(201).json({ message: "Not authenticated" });
-  res.status(200).json({ user: req.session.user });
+router.post("/logout", async (req, res) => {
+  try{
+    
+    res.cookie("token", "", { 
+      httpOnly: true, 
+      sameSite: "none", 
+      expires: new Date(0)  
+  });
+  
+
+  }catch(e){
+    return res.status(500).send("Internal Server Error");
+  }
 });
 
 module.exports = router;

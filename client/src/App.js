@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, useLocation, Navigate, useNavigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import './App.css';
 import FeedBack from './Presentation/Pages/FeedBack';
 import Home from './Presentation/Pages/Home';
@@ -24,13 +24,28 @@ import Analysis from './Presentation/Pages/AnalysisPags';
 import PrivateUniversity from './Presentation/Pages/PrivateUniversity';
 import ForgetPassword from './Presentation/Pages/ForgetPassword';
 import Loading from './Presentation/Pages/Loading';
+import { useSelector } from 'react-redux';
+
+
+const AuthRoute = ({children}) => {
+  const {data} = useSelector((state) => state.user);
+  const isAuthenticated = !!data;
+  return isAuthenticated ? children : <SignIn />;
+}
+
+
 function App() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
+  const shownavbar = location.pathname !== "/signup" && location.pathname !== "/signin" && location.pathname !== "/test" && location.pathname.indexOf("/analysis", 0) && location.pathname !== "/loading" && location.pathname !== "/forgetpassword";
   const fetUserDetails = async () => {
     try{
       const response = await axios.get("https://khojo-college-server.vercel.app/auth/profile", { withCredentials: true });
       console.log(response.data.data);
+      if(!response.data.data){
+        navigate("/signin");
+      }
       dispatch(setUserData(response.data.data));
       dispatch(setUserId(response.data.data._id));
     }
@@ -38,29 +53,15 @@ function App() {
       console.log(err);
     }
   };
-
   useEffect(() => {
-    async function checkUser(){
-      const res = await axios.get("https://khojo-college-server.vercel.app/auth/me", { withCredentials: true });
-      if(res.status === 200){
-        fetUserDetails();
-      }else{
-        if(window.location.pathname !== "/signin" && window.location.pathname !== "/signup" && window.location.pathname !== "/forgetpassword"){
-          navigate("/signin");
-        }
-      }
-    }
-    checkUser();
+    fetUserDetails();
   }, []);
 
-
-  const location = useLocation();
-  const shownavbar = location.pathname !== "/" && location.pathname !== "/signup" && location.pathname !== "/signin" && location.pathname !== "/test" && location.pathname.indexOf("/analysis", 0) && location.pathname !== "/loading" && location.pathname !== "/forgetpassword";
   return (
     <div style={{boxSizing:'border-box'}}>
       {shownavbar && <Navbar />}
       <Routes>
-        <Route path="/" element={<SignIn />} />
+        <Route path="/" element={<AuthRoute><Home /></AuthRoute>} />
         <Route path="/home" element={<Home />} />
         <Route path="/helpandfeedback" element={<FeedBack />} />
         <Route path="/tests" element={<MockTestPage />}/>

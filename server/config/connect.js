@@ -5,14 +5,16 @@ const uri = "mongodb+srv://samplesudharsan4:aLIqH9LLjXOwC25F@cluster0.ptyub.mong
 
 async function connectToDatabase() {
   try {
-    // Connecting to MongoDB using Mongoose
-    await mongoose.connect(uri);
-    console.log("Connected to MongoDB successfully using Mongoose!");
+    await mongoose.connect(uri, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
 
-    // You can now perform database operations, e.g., querying, inserting, etc.
+    console.log("Connected to MongoDB successfully using Mongoose!");
   } catch (error) {
     console.error("Error connecting to MongoDB:", error);
+    process.exit(1); // Exit process if database connection fails
   }
 }
 
-module.exports = connectToDatabase;
+module.exports = { connectToDatabase, mongoose };
