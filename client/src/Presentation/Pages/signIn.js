@@ -15,13 +15,13 @@ export default function SignIn() {
     async function handleSubmit(event) {
         event.preventDefault();
         try {
-            const response = await axios.post("http://localhost:8000/auth/login", {
+            const response = await axios.post("https://khojo-college-server.vercel.app/auth/login", {
                 email,
                 password
             }, {headers:{"Content-Type": "application/json"}, withCredentials: true });
             console.log(response);
             if(response.status === 200){
-                const respo = await axios.get("http://localhost:8000/auth/profile",{withCredentials: true});
+                const respo = await axios.get("https://khojo-college-server.vercel.app/auth/profile",{withCredentials: true});
                 console.log(respo);
                 dispatch(setUserData(respo.data.data));
                 dispatch(setUserId(respo.data.data._id));

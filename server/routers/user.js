@@ -304,19 +304,18 @@ router.post("/verifyresetotp", async (req, res) => {
 router.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body;
-    console.log("Login request received");
 
     // Check if user exists
     const user = await User.findOne({ email });
     if (!user) return res.status(400).json({ message: "User not found" });
-    console.log("User found:", user);
+    // console.log("User found:", user);
     // Compare password
     const isMatch = await bcrypt.compare(password, user.password);
-    console.log("Password match:", isMatch);
+    // console.log("Password match:", isMatch);
     if (!isMatch) return res.status(400).json({ message: "Invalid credentials" });
 
     // Store user session
-    console.log("User logged in:", user);
+    // console.log("User logged in:", user);
     const token = jwt.sign({ id: user._id }, "djbvunvuwheoufheowhfwuhefuhifwuehi", { expiresIn: "1d" });
     console.log("Token:", token);
     res.cookie("token", token, {

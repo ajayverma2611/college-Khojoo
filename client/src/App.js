@@ -29,7 +29,7 @@ function App() {
   const navigate = useNavigate();
   const fetUserDetails = async () => {
     try{
-      const response = await axios.get("http://localhost:8000/auth/profile", { withCredentials: true });
+      const response = await axios.get("https://khojo-college-server.vercel.app/auth/profile", { withCredentials: true });
       console.log(response.data.data);
       if(!response.data.data){
         navigate("/signin");

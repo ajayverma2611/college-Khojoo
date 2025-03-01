@@ -23,7 +23,7 @@ const InstructionPage = () => {
       try {
         setIsloading(true);
         const response = await axios.post(
-          `http://localhost:8000/mock/mocktestdata`,
+          `https://khojo-college-server.vercel.app/mock/mocktestdata`,
           { id: id }
         );
         const data = await response.data;
@@ -50,7 +50,7 @@ const InstructionPage = () => {
     try {
       setIsloading(true);
       console.log(testData);
-      const res = await axios.post("http://localhost:8000/mock/addMocktoUser", {
+      const res = await axios.post("https://khojo-college-server.vercel.app/mock/addMocktoUser", {
         userId: user_id,
         data: testData,
       });

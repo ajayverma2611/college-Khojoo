@@ -62,7 +62,7 @@ const Navbar = () => {
 
     const handleLogout = async () => {
         try {
-            await axios.post("http://localhost:8000/auth/logout", {}, { withCredentials: true });
+            await axios.post("https://khojo-college-server.vercel.app/auth/logout", {}, { withCredentials: true });
             
             // Clear session from frontend
             dispatch(resetUserData());
