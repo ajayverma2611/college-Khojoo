@@ -3,7 +3,7 @@ import axios from "axios";
 
 
 export const fetchBooks = createAsyncThunk("books/fetchBooks", async () => {
-    const response = await axios.get("https://khojo-college-server.vercel.app/material"); 
+    const response = await axios.get("http://localhost:8000/material"); 
     return response.data || [];
 });
 

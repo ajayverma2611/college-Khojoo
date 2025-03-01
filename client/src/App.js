@@ -29,8 +29,11 @@ function App() {
   const navigate = useNavigate();
   const fetUserDetails = async () => {
     try{
-      const response = await axios.get("https://khojo-college-server.vercel.app/auth/profile", { withCredentials: true });
+      const response = await axios.get("http://localhost:8000/auth/profile", { withCredentials: true });
       console.log(response.data.data);
+      if(!response.data.data){
+        navigate("/signin");
+      }
       dispatch(setUserData(response.data.data));
       dispatch(setUserId(response.data.data._id));
     }
@@ -38,19 +41,8 @@ function App() {
       console.log(err);
     }
   };
-
   useEffect(() => {
-    async function checkUser(){
-      const res = await axios.get("https://khojo-college-server.vercel.app/auth/me", { withCredentials: true });
-      if(res.status === 200){
-        fetUserDetails();
-      }else{
-        if(window.location.pathname !== "/signin" && window.location.pathname !== "/signup" && window.location.pathname !== "/forgetpassword"){
-          navigate("/signin");
-        }
-      }
-    }
-    checkUser();
+    fetUserDetails();
   }, []);
 
 

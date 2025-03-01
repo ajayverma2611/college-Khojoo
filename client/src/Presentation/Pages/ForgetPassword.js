@@ -18,7 +18,7 @@ export default function ForgetPassword() {
     async function handleSubmit(event) {
         event.preventDefault();
         try {
-            const response = await axios.post("https://khojo-college-server.vercel.app/auth/resetpassword", {
+            const response = await axios.post("http://localhost:8000/auth/resetpassword", {
                 email,
                 password,
                 confirmpassword
@@ -32,7 +32,7 @@ export default function ForgetPassword() {
                 setError(response.data.message);
             }
             
-            // const respo = await axios.post("https://khojo-college-server.vercel.app/auth/profile")
+            // const respo = await axios.post("http://localhost:8000/auth/profile")
             // dispatch(setUserData(respo.data.user));
             // navigate("/home"); // Redirect after login
         } catch (err) {
@@ -45,7 +45,7 @@ export default function ForgetPassword() {
     async function handleOTPSubmit(event) {
         event.preventDefault();
         try {
-            const response = await axios.post("https://khojo-college-server.vercel.app/auth/verifyresetotp", {
+            const response = await axios.post("http://localhost:8000/auth/verifyresetotp", {
                 email,
                 otp
             }, { withCredentials: true });

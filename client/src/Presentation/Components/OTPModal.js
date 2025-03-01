@@ -40,7 +40,7 @@ const OTPModalSignUp = ({ email, setIsModalOpen, navigate, setError, showModal }
 
     try {
       const response = await axios.post(
-        "https://khojo-college-server.vercel.app/auth/verifyotp",
+        "http://localhost:8000/auth/verifyotp",
         { email, otp: otpString },
         { withCredentials: true }
       );

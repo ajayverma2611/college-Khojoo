@@ -23,7 +23,7 @@ export default function SignUp() {
     async function handleSubmit(event) {
         event.preventDefault();
         try {
-            const response = await axios.post("https://khojo-college-server.vercel.app/auth/signup", {
+            const response = await axios.post("http://localhost:8000/auth/signup", {
                 name: fullName,
                 email,
                 location,

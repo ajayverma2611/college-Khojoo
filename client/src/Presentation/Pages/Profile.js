@@ -37,7 +37,7 @@ const Profile = () =>{
     const HandleChange =async () =>{
         try{
             setIsloading(true);
-            const response = await axios.post("https://khojo-college-server.vercel.app/auth/updateprofile",{
+            const response = await axios.post("http://localhost:8000/auth/updateprofile",{
                 id : user._id,
                 name : name,
                 location : location
@@ -60,7 +60,7 @@ const Profile = () =>{
             data.append("profilepic",profileimage);
             data.append("id",user._id);
 
-            const response = await axios.post("https://khojo-college-server.vercel.app/auth/updateuserprofile",data);
+            const response = await axios.post("http://localhost:8000/auth/updateuserprofile",data);
             if(response.data.error === false){
                 dispatch(setUserData(response.data.data));
                 window.location.reload();

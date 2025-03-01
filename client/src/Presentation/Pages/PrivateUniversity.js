@@ -10,7 +10,7 @@ const PrivateUniversity = () => {
   useEffect(() => {
     async function fetchData() {
       setIsloading(true);
-      const response = await fetch('https://khojo-college-server.vercel.app/auth/privateuniversities');
+      const response = await fetch('http://localhost:8000/auth/privateuniversities');
       const collegedata = await response.json();
       if(!data){
         console.log("Data not found");

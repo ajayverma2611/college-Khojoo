@@ -22,7 +22,7 @@ const AttemptedMocktests = () => {
     async function fetchData() {
         console.log(id_data);
       try {
-        // const response = await axios.post("https://khojo-college-server.vercel.app/mock/attemptedmocks",
+        // const response = await axios.post("http://localhost:8000/mock/attemptedmocks",
         //     {userId : id_data}
         // );
         // const data = await response.data;

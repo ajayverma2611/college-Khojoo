@@ -16,7 +16,7 @@ const FeedbackModal = ({showModal}) => {
     console.log(email);
     try{
       setIsloading(true);
-      const res = await axios.post("https://khojo-college-server.vercel.app/auth/feedback", {
+      const res = await axios.post("http://localhost:8000/auth/feedback", {
         name: username,
         email: email,
         message: description,

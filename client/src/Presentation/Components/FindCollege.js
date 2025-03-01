@@ -51,7 +51,7 @@ const FindCollege = () => {
                 tiertype : tiertype,
                 location: selectedLocation
             });
-            const response = await axios.post("https://khojo-college-server.vercel.app/auth/colleges", {
+            const response = await axios.post("http://localhost:8000/auth/colleges", {
                 page: pagenumber,
                 marks: marksdata,
                 percentile: percentiledata,

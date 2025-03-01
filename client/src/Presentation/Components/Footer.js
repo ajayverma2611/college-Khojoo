@@ -8,7 +8,7 @@ const Footer = () =>{
     const [contact, setContact] = useState("");
     const user = useSelector(state => state.user.data);
     const handleSubmit = (e) => {
-        const res = axios.post("https://khojo-college-server.vercel.app/auth/contactus",{
+        const res = axios.post("http://localhost:8000/auth/contactus",{
             name : user.name,
             email : user.email,
             message : contact
