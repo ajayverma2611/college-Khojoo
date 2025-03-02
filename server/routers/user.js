@@ -334,14 +334,12 @@ router.post("/login", async (req, res) => {
 router.post("/logout", async (req, res) => {
   try{
     
-    res.cookie("token", "", { 
-      httpOnly: true, 
-      sameSite: "none", 
-      expires: new Date(0)  
-  });
+    res.clearCookie("token");
+    res.status(200).send({ message: "Logout successful" });
   
 
   }catch(e){
+    console.log(e);
     return res.status(500).send("Internal Server Error");
   }
 });

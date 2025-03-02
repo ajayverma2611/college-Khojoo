@@ -16,6 +16,7 @@ import { resetTestData } from '../../Application/StateManagement/slices/Mocktest
 import { resetTimer } from '../../Application/StateManagement/slices/TimerSlice';
 import { clearBooks } from '../../Application/StateManagement/slices/BookSlice';
 import { useDispatch } from 'react-redux';
+import Cookies from 'js-cookie';
 
 const Navbar = () => {
     const [showDropdown, setShowDropdown] = useState(false);
@@ -77,23 +78,26 @@ const Navbar = () => {
 
     const handleLogout = async () => {
         try {
+            console.log("Logging out...");
             setLoading(true);
             const res = await axios.post("https://khojo-college-server.vercel.app/auth/logout", {}, { withCredentials: true });
+            Cookies.remove('token');
+            Cookies.remove('access-token');
             
             // Clear session from frontend
             if(res.status === 200){
-                clearCookie('token');
-                clearAllCookies();
-                window.location.reload();
+                console.log("recieved 200");
                 dispatch(resetUserData());
+                console.log("dispatched user");
                 dispatch(resetPrivateColleges());
+                console.log("dispatched colleges");
                 dispatch(resetTestData());
+                console.log("dispatched test data");
                 dispatch(resetTimer());
+                console.log("dispatched timer");
                 dispatch(clearBooks());
-
-                persistor.purge().then(() => {
-                    navigate("/signin");
-                });
+                console.log("dispatched books");
+                navigate("/signin");
             }
         } catch (error) {
             console.error("Logout failed:", error);
@@ -177,7 +181,7 @@ const Navbar = () => {
                 {loading && <Loading />}
                 <div className={`nav-dropdown${showDropdown ? " drop-active" : ""}`}>
                     <a href="/profile">Profile</a>
-                    <a onClick={handleLogout} href="/signin">Logout</a>
+                    <a style={{cursor:"pointer"}} onClick={handleLogout} >Logout</a>
                 </div>
             </div>
         </nav>
