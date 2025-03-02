@@ -27,17 +27,24 @@ import Loading from './Presentation/Pages/Loading';
 import { useSelector } from 'react-redux';
 
 
+
 const AuthRoute = ({children}) => {
   const {data} = useSelector((state) => state.user);
-  const isAuthenticated = !!data;
+  console.log(data);
+  const s = [];
+  const isAuthenticated = Array.isArray(data) && data.length === 0 ? false : true;
+  console.log(isAuthenticated);
   return isAuthenticated ? children : <SignIn />;
 }
 
 
 function App() {
+  const {data} = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
+
+
   const shownavbar = location.pathname !== "/signup" && location.pathname !== "/signin" && location.pathname !== "/test" && location.pathname.indexOf("/analysis", 0) && location.pathname !== "/loading" && location.pathname !== "/forgetpassword";
   const fetUserDetails = async () => {
     try{
@@ -54,7 +61,14 @@ function App() {
     }
   };
   useEffect(() => {
+    console.log('hi');
     fetUserDetails();
+    const isAuthenticated = Array.isArray(data) && data.length === 0 ? false : true;
+
+    if(!isAuthenticated && !window.location.pathname.includes("/signup")){
+      navigate("/signin");
+    }
+
   }, []);
 
   return (

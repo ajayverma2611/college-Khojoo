@@ -45,10 +45,10 @@ const AttemptedMocktests = () => {
       <div className="mocktestheader" id="attemptedMocktest-header">
         <h1>Attempted Mocktests</h1>
       </div>
-      <h1 className="attemptedmocktesttext" style={{color: "#059BB9"}}>{tests.length === 0 ? "No Attempted tests" : ""}</h1>
+      <h1 className="attemptedmocktesttext" style={{color: "#059BB9"}}>{ tests?.length === 0 ? "No Attempted tests" : ""}</h1>
       <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
         <div className="showtests">
-          {tests.map((test, index) => {
+          {tests?.map((test, index) => {
               return (
                 <div key={index} className="testContainer">
                   <div style={{ display: "flex", flexWrap: "wrap", gap: "20px" }}>

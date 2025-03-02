@@ -41,10 +41,10 @@ const ResumeTests = () => {
       <div className="mocktestheader">
         <h1>Resume your test</h1>
       </div>
-      <h1 className="mocktestresumeHeading">{tests.length === 0 ? "No Attempting Tests" : ""}</h1>
+      <h1 className="mocktestresumeHeading">{tests?.length === 0 ? "No Attempting Tests" : ""}</h1>
       <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
         <div className="showtests">
-          {tests.map((test, index) => {
+          {tests ? tests.map((test, index) => {
               return (
                 <div key={index} className="testContainer">
                   <div style={{ display: "flex", flexWrap: "wrap", gap: "20px" }}>
@@ -69,7 +69,7 @@ const ResumeTests = () => {
                   </p>
                 </div>
               );
-            })}
+            }) : null}
         </div>
       </div>
     </div>

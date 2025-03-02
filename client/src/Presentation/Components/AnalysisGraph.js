@@ -29,7 +29,7 @@ const PerformanceChart = () => {
   const id_data = useSelector((state) => state.user.id);
   const data2 = useSelector((state) => state.user.data.attempted_mocks);
   const [data, setdata] = useState([]);
-  const mockTestData = data.map((d, i) => ({ test: d.title, scoredMarks: d.scoredMarks }));
+  const mockTestData = data ? data.map((d, i) => ({ test: d.title, scoredMarks: d.scoredMarks })) : [];
 
   useEffect(() => {
     async function fetchData() {
