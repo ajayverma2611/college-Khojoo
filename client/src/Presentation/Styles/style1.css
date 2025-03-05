@@ -145,6 +145,20 @@
     object-fit: cover;
 }
 
+.sign-up-password-field {
+    position: relative;
+    width: 100%;
+}
+
+.sign-up-eye-icon {
+    position: absolute;
+    right: 15px;
+    top: 65%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    font-size: 18px;
+    color: #555;
+}
 
 @media (max-width: 48rem) {
     .container {

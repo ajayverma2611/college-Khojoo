@@ -162,6 +162,21 @@
     object-fit: cover;
 }
 
+.sign-in-password-field {
+    position: relative;
+    width: 100%;
+}
+
+.sign-in-eye-icon {
+    position: absolute;
+    right: 15px;
+    top: 65%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    font-size: 18px;
+    color: #555;
+}
+
 
 @media screen and (max-width: 780px) {
     .container {
