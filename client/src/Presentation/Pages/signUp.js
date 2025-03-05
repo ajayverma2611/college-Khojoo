@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { FaEye, FaEyeSlash } from "react-icons/fa"; 
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "../Styles/style1.css";
@@ -15,6 +16,9 @@ export default function SignUp() {
     const [success, setSuccess] = useState('');
     // const [otpsection, setOtpsection] = useState(false); 
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [hidePassword, setHidePassword] = useState(true);
+    const [hideConfirmPassword, setHideConfirmPassword] = useState(true);
+    
     // const [otp, setOtp] = useState('');
 
 
@@ -127,21 +131,28 @@ export default function SignUp() {
                         </select>
 
                         <label>Password</label>
-                        <input
-                            type="password"
+                        <div className="sign-up-password-field">
+                        <input 
+                            type={hidePassword ? "password" : "text"} 
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                             pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
                             title="Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one number, and one special character."
                             required
-                        // className={passwordError ? "input-error" : ""}
                         />
-                        {/* {passwordError && <p style={{color:"red" , fontWeight:400}}>{passwordError}</p>} */}
-
-
+                        <span 
+                            className="sign-up-eye-icon"
+                            onClick={() => setHidePassword(!hidePassword)}
+                        >   
+                            {hidePassword ? <FaEyeSlash /> : <FaEye />}
+                        </span>
+                        </div>
+                       
                         <label>Confirm Password</label>
-                        <input
-                            type="password"
+
+                        <div className="sign-up-password-field">
+                        <input 
+                            type={hideConfirmPassword ? "password" : "text"} 
                             value={confirmPassword}
                             onChange={(e) => setconfirmPassWord(e.target.value)}
 
@@ -154,6 +165,27 @@ export default function SignUp() {
                             }}
                             required
                         />
+                        <span 
+                            className="sign-up-eye-icon"
+                            onClick={() => setHideConfirmPassword(!hideConfirmPassword)}
+                        >   
+                            {hideConfirmPassword ? <FaEyeSlash /> : <FaEye />}
+                        </span>
+                        </div>
+                        {/* <input
+                            type="password"
+                            value={confirmPassword}
+                            onChange={(e) => setconfirmPassWord(e.target.value)}
+
+                            onBlur={(e) => {
+                                if (e.target.value !== password) {
+                                    e.target.setCustomValidity("Passwords do not match!");
+                                } else {
+                                    e.target.setCustomValidity("");
+                                }
+                            }}
+                            required
+                        /> */}
 
 
                         <button type="submit" className="sign-up-btn">Sign Up</button>
